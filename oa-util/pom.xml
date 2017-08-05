@@ -9,18 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>oa-service</artifactId>
-    <packaging>jar</packaging>
-<dependencies>
-    <dependency>
-        <groupId>com.xiaofan</groupId>
-        <artifactId>oa-dao</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-        <groupId>com.xiaofan</groupId>
-        <artifactId>oa-util</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </dependency>
-</dependencies>
+    <artifactId>oa-util</artifactId>
+
 </project>
