@@ -3,6 +3,7 @@ package com.xiaofan.car.dao.test;
 import com.xiaofan.car.dao.configuration.MybatisConfiguration;
 import com.xiaofan.car.dao.repository.LedgerInfoMapper;
 import com.xiaofan.car.persistence.model.LedgerInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +15,11 @@ import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = MybatisConfiguration.class)
+@Slf4j
 public class BaseDaoTest {
 
-    @Autowired
-    LedgerInfoMapper ledgerInfoMapper;
-
     @Test
-    public void inserLedgerInfoTest(){
-        LedgerInfo ledgerInfo = new LedgerInfo();
-        ledgerInfo.setCreateUser("β他爹");
-        ledgerInfo.setDeviceNo(UUID.randomUUID().toString());
-
-        ledgerInfoMapper.insertSelective(ledgerInfo);
+    public void test(){
+        log.debug("debug");
     }
 }

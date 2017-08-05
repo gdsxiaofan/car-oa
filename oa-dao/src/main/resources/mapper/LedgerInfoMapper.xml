@@ -10,9 +10,9 @@
 		<!--设备编号-->
 		<result property="deviceNo" column="device_No" />
 		<!--录入人员-->
-		<result property="createUser" column="craet_User" />
+		<result property="createUser" column="create_User" />
 		<!--创建时间-->
-		<result property="createTime" column="creat_Time" />
+		<result property="createTime" column="create_Time" />
 		<!--更新时间-->
 		<result property="updateTime" column="update_Time" />
 		<!--删除状态：1：正常状态，0：删除-->
@@ -51,10 +51,10 @@
 				 device_No,
 			</if>
 			<if test="createUser != null">
-				 craet_User,
+				 create_User,
 			</if>
 			<if test="createTime != null">
-				 creat_Time,
+				 create_Time,
 			</if>
 			<if test="updateTime != null">
 				 update_Time,

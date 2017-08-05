@@ -8,13 +8,8 @@
 out
 gen
 
-oa-api/src/
 oa-api/target/
-oa-biz/src/
 oa-biz/target/
-oa-dao/src/
 oa-dao/target/
-oa-persistence/src/
 oa-persistence/target/
-oa-service/src/
 oa-service/target/
