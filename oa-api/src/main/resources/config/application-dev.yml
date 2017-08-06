@@ -1,6 +1,6 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: qwer1234
     url: jdbc:mysql://47.93.20.244:3306/caroa_db?useUnicode=true&characterEncoding=utf8
