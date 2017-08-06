@@ -1,5 +1,6 @@
 package com.xiaofan.car;
 
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +16,8 @@ import java.net.UnknownHostException;
  */
 @SpringBootApplication
 @MapperScan("com.xiaofan.car.dao.repository")
+@Slf4j
 public class AppStartConfiguration{
-    private static final Logger log = LoggerFactory.getLogger(AppStartConfiguration.class);
 
     public static void main(String[] args) {
         SpringApplication app =new SpringApplication(AppStartConfiguration.class);
