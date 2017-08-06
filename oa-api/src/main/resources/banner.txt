@@ -1,0 +1,16 @@
+
+${AnsiColor.RED}    ,---,.
+${AnsiColor.RED}  ,'  .'  \
+${AnsiColor.RED},---.' .' |${AnsiColor.RED}                             ,---,
+${AnsiColor.RED}|   |  |: |${AnsiColor.RED}                         ,-+-. /  |
+${AnsiColor.RED}:   :  :  /${AnsiColor.RED}   ,---.     ,--.--.    ,--.'|'   |
+${AnsiColor.RED}:   |    ; ${AnsiColor.RED}  /     \   /       \  |   |  ,"' |
+${AnsiColor.RED}|   :     \${AnsiColor.RED} /    /  | .--.  .-. | |   | /  | |
+${AnsiColor.RED}|   |   . |${AnsiColor.RED}.    ' / |  \__\/: . . |   | |  | |
+${AnsiColor.RED}'   :  '; |${AnsiColor.RED}'   ;   /|  ," .--.; | |   | |  |/
+${AnsiColor.RED}|   |  | ; ${AnsiColor.RED}'   |  / | /  /  ,.  | |   | |--'
+${AnsiColor.RED}|   :   /  ${AnsiColor.RED}|   :    |;  :   .'   \|   |/
+${AnsiColor.RED}|   | ,'   ${AnsiColor.RED} \   \  / |  ,     .-./'---'
+${AnsiColor.RED}`----'     ${AnsiColor.RED} `----'   `--`---'
+${AnsiColor.BRIGHT_BLUE}Running Spring Boot ${spring-boot.version} ::
+${AnsiColor.DEFAULT}

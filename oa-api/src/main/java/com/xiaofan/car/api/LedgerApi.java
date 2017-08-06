@@ -28,7 +28,7 @@ public class LedgerApi {
     @RequestMapping(value="/apply",method = RequestMethod.GET)
     @ResponseBody
     public JsonResult<String> applyLedger(
-            LedgerInfoParam ledgerInfoParam
+            @RequestBody LedgerInfoParam ledgerInfoParam
     ){
         log.info("进入报备设备申请接口：{}", ledgerInfoParam.toString());
         JsonResult<String> jsonResult = new JsonResult<String>();
