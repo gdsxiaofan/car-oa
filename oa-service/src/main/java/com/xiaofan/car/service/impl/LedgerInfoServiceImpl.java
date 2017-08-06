@@ -19,4 +19,9 @@ public class LedgerInfoServiceImpl implements LedgerInfoService{
 
         return ledgerInfoMapper.insertSelective(ledgerInfo);
     }
+
+    @Override
+    public LedgerInfo selectLedgerInfo(Integer id) {
+        return ledgerInfoMapper.selectLedgerInfoById(id);
+    }
 }

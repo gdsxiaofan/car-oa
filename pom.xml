@@ -15,6 +15,7 @@
         <module>oa-dao</module>
         <module>oa-persistence</module>
         <module>oa-util</module>
+        <module>oa-schedule</module>
     </modules>
 
     <properties>

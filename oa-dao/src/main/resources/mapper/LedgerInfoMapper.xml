@@ -26,7 +26,7 @@
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.LedgerInfo" parameterType="java.lang.Integer">
+	<select id="selectLedgerInfoById" resultType="com.xiaofan.car.persistence.model.LedgerInfo" parameterType="java.lang.Integer">
 		 SELECT
 		 <include refid="Base_Column_List" />
 		 FROM t_ledger_info

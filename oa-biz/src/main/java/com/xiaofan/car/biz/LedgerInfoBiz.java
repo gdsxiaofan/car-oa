@@ -9,4 +9,6 @@ import com.xiaofan.car.persistence.param.LedgerInfoParam;
 public interface LedgerInfoBiz {
 
     public Integer applyLedgerInfo(LedgerInfoParam ledgerInfoParam);
+
+    public LedgerInfo selectLedgerInfo(Integer id);
 }

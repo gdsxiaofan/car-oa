@@ -7,4 +7,6 @@ import com.xiaofan.car.persistence.model.LedgerInfo;
  */
 public interface LedgerInfoService {
     public Integer saveLedgerInfoService(LedgerInfo ledgerInfo);
+
+    public LedgerInfo selectLedgerInfo(Integer id);
 }

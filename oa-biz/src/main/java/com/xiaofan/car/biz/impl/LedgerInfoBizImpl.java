@@ -30,4 +30,10 @@ public class LedgerInfoBizImpl implements LedgerInfoBiz{
 
         return ledgerInfoService.saveLedgerInfoService(ledgerInfo);
     }
+
+    @Override
+    public LedgerInfo selectLedgerInfo(Integer id) {
+        return ledgerInfoService.selectLedgerInfo(id);
+    }
+
 }
