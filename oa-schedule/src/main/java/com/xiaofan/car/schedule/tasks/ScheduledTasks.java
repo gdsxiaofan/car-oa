@@ -35,7 +35,9 @@ public class ScheduledTasks {
         LedgerInfo ledgerInfo = ledgerInfoBiz.selectLedgerInfo(id);
         log.info("当前查询数据为：{}",ledgerInfo.toString());
 
+        //传入参数
         JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
+        //执行任务
         jobLauncher.run(job,jobParameters);
         id++;
     }

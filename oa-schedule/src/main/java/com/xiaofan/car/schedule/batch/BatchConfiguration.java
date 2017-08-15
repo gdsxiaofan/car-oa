@@ -73,7 +73,7 @@ public class BatchConfiguration {
         };
     }
     /**
-     * 读取外部文件方法
+     * 写入处理完的数据
      * @return
      * @throws IOException
      */
