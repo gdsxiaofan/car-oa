@@ -3,6 +3,10 @@ package com.xiaofan.car.schedule.tasks;
 import com.xiaofan.car.biz.LedgerInfoBiz;
 import com.xiaofan.car.persistence.model.LedgerInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,14 +22,21 @@ import java.util.Date;
 public class ScheduledTasks {
 
     @Autowired
-    LedgerInfoBiz ledgerInfoBiz;
+    private LedgerInfoBiz ledgerInfoBiz;
+    @Autowired
+    private Job job;
+    @Autowired
+    JobLauncher jobLauncher;
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     private static Integer id =1;
-    @Scheduled(fixedRate = 5000)
-    public void reportCurrentTime() {
+    @Scheduled(fixedRate = 500000)
+    public void reportCurrentTime() throws Exception{
         System.out.println("现在时间：" + dateFormat.format(new Date()));
         LedgerInfo ledgerInfo = ledgerInfoBiz.selectLedgerInfo(id);
         log.info("当前查询数据为：{}",ledgerInfo.toString());
+
+        JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
+        jobLauncher.run(job,jobParameters);
         id++;
     }
 
