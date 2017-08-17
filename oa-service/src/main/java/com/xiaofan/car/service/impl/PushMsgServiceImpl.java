@@ -1,5 +1,6 @@
 package com.xiaofan.car.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.xiaofan.car.persistence.dingding.enums.MsgTypeEnum;
 import com.xiaofan.car.persistence.dingding.msg.*;
 import com.xiaofan.car.service.PushMsgService;
@@ -34,32 +35,38 @@ public class PushMsgServiceImpl implements PushMsgService{
     @Value(value = "${CAR_OA_ACCESS_TOKEN:''}")
     private String accessToken;
 
+    private static final String ACCESS_TOKEN="access_token";
+
     @Override
     public boolean pushTextMsg(TextMsg textMsg) {
         // 1.校验参数
         Assert.isTrue(StringUtils.isNotBlank(textMsg.getText().getContent()),"消息内容不能为空");
         textMsg.setMsgtype(MsgTypeEnum.TEXT.getCode());
-        return this.pushTextMsg(textMsg);
+        return this.pushMsgToDingDing(textMsg);
     }
 
     @Override
-    public boolean pushLinkMsg(LinkMsg textMsg) {
-        return false;
+    public boolean pushLinkMsg(LinkMsg linkMsg) {
+        linkMsg.setMsgtype(MsgTypeEnum.LINK.getCode());
+        return this.pushMsgToDingDing(linkMsg);
     }
 
     @Override
-    public boolean pushActionCardMsg(ActionCardMsg textMsg) {
-        return false;
+    public boolean pushActionCardMsg(ActionCardMsg actionCardMsg) {
+        actionCardMsg.setMsgtype(MsgTypeEnum.ACTION_CARD.getCode());
+        return this.pushMsgToDingDing(actionCardMsg);
     }
 
     @Override
-    public boolean pushFeedCardMsg(FeedCardMsg textMsg) {
-        return false;
+    public boolean pushFeedCardMsg(FeedCardMsg feedCardMsg) {
+        feedCardMsg.setMsgtype(MsgTypeEnum.FEED_CARD.getCode());
+        return this.pushMsgToDingDing(feedCardMsg);
     }
 
     @Override
-    public boolean pushMarkdownMsg(MarkdownMsg textMsg) {
-        return false;
+    public boolean pushMarkdownMsg(MarkdownMsg markdownMsg) {
+        markdownMsg.setMsgtype(MsgTypeEnum.MARKDOWN.getCode());
+        return this.pushMsgToDingDing(markdownMsg);
     }
 
     /**
@@ -69,13 +76,15 @@ public class PushMsgServiceImpl implements PushMsgService{
     private boolean pushMsgToDingDing(Object object){
         boolean flag = false;
         try{
-            String WEBHOOK_TOKEN = httpUrl+"?"+accessToken;
+            String WEBHOOK_TOKEN = httpUrl+"?"+ACCESS_TOKEN+"="+accessToken;
             HttpClient httpclient = HttpClients.createDefault();
 
             HttpPost httppost = new HttpPost(WEBHOOK_TOKEN);
             httppost.addHeader("Content-Type", "application/json; charset=utf-8");
 
             String textMsg = JSONHelper.obj2JSONString(object);
+
+            log.info("调用地址为：{}，参数为：{}",WEBHOOK_TOKEN,textMsg);
             StringEntity se = new StringEntity(textMsg, "utf-8");
             httppost.setEntity(se);
             HttpResponse response = httpclient.execute(httppost);

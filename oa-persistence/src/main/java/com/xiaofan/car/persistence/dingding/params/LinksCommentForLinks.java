@@ -10,8 +10,9 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
-public class LinksComment {
+public class LinksCommentForLinks {
+    private String text;
     private String title;//单条信息文本
-    private String messageURL;//点击单条信息到跳转链接
-    private String picURL;//单条信息后面图片的URL
+    private String messageUrl;//点击单条信息到跳转链接
+    private String picUrl;//单条信息后面图片的URL
 }

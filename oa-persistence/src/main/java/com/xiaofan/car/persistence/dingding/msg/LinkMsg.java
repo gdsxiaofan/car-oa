@@ -1,5 +1,6 @@
 package com.xiaofan.car.persistence.dingding.msg;
 
+import com.xiaofan.car.persistence.dingding.params.LinksCommentForLinks;
 import lombok.Data;
 
 /**
@@ -12,8 +13,5 @@ import lombok.Data;
 @Data
 public class LinkMsg {
     private String msgtype;//消息类型，此时固定为:link
-    private String title;//消息标题
-    private String text;//消息内容。如果太长只会部分展示
-    private String messageUrl;//点击消息跳转的URL
-    private String picUrl;//图片URL
+    private LinksCommentForLinks link;
 }

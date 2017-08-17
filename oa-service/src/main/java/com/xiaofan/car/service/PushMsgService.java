@@ -11,8 +11,8 @@ import com.xiaofan.car.persistence.dingding.msg.*;
  */
 public interface PushMsgService {
     public boolean pushTextMsg(TextMsg textMsg);
-    public boolean pushLinkMsg(LinkMsg textMsg);
-    public boolean pushActionCardMsg(ActionCardMsg textMsg);
-    public boolean pushFeedCardMsg(FeedCardMsg textMsg);
-    public boolean pushMarkdownMsg(MarkdownMsg textMsg);
+    public boolean pushLinkMsg(LinkMsg linkMsg);
+    public boolean pushActionCardMsg(ActionCardMsg actionCardMsg);
+    public boolean pushFeedCardMsg(FeedCardMsg feedCardMsg);
+    public boolean pushMarkdownMsg(MarkdownMsg markdownMsg);
 }

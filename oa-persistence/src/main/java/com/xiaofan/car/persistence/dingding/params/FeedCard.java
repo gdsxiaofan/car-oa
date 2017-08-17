@@ -13,5 +13,5 @@ import java.util.List;
  */
 @Data
 public class FeedCard {
-    List<LinksComment> links;
+    List<LinksCommentForFeedCard> links;
 }
