@@ -5,3 +5,7 @@ spring:
     name: 汽车服务
 server:
   port: 8011
+
+#car项目自有属性配置
+DINGDING_CAR_OA_HTTP_URL: https://oapi.dingtalk.com/robot/send
+CAR_OA_ACCESS_TOKEN: f7c874c95000b1116a5089b76c917a62d0b93af83365c72b76479e5fb3d22061

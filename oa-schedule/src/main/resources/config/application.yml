@@ -4,3 +4,5 @@ spring:
   batch:
     job:
       enabled: false
+server:
+  port: 8012
