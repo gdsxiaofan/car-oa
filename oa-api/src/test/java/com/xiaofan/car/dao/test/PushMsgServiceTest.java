@@ -24,7 +24,7 @@ public class PushMsgServiceTest extends BaseDaoTest {
         msgComment.setContent("有新的工单需要处理,点击链接开始处理工单：http://47.93.20.244:8011/swagger-ui.html");
 
         DealTypeAt dealTypeAt = new DealTypeAt();
-        dealTypeAt.setIsAtAll("true");
+        dealTypeAt.setIsAtAll(true);
 //        List<String> mobileList = new ArrayList<>();
 //        mobileList.add("13162510229");
 //        mobileList.add("13162510253");
@@ -115,7 +115,7 @@ public class PushMsgServiceTest extends BaseDaoTest {
         markdownMsg.setMarkdown(markdown);
 
         DealTypeAt dealTypeAt = new DealTypeAt();
-        dealTypeAt.setIsAtAll("false");
+        dealTypeAt.setIsAtAll(false);
 
         markdownMsg.setAt(dealTypeAt);
 

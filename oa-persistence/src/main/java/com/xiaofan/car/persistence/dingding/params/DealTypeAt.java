@@ -14,5 +14,5 @@ import java.util.List;
 @Data
 public class DealTypeAt {
     private List<String> atMobiles;//被@人的手机号
-    private String isAtAll;//@所有人时:true,否则为:false
+    private Boolean isAtAll;//@所有人时:true,否则为:false
 }
