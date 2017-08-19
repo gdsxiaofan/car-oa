@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaofan.car.dao.repository.RoleMapper">
+
+	<!--实体映射-->
+	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.Role">
+		<!---->
+		<id property="id" column="id" />
+		<!--角色名称-->
+		<result property="roleName
+roleName" column="role_name
+role_name" />
+		<!--父节点权限id-->
+		<result property="parentRoleId" column="parent_role_id" />
+		<!--角色code-->
+		<result property="roleCode" column="role_code" />
+		<!--有效状态：1：有效 0：无效-->
+		<result property="deleteStaus" column="delete_staus" />
+		<!--创建时间-->
+		<result property="createTime" column="create_time" />
+		<!--更新时间-->
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+	id,	role_name
+role_name,	parent_role_id,	role_code,	delete_staus,	create_time,	update_time
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.Role" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_role
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		 DELETE FROM t_role
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.Role">
+		 INSERT INTO t_role
+ 		(id,role_name
+role_name,parent_role_id,role_code,delete_staus,create_time,update_time) 
+		 VALUES 
+ 		(#{id},#{roleName
+roleName},#{parentRoleId},#{roleCode},#{deleteStaus},#{createTime},#{updateTime}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.Role">
+		 INSERT INTO t_role
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="roleName
+roleName != null">
+				 role_name
+role_name,
+			</if>
+			<if test="parentRoleId != null">
+				 parent_role_id,
+			</if>
+			<if test="roleCode != null">
+				 role_code,
+			</if>
+			<if test="deleteStaus != null">
+				 delete_staus,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+			<if test="updateTime != null">
+				 update_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="roleName
+roleName!=null">
+				 #{roleName
+roleName},
+			</if>
+			<if test="parentRoleId!=null">
+				 #{parentRoleId},
+			</if>
+			<if test="roleCode!=null">
+				 #{roleCode},
+			</if>
+			<if test="deleteStaus!=null">
+				 #{deleteStaus},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.Role">
+		 UPDATE t_role
+ 		 <set> 
+			<if test="roleName
+roleName != null">
+				 role_name
+role_name = #{roleName
+roleName},
+			</if>
+			<if test="parentRoleId != null">
+				 parent_role_id = #{parentRoleId},
+			</if>
+			<if test="roleCode != null">
+				 role_code = #{roleCode},
+			</if>
+			<if test="deleteStaus != null">
+				 delete_staus = #{deleteStaus},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				 update_time = #{updateTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.Role">
+		 UPDATE t_role
+		 SET 
+			 role_name
+role_name = #{roleName
+roleName},
+			 parent_role_id = #{parentRoleId},
+			 role_code = #{roleCode},
+			 delete_staus = #{deleteStaus},
+			 create_time = #{createTime},
+			 update_time = #{updateTime}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>
