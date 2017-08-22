@@ -10,13 +10,13 @@ import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 import VueClipboard from 'vue-clipboard2'
 
-Mock.bootstrap();
+// Mock.bootstrap();
 
 Vue.use(VueClipboard)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(iview)
-
+Vue.config.productionTip = false
 const router = new VueRouter({
     routes
 })
