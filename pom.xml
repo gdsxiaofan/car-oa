@@ -16,6 +16,7 @@
         <module>oa-persistence</module>
         <module>oa-util</module>
         <module>oa-schedule</module>
+        <module>oa-ui</module>
     </modules>
 
     <properties>
