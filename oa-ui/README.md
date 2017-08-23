@@ -28,6 +28,6 @@ npm run dev
 ```
 npm run build
 ```
-  自动会在浏览器中打开 http://localhost:8080/#/login 的地址，如 第一幅图所示：</br>
+  自动会在浏览器中打开 http://localhost:8081/#/login 的地址，如 第一幅图所示：</br>
   用户名： 任意输入（还未做校验）</br>
   密码： 大于6个字符。

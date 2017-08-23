@@ -13,3 +13,6 @@ oa-biz/target/
 oa-dao/target/
 oa-persistence/target/
 oa-service/target/
+oa-schedule/target/
+oa-ui/target/
+oa-util/target/
