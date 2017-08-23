@@ -5,18 +5,16 @@ import VueRouter from 'vue-router'
 import store from './vuex/store'
 import Vuex from 'vuex'
 import routes from './routes'
-import Mock from './mock'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 import VueClipboard from 'vue-clipboard2'
 
-// Mock.bootstrap();
 
 Vue.use(VueClipboard)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(iview)
-Vue.config.productionTip = false
+Vue.config.devtools = true
 const router = new VueRouter({
     routes
 })
@@ -25,7 +23,6 @@ router.beforeEach((to, from, next) => {
     if (to.path == '/login') {
         sessionStorage.removeItem('user');
     }
-    debugger
     let user = JSON.parse(sessionStorage.getItem('user'));
     if (!user && to.path != '/login') {
         next({ path: '/login' })

@@ -4,7 +4,7 @@
     <Form-item class="formLogin-title">
         <h3>系统登录</h3>
     </Form-item>
-     
+
         <Form-item prop="username">
             <i-input size="large" type="text" v-model="formLogin.username" placeholder="用户名">
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
@@ -58,10 +58,10 @@
         methods: {
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
-                    sessionStorage.setItem('user', JSON.stringify(this.formLogin.username));
                     if (valid) {
-                        this.$Message.success('提交成功!');
-                        this.$router.push({ path: '/table' });
+                        this.$Message.success('登录成功!');
+                        sessionStorage.setItem('user', JSON.stringify(this.formLogin.username));
+                        this.$router.push({ path: '/' });
                     } else {
                         this.$Message.error('表单验证失败!');
                     }
@@ -104,7 +104,7 @@
     width: 400px;
    /* border: 2px solid #8492A6;*/
   }
-  
+
   .title {
     margin: 0px auto 40px auto;
     text-align: center;
@@ -120,5 +120,5 @@
   .login-no-bottom {
       	margin-bottom: 10px;
   }
- 
+
 </style>
