@@ -20,6 +20,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  iview.LoadingBar.start();
     if (to.path == '/login') {
         sessionStorage.removeItem('user');
     }
@@ -31,9 +32,10 @@ router.beforeEach((to, from, next) => {
     }
 })
 
-//router.afterEach(transition => {
-//NProgress.done();
-//});
+router.afterEach(() => {
+  iview.LoadingBar.finish();
+  window.scrollTo(0, 0);
+});
 
 new Vue({
     el: '#app',

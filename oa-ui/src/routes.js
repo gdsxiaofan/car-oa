@@ -41,11 +41,6 @@ let routes = [
     },
     iconCls: 'ios-home', //图标样式class
     children: [
-      {
-        path: 'page0', meta: {title: '打印首页'}, icon: 'ios-home', component: function (resolve) {
-        require(["./pages/print/firstpage.vue"], resolve)
-      }
-      },
       {path: 'role', meta: {title: '角色管理'}, icon: 'ios-home', component: Role},
       {path: 'addRole', meta: {title: '新增角色'}, icon: 'ios-home', component: AddRole},
       {path: 'userRole', meta: {title: '用户角色管理'}, icon: 'ios-home', component: UserRole},

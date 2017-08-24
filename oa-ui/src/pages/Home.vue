@@ -260,6 +260,9 @@
       },
       Breadcrumb() {
         let bread = []
+        if(this.$route.path === '/'){
+          return bread
+        }
         let menucache = this.menu.filter(item => {
           return item.id === this.activeNames
         })[0]
