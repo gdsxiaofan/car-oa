@@ -165,18 +165,22 @@
       </i-col>
     </Row>
 
-    <Modal v-model="modal1" title="修改密码" @on-ok.prevent="comfirmModifyPS" @on-cancel="cancel">
+    <Modal v-model="modal1" title="修改密码" @on-cancel="cancel('formValidate')">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
         <Form-item label="原密码" prop="oldPassword">
-          <Input v-model="formValidate.oldPassword" placeholder="请输入原始密码"></Input>
+          <Input type="password" v-model="formValidate.oldPassword" placeholder="请输入原始密码"></Input>
         </Form-item>
         <Form-item label="新密码" prop="newPassword">
-          <Input v-model="formValidate.newPassword" placeholder="请输入新密码"></Input>
+          <Input type="password" v-model="formValidate.newPassword" placeholder="请输入新密码"></Input>
         </Form-item>
         <Form-item label="确认新密码" prop="resetPassword">
-          <Input v-model="formValidate.resetPassword" placeholder="请再次输入新密码"></Input>
+          <Input type="password" v-model="formValidate.resetPassword" placeholder="请再次输入新密码"></Input>
         </Form-item>
       </Form>
+      <div slot="footer">
+        <Button type="ghost" @click="cancel('formValidate')" style="margin-left: 8px">取消</Button>
+        <Button type="primary" @click="comfirmModifyPS" :loading="loading1">提交</Button>
+      </div>
     </Modal>
   </div>
   <!-- 修改密码 模态框 -->
@@ -186,9 +190,30 @@
 
 <script>
   import _ from "lodash"
+  import {updatePwd} from "../api/api"
 
   export default {
     data() {
+      const validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.formValidate.resetPassword !== '') {
+            // 对第二个密码框单独验证
+            this.$refs.formValidate.validateField('resetPassword');
+          }
+          callback();
+        }
+      }
+      const validatePassCheck = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.formValidate.newPassword) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      }
       return {
         curUserName: sessionStorage.getItem('user').replace(/\"/g, ""),
         modeType: "vertical",
@@ -197,20 +222,22 @@
         logoIsDisplay: false,
         loading: true,
         modal1: false,
+        loading1: false,
         formValidate: {
           oldPassword: '',
           newPassword: '',
           resetPassword: ''
         },
+
         ruleValidate: {
           oldPassword: [
             {required: true, message: '密码不能为空', trigger: 'blur'}
           ],
           newPassword: [
-            {required: true, message: '密码不能为空', trigger: 'blur'}
+            {required: true, validator: validatePass, trigger: 'blur'}
           ],
           resetPassword: [
-            {required: true, message: '密码不能为空', trigger: 'blur'}
+            {required: true, validator: validatePassCheck, trigger: 'blur'}
           ],
         },
         menu: [
@@ -260,15 +287,15 @@
       },
       Breadcrumb() {
         let bread = []
-        if(this.$route.path === '/'){
+        if (this.$route.path === '/') {
           return bread
         }
         let menucache = this.menu.filter(item => {
           return item.id === this.activeNames
         })[0]
         bread.push(menucache)
-        while (menucache.parent_menu_id!==0){
-         menucache=  this.menu.filter(item => {
+        while (menucache.parent_menu_id !== 0) {
+          menucache = this.menu.filter(item => {
             return item.id === menucache.parent_menu_id
           })[0]
           bread.push(menucache)
@@ -293,12 +320,20 @@
         this.$router.push('/login');
       },
       comfirmModifyPS() {
-        return false;
+
         this.$refs.formValidate.validate((valid) => {
           if (valid) {
-            this.modal1 = false;
-            //         this.loading = false;
-            this.$Message.success('提交成功!');
+            this.modal1 = true;
+            this.loading1 = true;
+            updatePwd(this.formValidate.oldPassword, this.formValidate.newPassword).then(()=>{
+              this.loading1 = false;
+              this.modal1 = false;
+              this.$Message.success('提交成功!');
+              this.$refs.formValidate.resetFields();
+            }).catch(err=>{
+              this.loading1 = false;
+              this.$Message.error('表单验证失败!'+err);
+            })
           } else {
             this.$Message.error('表单验证失败!');
             return false;
@@ -306,8 +341,9 @@
         })
         // this.$Message.info('点击了确定');
       },
-      cancel() {
+      cancel(name) {
         this.modal1 = false;
+        this.$refs[name].resetFields();
         this.$Message.info('点击了取消');
       },
       menuSelect(id) {
