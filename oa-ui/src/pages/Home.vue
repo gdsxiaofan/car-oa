@@ -114,33 +114,13 @@
             <!--<Icon type="paper-airplane" :size="logoSize" v-show="logoIsDisplay"></Icon>-->
             <h3>工单管理系统</h3>
           </div>
-          <!--<template v-for="(item,index) in menu">-->
-          <!--<Submenu :name="item.name" v-if="item.level==2">-->
-          <!--<template slot="title">-->
-          <!--<Icon :type="item.icon" :size="iconSize"></Icon>-->
-          <!--<span class="layout-text">{{item.name}}</span>-->
-          <!--</template>-->
-          <!--<template v-for="(child,childIndex) in item.children" v-if="!child.hidden">-->
-          <!--<Menu-item :name="child.path">-->
-          <!--<Icon :type="child.icon" :size="iconSize"></Icon>-->
-          <!--<span class="layout-text">{{child.name}}</span>-->
-          <!--</Menu-item>-->
-          <!--</template>-->
-          <!--</Submenu>-->
-          <!--&lt;!&ndash;<template v-if="item.leaf&&item.children.length>0">&ndash;&gt;-->
-          <!--&lt;!&ndash;<Menu-item :name="item.children[0].path">&ndash;&gt;-->
-          <!--&lt;!&ndash;<Icon :type="item.iconCls" :size="iconSize"></Icon>&ndash;&gt;-->
-          <!--&lt;!&ndash;<span class="layout-text">{{item.children[0].name}}</span>&ndash;&gt;-->
-          <!--&lt;!&ndash;</Menu-item>&ndash;&gt;-->
-          <!--&lt;!&ndash;</template>&ndash;&gt;-->
-          <!--</template>-->
-          <template v-for="(item,index) in menu1">
+          <template v-for="(item,index) in menu">
             <Submenu :name="item.id" v-if="item.order==2">
               <template slot="title">
                 <Icon :type="item.icon" :size="iconSize"></Icon>
                 <span class="layout-text">{{item.name}}</span>
               </template>
-              <template v-for="(child,childIndex) in menu1" v-if="child.parent_menu_id==item.id">
+              <template v-for="(child,childIndex) in menu" v-if="child.parent_menu_id==item.id">
                 <Menu-item :name="child.id">
                   <Icon :type="child.icon" :size="iconSize"></Icon>
                   <span class="layout-text">{{child.name}}</span>
@@ -164,8 +144,7 @@
           <div class="userinfo">
             <Dropdown placement="bottom-end">
                         <span class="head-img">
-                            {{curUserName}}|
-                            管理员|<span style="cursor: pointer" @click="modifyPassWord">修改密码</span>|<span
+                            {{curUserName}}|管理员|<span style="cursor: pointer" @click="modifyPassWord">修改密码</span>|<span
                           style="cursor: pointer" @click="logout">退出</span>
                         </span>
             </Dropdown>
@@ -173,8 +152,8 @@
         </div>
         <div class="layout-breadcrumb">
           <Breadcrumb>
-            <Breadcrumb-item v-for="item in this.$route.matched" :href="item.path" :key="item.path">
-              {{item.meta.title}}
+            <Breadcrumb-item v-for="item in Breadcrumb" :href="item.href" :key="item.href">
+              {{item.name}}
             </Breadcrumb-item>
           </Breadcrumb>
         </div>
@@ -234,33 +213,7 @@
             {required: true, message: '密码不能为空', trigger: 'blur'}
           ],
         },
-        menu: [{
-          path: '', name: '权限管理', icon: 'ios-home', level: 2,
-          children: [
-            {path: '/role', name: '角色管理', icon: 'ios-home'},
-            {path: '/addRole', name: '新增角色', icon: 'ios-home'},
-            {path: '/userRole', name: '用户角色管理', icon: 'ios-home'}]
-        }, {
-          path: '', name: '工单管理', icon: 'ios-home', level: 2,
-          children: [
-            {path: '/myOrder', name: '我的工单', icon: 'ios-home'},
-            {path: '/publishOrder', name: '发布工单', icon: 'ios-home'},
-            {path: '/dispatchOrder', name: '派发工单', icon: 'ios-home'},
-            {path: '/historyOrder', name: '历史工单', icon: 'ios-home'},
-            {path: '/allOrder', name: '所有工单', icon: 'ios-home'}]
-        }, {
-          path: '', name: '员工管理', icon: 'ios-home', level: 2,
-          children: [
-            {path: '/employeeInfo', name: '员工信息管理', icon: 'ios-home'},
-            {path: '/employeeAdd', name: '新增员工', icon: 'ios-home'}]
-        }, {
-          path: '', name: '设备管理', icon: 'ios-home', level: 2,
-          children: [
-            {path: '/deviceInfo', name: '设备基础信息管理', icon: 'ios-home'},
-            {path: '/deviceAdd', name: '新增设备信息', icon: 'ios-home'}]
-        },
-        ],
-        menu1: [
+        menu: [
           {id: 1, href: '', name: '权限管理', icon: 'ios-home', order: 2, parent_menu_id: 0},
           {id: 2, href: '/role', name: '角色管理', icon: 'ios-home', parent_menu_id: 1},
           {id: 3, href: '/addRole', name: '新增角色', icon: 'ios-home', parent_menu_id: 1},
@@ -294,16 +247,30 @@
         }
       },
       openNames() {
-        return this.$route.path === '/' ? [] : this.menu1.filter(item => {
+        return this.$route.path === '/' ? [] : this.menu.filter(item => {
           return item.href === this.$route.path
         }).map(item => {
           return item.parent_menu_id
         })
       },
       activeNames() {
-        return this.$route.path === '/' ? 0 : this.menu1.filter(item => {
+        return this.$route.path === '/' ? 0 : this.menu.filter(item => {
           return item.href === this.$route.path
         })[0].id
+      },
+      Breadcrumb() {
+        let bread = []
+        let menucache = this.menu.filter(item => {
+          return item.id === this.activeNames
+        })[0]
+        bread.push(menucache)
+        while (menucache.parent_menu_id!==0){
+         menucache=  this.menu.filter(item => {
+            return item.id === menucache.parent_menu_id
+          })[0]
+          bread.push(menucache)
+        }
+        return bread.reverse()
       }
     },
     methods: {
@@ -341,7 +308,7 @@
         this.$Message.info('点击了取消');
       },
       menuSelect(id) {
-        let path = this.menu1.filter(item => {
+        let path = this.menu.filter(item => {
           return item.id === id
         })[0].href
         this.$router.push({path});
