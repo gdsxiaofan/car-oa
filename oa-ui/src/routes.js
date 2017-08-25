@@ -1,3 +1,5 @@
+import VueRouter from 'vue-router'
+import iview from 'iview'
 //登录页
 const Login = resolve => require(['./pages/Login.vue'], resolve)
 //404
@@ -75,4 +77,25 @@ let routes = [
   }
 ];
 
-export default routes;
+const router = new VueRouter({
+  routes
+})
+router.beforeEach((to, from, next) => {
+  iview.LoadingBar.start();
+  if (to.path == '/login') {
+    sessionStorage.removeItem('user');
+  }
+  let user = JSON.parse(sessionStorage.getItem('user'));
+  if (!user && to.path != '/login') {
+    next({ path: '/login' })
+  } else {
+    next()
+  }
+})
+
+router.afterEach(() => {
+  iview.LoadingBar.finish();
+  window.scrollTo(0, 0);
+});
+
+export default router;

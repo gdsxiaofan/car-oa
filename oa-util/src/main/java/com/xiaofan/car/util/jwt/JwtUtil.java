@@ -15,7 +15,8 @@ public class JwtUtil {
 
     private static String SECRET = "MY SECRET";
 
-    private static final Long OUTTIME = 60 * 60 * 1000L;
+//    private static final Long OUTTIME = 60 * 60 * 1000L;
+    private static final Long OUTTIME = 1000L;
 
     /**
      * @param id  用户主键id
@@ -46,7 +47,7 @@ public class JwtUtil {
      * @param Jwt
      * @return  id：用户主键 如果为null则token失效  跳转登录页面
      */
-    public static Long parseJwt(String Jwt) {
+    public static Long parseJwt2Id(String Jwt) {
         try {
             Jws<Claims> parseClaimsJws = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(Jwt);//compactJws为jwt字符串
             return Long.parseLong(parseClaimsJws.getBody().getId());//得到body后我们可以从body中获取我们需要的信息
@@ -70,7 +71,7 @@ public class JwtUtil {
        String a= getJWTString(2L);
        Long statr2=System.currentTimeMillis();
         System.out.println(statr2-start);
-       Long id= parseJwt(a);
+       Long id= parseJwt2Id(a);
         System.out.println(System.currentTimeMillis()-statr2);
     }
 }

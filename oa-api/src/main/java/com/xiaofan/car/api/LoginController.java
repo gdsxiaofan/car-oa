@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class LoginController {
     /**
-     *
+     *  登录
      * @return
      */
     @RequestMapping("")
@@ -27,4 +27,17 @@ public class LoginController {
 
         return new JsonResult(1,"sucecss", JwtUtil.getJWTString(1L));
     }
+    /**
+     *  登录
+     * @return
+     */
+    @RequestMapping("/aaa")
+    public JsonResult aaa(String username,String password){
+        log.info(">>>>>>>{}.>>>>>>>>{}.>>>>>>{}",username,password, MD5Util.encode(password));
+
+
+        return new JsonResult(1,"sucecss", JwtUtil.getJWTString(1L));
+    }
+
+
 }
