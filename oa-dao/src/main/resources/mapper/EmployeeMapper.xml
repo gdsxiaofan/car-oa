@@ -35,27 +35,6 @@
 	id,	employee_name,	employee_password,	employee_mobile,	employee_no,	role_id,	induction_time,	employee_status,	create_Time,	update_Time,	delete_Status
 	</sql>
 
-	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.Employee" parameterType="java.lang.Integer">
-		 SELECT
-		 <include refid="Base_Column_List" />
-		 FROM t_employee
-		 WHERE id = #{id}
-	</select>
-
-	<!--删除：根据主键ID删除-->
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		 DELETE FROM t_employee
-		 WHERE id = #{id}
-	</delete>
-
-	<!-- 添加 -->
-	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.Employee">
-		 INSERT INTO t_employee
- 		(id,employee_name,employee_password,employee_mobile,employee_no,role_id,induction_time,employee_status,create_Time,update_Time,delete_Status) 
-		 VALUES 
- 		(#{id},#{employeeName},#{employeePassword},#{employeeMobile},#{employeeNo},#{roleId},#{inductionTime},#{employeeStatus},#{createTime},#{updateTime},#{deleteStatus}) 
-	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
 	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.Employee">
@@ -171,22 +150,13 @@
  		 </set>
 		 WHERE id = #{id}
 	</update>
-
-	<!-- 修 改-->
-	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.Employee">
-		 UPDATE t_employee
-		 SET 
-			 employee_name = #{employeeName},
-			 employee_password = #{employeePassword},
-			 employee_mobile = #{employeeMobile},
-			 employee_no = #{employeeNo},
-			 role_id = #{roleId},
-			 induction_time = #{inductionTime},
-			 employee_status = #{employeeStatus},
-			 create_Time = #{createTime},
-			 update_Time = #{updateTime},
-			 delete_Status = #{deleteStatus}
-		 WHERE id = #{id}
-	</update>
-
+	<select id="selectEmployeeForLogin" resultType="com.xiaofan.car.persistence.model.Employee">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+			t_employee
+		WHERE
+			employee_no = #{employeeNo}
+		AND employee_password = #{password}
+	</select>
 </mapper>
