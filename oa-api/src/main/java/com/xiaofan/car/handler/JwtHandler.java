@@ -1,5 +1,6 @@
 package com.xiaofan.car.handler;
 
+import com.xiaofan.car.util.Constant;
 import com.xiaofan.car.util.jwt.JwtUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,9 +23,15 @@ public class JwtHandler implements HandlerInterceptor {
         if(Arrays.asList(passPath).contains(path)){
             return true;
         }else {
-            String jwt=request.getHeader("Authorization");
-            response.setStatus(401);
-            return JwtUtil.parseJwt2Id(jwt) != null;
+            String jwt=request.getHeader(Constant.AUTHORIZATION);
+
+            Long id=JwtUtil.parseJwt2Id(jwt);
+            if(id==null){
+                response.setStatus(401);
+                return false;
+            }
+            response.setHeader(Constant.AUTHORIZATION,JwtUtil.getJWTString(id));
+            return  true;
         }
 
     }

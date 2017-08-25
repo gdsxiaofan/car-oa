@@ -26,10 +26,11 @@
 
 <script>
   import {getRoleList} from '../../api/role/role'
+
   export default {
-    data(){
+    data() {
       return {
-        selection:'',
+        selection: '',
         queryCondition: {
           pageSize: 10,
           pageNum: 1,
@@ -86,7 +87,7 @@
                   click: () => {
                     this.$Modal.confirm({
                       title: '是否删除',
-                      content: '<p>'+params.row.name+'</p>',
+                      content: '<p>' + params.row.name + '</p>',
                       loading: true,
                       onOk: () => {
                         this.$Message.info('删除成功');
@@ -99,11 +100,11 @@
             ])
           }
         ],
-        list:[{id:1,name:'管理员'},
-          {id:2,name:'维修工'}]
+        list: [{id: 1, name: '管理员'},
+          {id: 2, name: '维修工'}]
       }
     },
-    methods:{
+    methods: {
       getSelection(selection) {
         this.selection = selection
       },
@@ -114,9 +115,7 @@
           this.list = res.data.list
           this.queryCondition.total = res.data.total
         }).catch(err => {
-          this.$Message.error('获取规则集列表错误：' + err)
-          // next({ path: '/401' })
-          // console.error(err)
+
         });
       },
     }

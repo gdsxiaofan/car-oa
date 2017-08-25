@@ -64,7 +64,6 @@
                         if(res.data.code ===1){
                         this.$Message.success('登录成功!');
                         sessionStorage.setItem('user', JSON.stringify(this.formLogin.username));
-                        sessionStorage.setItem("Authorization",res.data.data)
                         this.$router.push({ path: '/' })
                         }else {
                           this.$Message.error('登录失败!');

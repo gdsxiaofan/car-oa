@@ -1,4 +1,4 @@
-package com.xiaofan.car.util.md5;
+package com.xiaofan.car.util.lang;
 
 import java.security.MessageDigest;
 

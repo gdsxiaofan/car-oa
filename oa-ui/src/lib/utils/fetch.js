@@ -35,7 +35,10 @@ fetch.interceptors.request.use(config => {
 
 // respone拦截器
 fetch.interceptors.response.use(
-  response => response
+  response => {
+    sessionStorage.setItem("Authorization",response.headers.authorization)
+    return response
+  }
 
   /**
    * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
@@ -61,7 +64,7 @@ fetch.interceptors.response.use(
     if (error.response.status === 401) {
       router.push({path: '/login'})
       Message.error("请重新登录", 3);
-      return ;
+      return Promise.reject(error);
     }
     console.error('err' + error);// for debug
     Message.error(response.msg, 3);
