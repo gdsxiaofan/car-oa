@@ -262,7 +262,7 @@
     },
     computed: {
       iconSize() {
-        return this.spanLeft === 5 ? 14 : 24;
+        return this.spanLeft === 5 ? 24 : 14;
       },
       logoSize() {
         if (this.spanLeft !== 5) {
@@ -317,10 +317,10 @@
         this.modal1 = true;
       },
       logout() {
+        sessionStorage.removeItem('user')
         this.$router.push('/login');
       },
       comfirmModifyPS() {
-
         this.$refs.formValidate.validate((valid) => {
           if (valid) {
             this.modal1 = true;
@@ -352,7 +352,6 @@
         })[0].href
         this.$router.push({path});
       }
-
     },
     mounted() {
     }

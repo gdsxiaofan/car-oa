@@ -36,6 +36,7 @@
     </i-form>
 </template>
 <script>
+  import {login} from '../api/api'
     export default {
         data () {
             return {
@@ -59,9 +60,19 @@
             handleSubmit(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
+                      login(this.formLogin.username,this.formLogin.password).then(res=>{
+                        if(res.data.code ===1){
                         this.$Message.success('登录成功!');
                         sessionStorage.setItem('user', JSON.stringify(this.formLogin.username));
-                        this.$router.push({ path: '/' });
+                        sessionStorage.setItem("Authorization",res.data.data)
+                        this.$router.push({ path: '/' })
+                        }else {
+                          this.$Message.error('登录失败!');
+                        }
+                      }).catch(err=>{
+
+                      })
+
                     } else {
                         this.$Message.error('表单验证失败!');
                     }

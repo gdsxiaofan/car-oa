@@ -1,4 +1,4 @@
-import fetch from '../../lib/utils/fetch'
+import {fetch,qs} from '../../lib/utils/fetch'
 
 export function getRoleList(queryCondition) {
   return fetch({

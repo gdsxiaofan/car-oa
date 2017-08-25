@@ -2,8 +2,6 @@ package com.xiaofan.car.persistence.vo;
 
 import lombok.Data;
 
-import java.util.Calendar;
-
 /**
  * Created by gongdaoshun on 2017/8/6.
  */
@@ -16,5 +14,10 @@ public class JsonResult<T> {
     public JsonResult(){
         this.setCode(1);
         this.setMessage("success");
+    }
+    public JsonResult(Integer code,String message,T data){
+        this.setCode(code);
+        this.setMessage(message);
+        this.setData(data);
     }
 }

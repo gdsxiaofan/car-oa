@@ -1,17 +1,18 @@
 import axios from 'axios';
 // import store from 'src/store';
 import { Message } from 'iview';
-
+//发送表单请求需要序列化
+import qs from 'qs'
 // 创建axios实例
-const service = axios.create({
+const fetch = axios.create({
   // baseURL: 'http://localhost/', // api的base_url
-  // baseURL: baseUrl.dev,
+  baseURL: process.env.NODE_ENV === 'production'?'':"car",
   timeout: 5 * 1000                  // 请求超时时间
 });
 
 
 // request拦截器
-service.interceptors.request.use(config => {
+fetch.interceptors.request.use(config => {
   // Do something before request is sent
 
   // config.baseURL = 'http://sdf/'
@@ -22,7 +23,7 @@ service.interceptors.request.use(config => {
   // config.url = 'dsf/d'
   // console.log(config.url)
   // if (store.getters.token) {
-  //   config.headers['X-Token'] = store.getters.token; // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
+    config.headers['Authorization'] = sessionStorage.getItem("Authorization"); // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
   // }
   return config;
 }, error => {
@@ -32,7 +33,7 @@ service.interceptors.request.use(config => {
 })
 
 // respone拦截器
-service.interceptors.response.use(
+fetch.interceptors.response.use(
   response => response
   /**
   * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
@@ -63,4 +64,5 @@ service.interceptors.response.use(
   }
 )
 
-export default service;
+export {fetch}
+export {qs}
