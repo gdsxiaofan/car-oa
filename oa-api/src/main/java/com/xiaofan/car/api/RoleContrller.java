@@ -29,7 +29,6 @@ public class RoleContrller {
 
 
     @ApiOperation(value = "查找角色列表", notes = "查找角色", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @RequestMapping("/query")
     public JsonResult<PageInfo<RoleVo>> getRoleList(RoleListQueryParam roleListQueryParam){
 
@@ -38,8 +37,7 @@ public class RoleContrller {
     }
 
 
-    @ApiOperation(value = "查找角色列表", notes = "查找角色", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
+    @ApiOperation(value = "查找用户信息", notes = "查找用户", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping("/query/user")
     public JsonResult<List<EmployeeVo>> getRoleUserList(
             @RequestParam("roleId") Integer roleId
@@ -50,7 +48,6 @@ public class RoleContrller {
 
 
     @ApiOperation(value = "更新对应的角色信息", notes = "更新角色", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @RequestMapping("/update")
     public JsonResult<String> updateRole(
             @RequestBody RoleParam roleParam
@@ -62,7 +59,6 @@ public class RoleContrller {
 
 
     @ApiOperation(value = "删除对应的角色", notes = "删除角色", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ResponseBody
     @RequestMapping("/delete")
     public JsonResult<String> deleteRole(@RequestParam("roleId")Integer roleId){
 
