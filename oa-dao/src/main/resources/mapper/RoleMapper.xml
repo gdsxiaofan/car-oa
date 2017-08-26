@@ -43,15 +43,6 @@ role_name,	parent_role_id,	role_code,	delete_staus,	create_time,	update_time
 		 WHERE id = #{id}
 	</delete>
 
-	<!-- 添加 -->
-	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.Role">
-		 INSERT INTO t_role
- 		(id,role_name
-role_name,parent_role_id,role_code,delete_staus,create_time,update_time) 
-		 VALUES 
- 		(#{id},#{roleName
-roleName},#{parentRoleId},#{roleCode},#{deleteStaus},#{createTime},#{updateTime}) 
-	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
 	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.Role">
@@ -60,10 +51,8 @@ roleName},#{parentRoleId},#{roleCode},#{deleteStaus},#{createTime},#{updateTime}
 			<if test="id != null">
 				 id,
 			</if>
-			<if test="roleName
-roleName != null">
-				 role_name
-role_name,
+			<if test="roleName!= null">
+				 role_name,
 			</if>
 			<if test="parentRoleId != null">
 				 parent_role_id,
@@ -86,10 +75,8 @@ role_name,
 			<if test="id!=null">
 				 #{id},
 			</if>
-			<if test="roleName
-roleName!=null">
-				 #{roleName
-roleName},
+			<if test="roleName!=null">
+				 #{roleName},
 			</if>
 			<if test="parentRoleId!=null">
 				 #{parentRoleId},
@@ -113,11 +100,8 @@ roleName},
 	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.Role">
 		 UPDATE t_role
  		 <set> 
-			<if test="roleName
-roleName != null">
-				 role_name
-role_name = #{roleName
-roleName},
+			<if test="roleName!= null">
+				 role_name = #{roleName},
 			</if>
 			<if test="parentRoleId != null">
 				 parent_role_id = #{parentRoleId},
@@ -139,20 +123,7 @@ roleName},
 		 WHERE id = #{id}
 	</update>
 
-	<!-- 修 改-->
-	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.Role">
-		 UPDATE t_role
-		 SET 
-			 role_name
-role_name = #{roleName
-roleName},
-			 parent_role_id = #{parentRoleId},
-			 role_code = #{roleCode},
-			 delete_staus = #{deleteStaus},
-			 create_time = #{createTime},
-			 update_time = #{updateTime}
-		 WHERE id = #{id}
-	</update>
+
 
 	<select id="getRoleVoList" resultType="com.xiaofan.car.persistence.vo.RoleVo">
 		SELECT
