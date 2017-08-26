@@ -1,7 +1,9 @@
 package com.xiaofan.car.dao.repository;
 
 import com.xiaofan.car.persistence.model.Employee;
+import com.xiaofan.car.persistence.param.UserQueryParam;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -9,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
  * EmployeeMapper数据库操作接口类
  * 
  **/
-
+@Repository
 public interface EmployeeMapper{
 
     /**
@@ -26,4 +28,12 @@ public interface EmployeeMapper{
             @Param("password") String password
     );
 
+    /**
+     * 列表查询对应得员工信息
+     * @param userQueryParam
+     * @return
+     */
+    public Employee selectEmployeeForList(
+            UserQueryParam userQueryParam
+    );
 }
