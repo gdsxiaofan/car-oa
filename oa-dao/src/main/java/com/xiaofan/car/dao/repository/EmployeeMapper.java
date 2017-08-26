@@ -2,9 +2,12 @@ package com.xiaofan.car.dao.repository;
 
 import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.param.UserQueryParam;
+import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.UserPermissionVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 /**
@@ -41,4 +44,9 @@ public interface EmployeeMapper{
     public UserPermissionVo selectUserPermissionVo(
             @Param("userId")Integer userId
     );
+
+    public List<EmployeeVo> selectEmployeeVoByRoleId(
+            @Param("roleId")Integer roleId
+    );
+
 }

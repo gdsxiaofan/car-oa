@@ -1,6 +1,7 @@
 package com.xiaofan.car.api;
 
 import com.github.pagehelper.PageInfo;
+import com.xiaofan.car.biz.RoleBiz;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
 import com.xiaofan.car.persistence.param.RoleParam;
 import com.xiaofan.car.persistence.vo.EmployeeVo;
@@ -9,6 +10,7 @@ import com.xiaofan.car.persistence.vo.RoleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,15 +27,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/role")
 @Slf4j
-public class RoleContrller {
+public class RoleContrlloer {
 
+    @Autowired
+    private RoleBiz roleBiz;
 
     @ApiOperation(value = "查找角色列表", notes = "查找角色", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping("/query")
     public JsonResult<PageInfo<RoleVo>> getRoleList(RoleListQueryParam roleListQueryParam){
+        JsonResult<PageInfo<RoleVo>> jsonReturn = new JsonResult<>();
+        try{
+            PageInfo<RoleVo> roleVoPageInfo = roleBiz.getRoleList(roleListQueryParam);
 
+            jsonReturn.setData(roleVoPageInfo);
+        }
+        catch(RuntimeException re){
+            jsonReturn.setCode(0);
+            jsonReturn.setMessage(re.getMessage());
+        }
+        catch (Exception e){
+            jsonReturn.setCode(0);
+            jsonReturn.setMessage("系统异常！");
+        }
 
-        return null;
+        return jsonReturn;
     }
 
 
@@ -42,8 +59,22 @@ public class RoleContrller {
     public JsonResult<List<EmployeeVo>> getRoleUserList(
             @RequestParam("roleId") Integer roleId
     ){
+        JsonResult<List<EmployeeVo>> jsonReturn = new JsonResult<>();
+        try{
+            List<EmployeeVo> employeeVoList = roleBiz.getEmployeeByRoleId(roleId);
 
-        return null;
+            jsonReturn.setData(employeeVoList);
+        }
+        catch(RuntimeException re){
+            jsonReturn.setCode(0);
+            jsonReturn.setMessage(re.getMessage());
+        }
+        catch (Exception e){
+            jsonReturn.setCode(0);
+            jsonReturn.setMessage("系统异常！");
+        }
+
+        return jsonReturn;
     }
 
 

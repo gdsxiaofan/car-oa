@@ -163,14 +163,27 @@
 
 	<select id="selectUserPermissionVo" resultType="com.xiaofan.car.persistence.vo.UserPermissionVo">
 		SELECT
-			e.employee_name,
-			e.employee_no,
-			r.id,
-			r.role_name
+			e.employee_name as userName,
+			e.employee_no as employeeNo,
+			r.id as roleId,
+			r.role_name as roleName
 		FROM
 			t_employee e
 		LEFT JOIN t_role r ON e.role_id = r.id
 		WHERE
 			e.id = #{userId}
+	</select>
+	<select id="selectEmployeeVoByRoleId" resultType="com.xiaofan.car.persistence.vo.EmployeeVo">
+		SELECT
+			id as id,
+			employee_name as employeeName,
+			employee_mobile as employeeMobile,
+			employee_no as employeeNO,
+			DATE_FORMAT(induction_time,'%Y-%m-%d %T') as inductionTime,
+			employee_status as employStatus
+		FROM
+			t_employee
+		WHERE
+			role_id = #{roleId}
 	</select>
 </mapper>

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.model.Role;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
+import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.RoleVo;
 import lombok.Data;
 
@@ -31,7 +32,7 @@ public interface RoleBiz {
      * @param roleId
      * @return
      */
-    public List<Employee> getEmployeeByRoleId(Integer roleId);
+    public List<EmployeeVo> getEmployeeByRoleId(Integer roleId);
 
     /**
      * 更新对应的权限信息
