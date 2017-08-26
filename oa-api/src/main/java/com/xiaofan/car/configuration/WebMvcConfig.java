@@ -12,7 +12,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
     //配置jwt拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JwtHandler()).addPathPatterns("/**").excludePathPatterns("/swagger-ui.html");
+        registry.addInterceptor(new JwtHandler())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/swagger-ui.html","/error","/login");
         super.addInterceptors(registry);
     }
 

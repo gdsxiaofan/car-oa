@@ -11,28 +11,20 @@ import java.util.Arrays;
 
 /**
  * @Author:duhongda
- * @Description:
+ * @Description: jwt登录token认证
  * @Date:Create in 17:25 2017/8/25
  */
 public class JwtHandler implements HandlerInterceptor {
-    //允许通过
-    private String[] passPath={"/login","/loginOut","/error"};
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        String path=request.getServletPath();
-        if(Arrays.asList(passPath).contains(path)){
-            return true;
-        }else {
-            String jwt=request.getHeader(Constant.AUTHORIZATION);
-
-            Long id=JwtUtil.parseJwt2Id(jwt);
-            if(id==null){
-                response.setStatus(401);
-                return false;
-            }
-            response.setHeader(Constant.AUTHORIZATION,JwtUtil.getJWTString(id));
-            return  true;
+        String jwt = request.getHeader(Constant.AUTHORIZATION);
+        Long id = JwtUtil.parseJwt2Id(jwt);
+        if (id == null) {
+            response.setStatus(401);
+            return false;
         }
+        response.setHeader(Constant.AUTHORIZATION, JwtUtil.getJWTString(id));
+        return true;
 
     }
 
