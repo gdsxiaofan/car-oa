@@ -32,6 +32,32 @@
 		 FROM t_ledger_info
 		 WHERE id = #{id}
 	</select>
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectLedgerInfosByLedgerInfo" resultMap="BaseResultMap" parameterType="com.xiaofan.car.persistence.model.LedgerInfo">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_ledger_info
+		<where>
+			<if test="id != null">
+				ID = #{id}
+			</if>
+			<if test="deviceNo != null and deviceNo !=''">
+				AND device_no = #{deviceNo}
+			</if>
+			<if test="createUser != null and createUser !=''">
+				AND create_User like #{createUser}
+			</if>
+			<if test="createTime != null and createTime !=''">
+				AND create_Time = #{createTime}
+			</if>
+			<if test="updateTime != null and updateTime !=''">
+				AND update_Time = #{updateTime}
+			</if>
+			<if test="deleteStatus != null and deleteStatus != 0">
+				AND delete_Status = #{deleteStatus}
+			</if>
+		</where>
+	</select>
 
 	<!--删除：根据主键ID删除-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

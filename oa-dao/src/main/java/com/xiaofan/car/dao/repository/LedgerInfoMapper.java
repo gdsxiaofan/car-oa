@@ -7,17 +7,19 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
- * 
  * LedgerInfoMapper数据库操作接口类
- * 
  **/
 @Mapper
 @Component(value = "ledgerInfoMapper")
-public interface LedgerInfoMapper{
+public interface LedgerInfoMapper {
 
-    public Integer insertSelective(LedgerInfo ledgerInfo);
+    Integer insertSelective(LedgerInfo ledgerInfo);
 
-    public LedgerInfo selectLedgerInfoById(@Param(value="id") Integer id);
+    LedgerInfo selectLedgerInfoById(@Param(value = "id") Integer id);
+
+    List<LedgerInfo> selectLedgerInfosByLedgerInfo(LedgerInfo ledgerInfo);
 }

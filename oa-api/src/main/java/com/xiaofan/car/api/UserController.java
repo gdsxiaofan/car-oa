@@ -1,5 +1,6 @@
 package com.xiaofan.car.api;
 
+import com.xiaofan.car.biz.UserBiz;
 import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.JsonResult;
 import lombok.extern.slf4j.Slf4j;

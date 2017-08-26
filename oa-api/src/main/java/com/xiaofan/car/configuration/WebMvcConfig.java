@@ -1,4 +1,4 @@
-package com.xiaofan.car;
+package com.xiaofan.car.configuration;
 
 import com.xiaofan.car.handler.JwtHandler;
 import org.springframework.context.annotation.Configuration;
