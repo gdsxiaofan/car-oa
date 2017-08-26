@@ -9,23 +9,23 @@
             <h3>工单管理系统</h3>
           </div>
           <template v-for="(item,index) in menuMain">
-            <Submenu :name="item.id" v-if="item.order==2">
+            <Submenu :name="item.id" v-if="item.orderTop==1">
               <template slot="title">
                 <Icon :type="item.icon" :size="iconSize"></Icon>
                 <span class="layout-text">{{item.name}}</span>
               </template>
-              <template v-for="(child,childIndex) in menu" v-if="child.parent_menu_id==item.id">
+              <template v-for="(child,childIndex) in menu" v-if="child.parentId==item.id">
                 <Menu-item :name="child.id">
                   <Icon :type="child.icon" :size="iconSize"></Icon>
                   <span class="layout-text">{{child.name}}</span>
                 </Menu-item>
               </template>
             </Submenu>
-            <template v-if="item.order!=2">
-            <Menu-item :name="item.id">
-            <Icon :type="item.icon" :size="iconSize"></Icon>
-            <span class="layout-text">{{item.name}}</span>
-            </Menu-item>
+            <template v-if="item.orderTop!=1">
+              <Menu-item :name="item.id">
+                <Icon :type="item.icon" :size="iconSize"></Icon>
+                <span class="layout-text">{{item.name}}</span>
+              </Menu-item>
             </template>
           </template>
         </Menu>
@@ -38,7 +38,7 @@
           <div class="userinfo">
             <Dropdown placement="bottom-end">
                         <span class="head-img">
-                            {{curUserName}}|管理员|<span style="cursor: pointer" @click="modifyPassWord">修改密码</span>|<span
+                            {{userName}}|{{userRole}}|<span style="cursor: pointer" @click="modifyPassWord">修改密码</span>|<span
                           style="cursor: pointer" @click="logout">退出</span>
                         </span>
             </Dropdown>
@@ -84,7 +84,10 @@
 
 <script>
   import _ from "lodash"
-  import {updatePwd} from "../api/api"
+  import {
+    updatePwd,
+    getUserInfo
+  } from "../api/api"
 
   export default {
     data() {
@@ -109,7 +112,6 @@
         }
       }
       return {
-        curUserName: sessionStorage.getItem('user').replace(/\"/g, ""),
         modeType: "vertical",
         spanLeft: 5,
         spanRight: 19,
@@ -122,7 +124,6 @@
           newPassword: '',
           resetPassword: ''
         },
-
         ruleValidate: {
           oldPassword: [
             {required: true, message: '密码不能为空', trigger: 'blur'}
@@ -135,23 +136,25 @@
           ],
         },
         menu: [
-          {id: 1, href: '', name: '权限管理', icon: 'ios-home', order: 2, parent_menu_id: 0},
-          {id: 2, href: '/role', name: '角色管理', icon: 'ios-home', parent_menu_id: 1},
-          {id: 3, href: '/addRole', name: '新增角色', icon: 'ios-home', parent_menu_id: 1},
-          {id: 4, href: '/userRole', name: '用户角色管理', icon: 'ios-home', parent_menu_id: 1},
-          {id: 5, href: '', name: '工单管理', icon: 'ios-home', order: 2, parent_menu_id: 0},
-          {id: 6, href: '/myOrder', name: '我的工单', icon: 'ios-home', parent_menu_id: 5},
-          {id: 7, href: '/publishOrder', name: '发布工单', icon: 'ios-home', parent_menu_id: 5},
-          {id: 8, href: '/dispatchOrder', name: '派发工单', icon: 'ios-home', parent_menu_id: 5},
-          {id: 9, href: '/historyOrder', name: '历史工单', icon: 'ios-home', parent_menu_id: 5},
-          {id: 10, href: '/allOrder', name: '所有工单', icon: 'ios-home', parent_menu_id: 5},
-          {id: 11, href: '', name: '员工管理', icon: 'ios-home', order: 2, parent_menu_id: 0},
-          {id: 12, href: '/employeeInfo', name: '员工信息管理', icon: 'ios-home', parent_menu_id: 11},
-          {id: 13, href: '/employeeAdd', name: '新增员工', icon: 'ios-home', parent_menu_id: 11},
-          {id: 14, href: '', name: '设备管理', icon: 'ios-home', order: 2, parent_menu_id: 0},
-          {id: 15, href: '/deviceInfo', name: '设备基础信息管理', icon: 'ios-home', parent_menu_id: 14},
-          {id: 16, href: '/deviceAdd', name: '新增设备信息', icon: 'ios-home', parent_menu_id: 14}
-        ]
+          {id: 1, href: '', name: '权限管理', icon: 'ios-home', orderTop: 2, parentId: 0},
+          {id: 2, href: '/role', name: '角色管理', icon: 'ios-home', parentId: 1},
+          {id: 3, href: '/addRole', name: '新增角色', icon: 'ios-home', parentId: 1},
+          {id: 4, href: '/userRole', name: '用户角色管理', icon: 'ios-home', parentId: 1},
+          {id: 5, href: '', name: '工单管理', icon: 'ios-home', orderTop: 2, parentId: 0},
+          {id: 6, href: '/myorderTop', name: '我的工单', icon: 'ios-home', parentId: 5},
+          {id: 7, href: '/publishorderTop', name: '发布工单', icon: 'ios-home', parentId: 5},
+          {id: 8, href: '/dispatchorderTop', name: '派发工单', icon: 'ios-home', parentId: 5},
+          {id: 9, href: '/historyorderTop', name: '历史工单', icon: 'ios-home', parentId: 5},
+          {id: 10, href: '/allorderTop', name: '所有工单', icon: 'ios-home', parentId: 5},
+          {id: 11, href: '', name: '员工管理', icon: 'ios-home', orderTop: 2, parentId: 0},
+          {id: 12, href: '/employeeInfo', name: '员工信息管理', icon: 'ios-home', parentId: 11},
+          {id: 13, href: '/employeeAdd', name: '新增员工', icon: 'ios-home', parentId: 11},
+          {id: 14, href: '', name: '设备管理', icon: 'ios-home', orderTop: 2, parentId: 0},
+          {id: 15, href: '/deviceInfo', name: '设备基础信息管理', icon: 'ios-home', parentId: 14},
+          {id: 16, href: '/deviceAdd', name: '新增设备信息', icon: 'ios-home', parentId: 14}
+        ],
+        userName: '',
+        userRole: ''
       }
     },
     computed: {
@@ -167,16 +170,16 @@
           return 0;
         }
       },
-      menuMain(){
-        return this.menu.filter(item=>{
-          return item.parent_menu_id===0
+      menuMain() {
+        return this.menu.filter(item => {
+          return item.parentId === 0
         })
       },
       openNames() {
         return this.$route.path === '/' ? [] : this.menu.filter(item => {
           return item.href === this.$route.path
         }).map(item => {
-          return item.parent_menu_id
+          return item.parentId
         })
       },
       activeNames() {
@@ -193,9 +196,9 @@
           return item.id === this.activeNames
         })[0]
         bread.push(menucache)
-        while (menucache.parent_menu_id !== 0) {
+        while (menucache.parentId !== 0) {
           menucache = this.menu.filter(item => {
-            return item.id === menucache.parent_menu_id
+            return item.id === menucache.parentId
           })[0]
           bread.push(menucache)
         }
@@ -224,14 +227,14 @@
           if (valid) {
             this.modal1 = true;
             this.loading1 = true;
-            updatePwd(this.formValidate.oldPassword, this.formValidate.newPassword).then(()=>{
+            updatePwd(this.formValidate.oldPassword, this.formValidate.newPassword).then(() => {
               this.loading1 = false;
               this.modal1 = false;
               this.$Message.success('提交成功!');
               this.$refs.formValidate.resetFields();
-            }).catch(err=>{
+            }).catch(err => {
               this.loading1 = false;
-              this.$Message.error('表单验证失败!'+err);
+              this.$Message.error('表单验证失败!' + err);
             })
           } else {
             this.$Message.error('表单验证失败!');
@@ -251,6 +254,13 @@
         })[0].href
         this.$router.push({path});
       }
+    },
+    created() {
+      getUserInfo().then(res => {
+        this.userName = res.data.data.userName
+        this.userRole = res.data.data.roleName
+        this.menu = res.data.data.memuVoList
+      })
     },
     mounted() {
     }
@@ -273,7 +283,7 @@
     margin: 15px;
     overflow: auto;
     background: #fff;
-    border-radius: 4px;
+    borderTop-radius: 4px;
     height: 80%;
   }
 
@@ -301,7 +311,7 @@
     width: 90%;
     height: 30px;
     background: #5b6270;
-    border-radius: 3px;
+    borderTop-radius: 3px;
     margin: 15px auto;
     line-height: 30px;
     color: white;
@@ -353,7 +363,7 @@
   }
 
   .head-img img {
-    border-radius: 20px;
+    borderTop-radius: 20px;
     margin: 10px 0px 10px 10px;
     width: 40px;
     height: 40px;

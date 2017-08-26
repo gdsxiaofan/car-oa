@@ -4,12 +4,16 @@ import com.xiaofan.car.biz.UserBiz;
 import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.persistence.vo.UserPermissionVo;
+import com.xiaofan.car.util.Constant;
+import com.xiaofan.car.util.jwt.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by gongdaoshun on 2017/8/26.
@@ -34,8 +38,9 @@ public class UserController {
     @ApiOperation(value = "获取当前用户、角色、权限信息", notes = "获取用户权限相关信息", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/query")
     public JsonResult<UserPermissionVo> getUserPermissionVo(
-            @RequestParam("userId") Integer userId
+            HttpServletResponse response
     ){
+        Integer userId= JwtUtil.parseJwt2Id(response.getHeader(Constant.AUTHORIZATION));
         JsonResult<UserPermissionVo> returnJson = new JsonResult<>();
 
         UserPermissionVo userPermissionVo = userBiz.getUserPermisson(userId);

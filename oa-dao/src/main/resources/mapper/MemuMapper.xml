@@ -32,7 +32,7 @@
 	</sql>
 
 
-	<select id="selectMemuByRoleId" resultType="com.xiaofan.car.persistence.model.Memu">
+	<select id="selectMemuByRoleId" resultMap="BaseResultMap">
 		SELECT
 				<include refid="Base_Column_List" />
 		FROM
@@ -44,7 +44,7 @@
 				FROM
 					t_permission
 				WHERE
-					role_id = #{roleId}}
+					role_id = #{roleId}
 			)
 	</select>
 

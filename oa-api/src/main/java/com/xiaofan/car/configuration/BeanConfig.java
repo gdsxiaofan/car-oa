@@ -19,7 +19,7 @@ public class BeanConfig {
     @Bean(name = "org.dozer.Mapper")
     public DozerBeanMapper dozerBean() {
         List<String> mappingFiles = Arrays.asList(
-                "beanMappers.xml"
+                "dozer/beanMappers.xml"
         );
 
         DozerBeanMapper dozerBean = new DozerBeanMapper();

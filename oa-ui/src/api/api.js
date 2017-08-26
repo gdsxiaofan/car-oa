@@ -2,7 +2,7 @@ import {fetch,qs} from '../lib/utils/fetch'
 
 let base = '';
 
-//修改密码
+//修改密码 TODO
 export function updatePwd(oldPwd, newPwd) {
   return fetch({
     url: `updatePwd`,
@@ -20,27 +20,10 @@ export function login(username, password) {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   })
 }
-
-export const requestLogin = params => {
-  return fetch.post(`${base}/login`, params).then(res => res.data);
-};
-
-export const getUserList = params => {
-  return fetch.get(`${base}/user/list`, {params: params});
-};
-
-export const getUserListPage = params => {
-  return fetch.get(`${base}/user/listpage`, {params: params});
-};
-
-export const removeUser = params => {
-  return fetch.get(`${base}/user/remove`, {params: params});
-};
-
-export const editUser = params => {
-  return fetch.get(`${base}/user/edit`, {params: params});
-};
-
-export const addUser = params => {
-  return fetch.get(`${base}/user/add`, {params: params});
-};
+//获取用户相关信息（菜单，个人信息等）
+export function getUserInfo() {
+  return fetch({
+    url: `v1/user/query`,
+    method: 'get'
+  })
+}
