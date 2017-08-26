@@ -8,9 +8,7 @@
 		<!---->
 		<id property="id" column="id" />
 		<!--角色名称-->
-		<result property="roleName
-roleName" column="role_name
-role_name" />
+		<result property="roleName" column="role_name" />
 		<!--父节点权限id-->
 		<result property="parentRoleId" column="parent_role_id" />
 		<!--角色code-->
@@ -38,7 +36,8 @@ role_name,	parent_role_id,	role_code,	delete_staus,	create_time,	update_time
 		 WHERE id = #{id}
 	</select>
 
-	<!--删除：根据主键ID删除-->
+
+    <!--删除：根据主键ID删除-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		 DELETE FROM t_role
 		 WHERE id = #{id}
@@ -154,5 +153,19 @@ roleName},
 			 update_time = #{updateTime}
 		 WHERE id = #{id}
 	</update>
+
+	<select id="getRoleVoList" resultType="com.xiaofan.car.persistence.vo.RoleVo">
+		SELECT
+			role_name as roleName,
+			parent_role_id as parentRoleId,
+			role_code as roleCode
+		FROM
+			t_role
+		<where>
+			<if test="roleName!=null and roleName !=''">
+				role_name = #{roleName}
+			</if>
+		</where>
+	</select>
 
 </mapper>

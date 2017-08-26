@@ -15,7 +15,7 @@ import java.util.List;
 public class UserPermissionVo {
     private String userName;
     private String employeeNo;
-    private Integer userId;
+    private Integer roleName;
     private Integer roleId;
     private List<MemuVo> memuVoList;
 }
