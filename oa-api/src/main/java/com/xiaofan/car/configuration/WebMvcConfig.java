@@ -14,7 +14,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtHandler())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/swagger-ui.html","/error","/login");
+                .excludePathPatterns("/error","/login","/swagger-resources","/v2/api-docs","/configuration/*");
         super.addInterceptors(registry);
     }
 
@@ -23,6 +23,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/META-INF/car/");
+        registry.addResourceHandler("swagger-ui.html")
+                 .addResourceLocations("classpath:/META-INF/resources/");
         super.addResourceHandlers(registry);
     }
 }

@@ -1,4 +1,4 @@
-package com.xiaofan.car;
+package com.xiaofan.car.configuration;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.context.annotation.Bean;

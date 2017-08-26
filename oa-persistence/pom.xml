@@ -12,4 +12,11 @@
     <artifactId>oa-persistence</artifactId>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.xiaofan</groupId>
+            <artifactId>oa-util</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
