@@ -6,8 +6,8 @@ import router from '../../routes'
 import qs from 'qs'
 // 创建axios实例
 const fetch = axios.create({
-  // baseURL: 'http://localhost/', // api的base_url
-  baseURL: process.env.NODE_ENV === 'production' ? '' : "car",
+
+  baseURL: process.env.NODE_ENV === 'production' ? '' : "car",  // baseURL: 'http://localhost/', // api的base_url
   timeout: 5 * 1000                  // 请求超时时间
 });
 

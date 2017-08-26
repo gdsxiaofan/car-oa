@@ -1,5 +1,7 @@
 package com.xiaofan.car.biz;
 
+import com.xiaofan.car.persistence.model.Employee;
+
 /**
  * 登录相关的业务逻辑
  *
@@ -15,6 +17,6 @@ public interface LoginBiz {
      * @param password
      * @return
      */
-    public void verificationForLogin(String employeeNo,String password);
+    public Employee verificationForLogin(String employeeNo, String password);
 
 }

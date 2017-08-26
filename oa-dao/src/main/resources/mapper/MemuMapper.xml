@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaofan.car.dao.repository.MemuMapper">
+
+	<!--实体映射-->
+	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.Memu">
+		<!---->
+		<id property="id" column="id" />
+		<!--菜单名称-->
+		<result property="name" column="name" />
+		<!--菜单url-->
+		<result property="href" column="href" />
+		<!--待定-->
+		<result property="icon" column="icon" />
+		<!--菜单层级：1最高-->
+		<result property="orderTop" column="order_top" />
+		<!--父菜单id-->
+		<result property="parentId" column="parent_id" />
+		<!---->
+		<result property="deleteStatus" column="delete_status" />
+		<!--创建时间-->
+		<result property="createTime" column="create_time" />
+		<!--更新时间-->
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+	id,	name,	href,	icon,	order_top,	parent_id,	delete_status,	create_time,	update_time
+	</sql>
+
+
+	<select id="selectMemuByRoleId" resultType="com.xiaofan.car.persistence.model.Memu">
+		SELECT
+				<include refid="Base_Column_List" />
+		FROM
+			t_memu
+		WHERE
+			id IN (
+				SELECT
+					memu_id
+				FROM
+					t_permission
+				WHERE
+					role_id = #{roleId}}
+			)
+	</select>
+
+
+
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.Memu" useGeneratedKeys="true" keyProperty="id">
+		 INSERT INTO t_memu
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="name != null and name!=''">
+				 name,
+			</if>
+			<if test="href != null and href!=''">
+				 href,
+			</if>
+			<if test="icon != null  and icon!=''">
+				 icon,
+			</if>
+			<if test="orderTop != null">
+				 order_top,
+			</if>
+			<if test="parentId != null">
+				 parent_id,
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+			<if test="updateTime != null">
+				 update_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="name!=null and name!=''">
+				 #{name},
+			</if>
+			<if test="href!=null and href!=''">
+				 #{href},
+			</if>
+			<if test="icon!=null and icon!=''">
+				 #{icon},
+			</if>
+			<if test="orderTop!=null">
+				 #{orderTop},
+			</if>
+			<if test="parentId!=null">
+				 #{parentId},
+			</if>
+			<if test="deleteStatus!=null">
+				 #{deleteStatus},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.Memu">
+		 UPDATE t_memu
+ 		 <set> 
+			<if test="name != null">
+				 name = #{name},
+			</if>
+			<if test="href != null">
+				 href = #{href},
+			</if>
+			<if test="icon != null">
+				 icon = #{icon},
+			</if>
+			<if test="orderTop != null">
+				 order_top = #{orderTop},
+			</if>
+			<if test="parentId != null">
+				 parent_id = #{parentId},
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status = #{deleteStatus},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				 update_time = #{updateTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

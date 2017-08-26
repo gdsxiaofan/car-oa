@@ -670,12 +670,12 @@ public class EntityUtil {
             List<String> tables = new ArrayList<String>();
 
 //            tables.add("t_ledger_info");
-            tables.add("t_device");
-            tables.add("t_employee");
-            tables.add("t_role");
-            tables.add("t_vip");
-            tables.add("t_vip_level");
-
+//            tables.add("t_device");
+//            tables.add("t_employee");
+//            tables.add("t_role");
+//            tables.add("t_vip");
+//            tables.add("t_vip_level");
+            tables.add("t_memu");
             new EntityUtil().generate(tables);
             // 自动打开生成文件的目录
             Runtime.getRuntime().exec("cmd /c start explorer D:\\");

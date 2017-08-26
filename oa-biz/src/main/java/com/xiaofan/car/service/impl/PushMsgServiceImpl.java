@@ -1,6 +1,5 @@
 package com.xiaofan.car.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.xiaofan.car.persistence.dingding.enums.MsgTypeEnum;
 import com.xiaofan.car.persistence.dingding.msg.*;
 import com.xiaofan.car.service.PushMsgService;
@@ -27,7 +26,7 @@ import org.springframework.util.Assert;
  */
 @Service
 @Slf4j
-public class PushMsgServiceImpl implements PushMsgService{
+public class PushMsgServiceImpl implements PushMsgService {
 
     @Value(value = "${DINGDING_CAR_OA_HTTP_URL:''}")
     private String httpUrl;
