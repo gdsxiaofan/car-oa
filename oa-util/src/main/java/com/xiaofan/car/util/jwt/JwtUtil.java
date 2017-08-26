@@ -22,7 +22,7 @@ public class JwtUtil {
      * @param id  用户主键id
      * @return
      */
-    public static String getJWTString(Long id) {
+    public static String getJWTString(Integer id) {
         if (id == null) {
             throw new NullPointerException("null id is illegal");
         }
@@ -47,10 +47,10 @@ public class JwtUtil {
      * @param Jwt
      * @return  id：用户主键 如果为null则token失效  跳转登录页面
      */
-    public static Long parseJwt2Id(String Jwt) {
+    public static Integer parseJwt2Id(String Jwt) {
         try {
             Jws<Claims> parseClaimsJws = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(Jwt);//compactJws为jwt字符串
-            return Long.parseLong(parseClaimsJws.getBody().getId());//得到body后我们可以从body中获取我们需要的信息
+            return Integer.parseInt(parseClaimsJws.getBody().getId());//得到body后我们可以从body中获取我们需要的信息
         } catch (SignatureException | MalformedJwtException e) {
             // jwt 解析错误
             log.warn("Jwt:{} 解析错误");
@@ -68,10 +68,10 @@ public class JwtUtil {
 
     public static void main(String[] args) {
         Long start=System.currentTimeMillis();
-       String a= getJWTString(2L);
+       String a= getJWTString(2);
        Long statr2=System.currentTimeMillis();
         System.out.println(statr2-start);
-       Long id= parseJwt2Id(a);
+       Integer id= parseJwt2Id(a);
         System.out.println(System.currentTimeMillis()-statr2);
     }
 }

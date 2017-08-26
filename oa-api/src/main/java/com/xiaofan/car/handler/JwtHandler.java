@@ -18,7 +18,7 @@ public class JwtHandler implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String jwt = request.getHeader(Constant.AUTHORIZATION);
-        Long id = JwtUtil.parseJwt2Id(jwt);
+        Integer id = JwtUtil.parseJwt2Id(jwt);
         if (id == null) {
             response.setStatus(401);
             return false;

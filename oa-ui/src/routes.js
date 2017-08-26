@@ -83,11 +83,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   iview.LoadingBar.start();
   if (to.path == '/login') {
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('Authorization');
   }
-  let user = JSON.parse(sessionStorage.getItem('user'));
-  if (!user && to.path != '/login') {
+  let jwt = sessionStorage.getItem("Authorization");
+  if (!jwt && to.path != '/login') {
     next({ path: '/login' })
+    iview.LoadingBar.finish();
+    window.scrollTo(0, 0);
   } else {
     next()
   }

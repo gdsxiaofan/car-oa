@@ -20,4 +20,8 @@ public class JsonResult<T> {
         this.setMessage(message);
         this.setData(data);
     }
+    public JsonResult(Integer code,String message){
+        this.setCode(code);
+        this.setMessage(message);
+    }
 }
