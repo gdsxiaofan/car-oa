@@ -5,9 +5,10 @@ let base = '';
 //修改密码 TODO
 export function updatePwd(oldPwd, newPwd) {
   return fetch({
-    url: `updatePwd`,
-    method: 'post',
-    data: {oldPwd, newPwd}
+    url: `/v1/user/updatePwd`,
+    method: 'put',
+    data: qs.stringify({oldPwd, newPwd}),
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
   })
 }
 

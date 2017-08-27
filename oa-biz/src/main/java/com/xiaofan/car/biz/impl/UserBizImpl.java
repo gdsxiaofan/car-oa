@@ -9,10 +9,12 @@ import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.MemuVo;
 import com.xiaofan.car.persistence.vo.UserPermissionVo;
 import com.xiaofan.car.service.MemuService;
+import com.xiaofan.car.util.lang.MD5Util;
 import io.jsonwebtoken.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -48,5 +50,30 @@ public class UserBizImpl implements UserBiz {
         userPermissionVo.setMemuVoList(memuVoList);
 
         return userPermissionVo;
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param userId
+     * @param oldPwd
+     * @param newPwd
+     * @return
+     */
+    @Override
+    @Transactional
+    public Boolean updatePwd(Integer userId, String oldPwd, String newPwd) {
+        //1.判断原密码是否正确
+        Employee employee= employeeMapper.selectEmployeeForUpdatePwd(userId, MD5Util.encode(oldPwd));
+        if(employee==null){
+            return false;
+        }else {
+            Employee update=new Employee();
+            update.setId(userId);
+            update.setEmployeePassword(MD5Util.encode(newPwd));
+            employeeMapper.updateByPrimaryKeySelective(update);
+            return true;
+        }
+
     }
 }

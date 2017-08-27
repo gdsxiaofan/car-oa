@@ -209,13 +209,17 @@
       comfirmModifyPS() {
         this.$refs.formValidate.validate((valid) => {
           if (valid) {
-            this.modal1 = true;
             this.loading1 = true;
-            updatePwd(this.formValidate.oldPassword, this.formValidate.newPassword).then(() => {
+            updatePwd(this.formValidate.oldPassword, this.formValidate.newPassword).then(res => {
               this.loading1 = false;
-              this.modal1 = false;
-              this.$Message.success('提交成功!');
-              this.$refs.formValidate.resetFields();
+              if(res.data.code ===1){//修改成功
+                this.modal1 = false;
+                this.$Message.success(res.data.message);
+                this.$refs.formValidate.resetFields();
+              }else {//原密码不正确
+                this.$Message.error(res.data.message);
+              }
+
             }).catch(err => {
               this.loading1 = false;
               this.$Message.error('表单验证失败!' + err);

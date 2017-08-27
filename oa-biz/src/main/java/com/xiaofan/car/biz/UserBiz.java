@@ -16,5 +16,14 @@ public interface UserBiz {
      * @param userId
      * @return
      */
-    public UserPermissionVo getUserPermisson(Integer userId);
+    UserPermissionVo getUserPermisson(Integer userId);
+
+    /**
+     * 修改密码
+     * @param userId
+     * @param oldPwd
+     * @param newPwd
+     * @return
+     */
+    Boolean updatePwd(Integer userId, String oldPwd, String newPwd);
 }

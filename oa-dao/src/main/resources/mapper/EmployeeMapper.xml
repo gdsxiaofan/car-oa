@@ -186,4 +186,12 @@
 		WHERE
 			role_id = #{roleId}
 	</select>
+	<select id="selectEmployeeForUpdatePwd" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		t_employee
+		WHERE
+		id = #{id} and  employee_password=#{oldPwd}
+	</select>
 </mapper>

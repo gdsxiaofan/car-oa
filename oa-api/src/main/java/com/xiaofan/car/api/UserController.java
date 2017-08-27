@@ -49,6 +49,20 @@ public class UserController {
 
         return returnJson;
     }
+    @ApiOperation(value = "修改用户密码", notes = "修改用户密码", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping("/updatePwd")
+    public JsonResult<String> updatePwd(
+            String oldPwd,String newPwd,
+            HttpServletResponse response
+    ){
+        Integer userId= JwtUtil.parseJwt2Id(response.getHeader(Constant.AUTHORIZATION));
+        Boolean rs= userBiz.updatePwd(userId,oldPwd,newPwd);
+        if(rs) {
+            return new JsonResult<>(1, "修改成功");
+        }else {
+            return new JsonResult<>(0, "旧密码不正确");
+        }
+    }
 
 }
 

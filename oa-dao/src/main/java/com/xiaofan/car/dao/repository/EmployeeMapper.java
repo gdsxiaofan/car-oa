@@ -49,4 +49,8 @@ public interface EmployeeMapper{
             @Param("roleId")Integer roleId
     );
 
+    Employee selectEmployeeForUpdatePwd(@Param("id")Integer id, @Param("oldPwd")String oldPwd);
+
+
+    void updateByPrimaryKeySelective(Employee employee);
 }
