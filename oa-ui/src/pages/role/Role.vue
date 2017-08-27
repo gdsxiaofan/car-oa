@@ -7,7 +7,7 @@
         名称：
         </Col>
         <Col :span="6">
-        <Input type="text" v-model="roleName" placeholder="请输入..."></Input>
+        <Input type="text" v-model="queryCondition.roleName" placeholder="请输入..."></Input>
         </Col>
         <Col :span="2" offset="2">
         <Button type="primary" shape="circle" icon="ios-search" @click="getlist">查询</Button>
@@ -21,6 +21,15 @@
               show-elevator></Page>
       </div>
     </div>
+    <Modal v-model="RoleModal.isShow"
+           :title="RoleModal.title"
+           >
+      <p>点击确定后，对话框将在 2秒 后关闭。</p>
+      <div slot="footer">
+        <Button type="ghost" @click="RoleModal.isShow=false" style="margin-left: 8px">取消</Button>
+        <Button type="primary" @click="RoleModal.isShow=false" :loading="RoleModal.isLoading">提交</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -59,7 +68,7 @@
                 },
                 on: {
                   click: () => {
-//                    this.$router.push({ path: 'ruleManage/' + params.row.tacticId })
+                    this.RoleModal.isShow=false
                   }
                 }
               }, '修改'),
@@ -72,6 +81,7 @@
                 },
                 on: {
                   click: () => {
+                    this.$router.push({ path: 'userRole?id=' + params.row.id })
                   }
                 }
               }, '查看用户'),
@@ -99,8 +109,15 @@
             ])
           }
         ],
-        list: [{id: 1, name: '管理员'},
-          {id: 2, name: '维修工'}]
+        list: [],
+        RoleModal:{
+          title:'',
+          isShow:false,
+          isLoading:true
+        },
+        Role:{
+
+        }
       }
     },
     methods: {
@@ -117,6 +134,9 @@
 
         });
       },
+    },
+    created(){
+      this.getlist()
     }
   }
 </script>

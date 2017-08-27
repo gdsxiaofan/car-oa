@@ -7,7 +7,8 @@ import lombok.Data;
  */
 @Data
 public class UserQueryParam {
-    private String  userName;
+    private Integer roleId;
+    private String userName;
     private String employeeNo;
     private String userMobile;
     private Integer pageNum;

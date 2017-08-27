@@ -61,7 +61,6 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                       login(this.formLogin.username,this.formLogin.password).then(res=>{
-                        debugger
                         if(res.data.code ===1){
                         this.$Message.success(res.data.message);
                         sessionStorage.setItem('user', JSON.stringify(this.formLogin.username));

@@ -53,31 +53,6 @@ public class RoleContrlloer {
         return jsonReturn;
     }
 
-
-    @ApiOperation(value = "查找用户信息", notes = "查找用户", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping("/query/user")
-    public JsonResult<List<EmployeeVo>> getRoleUserList(
-            @RequestParam("roleId") Integer roleId
-    ){
-        JsonResult<List<EmployeeVo>> jsonReturn = new JsonResult<>();
-        try{
-            List<EmployeeVo> employeeVoList = roleBiz.getEmployeeByRoleId(roleId);
-
-            jsonReturn.setData(employeeVoList);
-        }
-        catch(RuntimeException re){
-            jsonReturn.setCode(0);
-            jsonReturn.setMessage(re.getMessage());
-        }
-        catch (Exception e){
-            jsonReturn.setCode(0);
-            jsonReturn.setMessage("系统异常！");
-        }
-
-        return jsonReturn;
-    }
-
-
     @ApiOperation(value = "更新对应的角色信息", notes = "更新角色", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @RequestMapping("/update")
     public JsonResult<String> updateRole(

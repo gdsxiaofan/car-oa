@@ -8,6 +8,7 @@ import com.xiaofan.car.dao.repository.RoleMapper;
 import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.model.Role;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
+import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,13 +51,14 @@ public class RoleBizImpl implements RoleBiz{
     }
 
     @Override
-    public List<EmployeeVo> getEmployeeByRoleId(Integer roleId) {
+    public PageInfo<EmployeeVo> getEmployeeByRoleIdNoName(UserQueryParam userQueryParam) {
         //1.校验参数
-        Assert.notNull(roleId,"角色id不能为空！");
+        Assert.notNull(userQueryParam.getRoleId(),"角色id不能为空！");
         //2.查询用户里列表数据
-        List<EmployeeVo> employeeVoList = employeeMapper.selectEmployeeVoByRoleId(roleId);
+        PageHelper.startPage(userQueryParam.getPageNum(),userQueryParam.getPageSize());
+        List<EmployeeVo> employeeVoList = employeeMapper.selectEmployeeVoByUserParam(userQueryParam);
 
-        return employeeVoList;
+        return new PageInfo<EmployeeVo>(employeeVoList);
     }
 
     @Override

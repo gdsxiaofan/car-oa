@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.model.Role;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
+import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.RoleVo;
 import lombok.Data;
@@ -28,11 +29,11 @@ public interface RoleBiz {
     public PageInfo<RoleVo> getRoleList(RoleListQueryParam roleListQueryParam);
 
     /**
-     * 根据权限id查询该权限的所有用户信息
-     * @param roleId
+     * 根据权限id和工号和姓名查询该权限的所有用户信息
+     * @param userQueryParam
      * @return
      */
-    public List<EmployeeVo> getEmployeeByRoleId(Integer roleId);
+    PageInfo<EmployeeVo> getEmployeeByRoleIdNoName(UserQueryParam userQueryParam);
 
     /**
      * 更新对应的权限信息

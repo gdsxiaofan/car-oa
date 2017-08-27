@@ -45,8 +45,7 @@ public interface EmployeeMapper{
             @Param("userId")Integer userId
     );
 
-    public List<EmployeeVo> selectEmployeeVoByRoleId(
-            @Param("roleId")Integer roleId
+    public List<EmployeeVo> selectEmployeeVoByUserParam(UserQueryParam userQueryParam
     );
 
     Employee selectEmployeeForUpdatePwd(@Param("id")Integer id, @Param("oldPwd")String oldPwd);

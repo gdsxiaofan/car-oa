@@ -1,167 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiaofan.car.dao.repository.EmployeeMapper">
 
-	<!--实体映射-->
-	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.Employee">
-		<!--自增主键-->
-		<id property="id" column="id" />
-		<!--员工姓名-->
-		<result property="employeeName" column="employee_name" />
-		<!--员工密码-->
-		<result property="employeePassword" column="employee_password" />
-		<!--员工手机号码-->
-		<result property="employeeMobile" column="employee_mobile" />
-		<!--员工号-->
-		<result property="employeeNo" column="employee_no" />
-		<!--角色id-->
-		<result property="roleId" column="role_id" />
-		<!--入职时间-->
-		<result property="inductionTime" column="induction_time" />
-		<!--员工状态：1：在职，2休假，3：离职-->
-		<result property="employeeStatus" column="employee_status" />
-		<!--创建时间-->
-		<result property="createTime" column="create_Time" />
-		<!--更新时间-->
-		<result property="updateTime" column="update_Time" />
-		<!--删除状态：1：正常状态，0：删除-->
-		<result property="deleteStatus" column="delete_Status" />
-	</resultMap>
+    <!--实体映射-->
+    <resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.Employee">
+        <!--自增主键-->
+        <id property="id" column="id"/>
+        <!--员工姓名-->
+        <result property="employeeName" column="employee_name"/>
+        <!--员工密码-->
+        <result property="employeePassword" column="employee_password"/>
+        <!--员工手机号码-->
+        <result property="employeeMobile" column="employee_mobile"/>
+        <!--员工号-->
+        <result property="employeeNo" column="employee_no"/>
+        <!--角色id-->
+        <result property="roleId" column="role_id"/>
+        <!--入职时间-->
+        <result property="inductionTime" column="induction_time"/>
+        <!--员工状态：1：在职，2休假，3：离职-->
+        <result property="employeeStatus" column="employee_status"/>
+        <!--创建时间-->
+        <result property="createTime" column="create_Time"/>
+        <!--更新时间-->
+        <result property="updateTime" column="update_Time"/>
+        <!--删除状态：1：正常状态，0：删除-->
+        <result property="deleteStatus" column="delete_Status"/>
+    </resultMap>
 
 
-	<!-- 通用查询结果列-->
-	<sql id="Base_Column_List">
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
 	id,	employee_name,	employee_password,	employee_mobile,	employee_no,	role_id,	induction_time,	employee_status,	create_Time,	update_Time,	delete_Status
 	</sql>
 
 
-	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.Employee">
-		 INSERT INTO t_employee
-		 <trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="id != null">
-				 id,
-			</if>
-			<if test="employeeName != null">
-				 employee_name,
-			</if>
-			<if test="employeePassword != null">
-				 employee_password,
-			</if>
-			<if test="employeeMobile != null">
-				 employee_mobile,
-			</if>
-			<if test="employeeNo != null">
-				 employee_no,
-			</if>
-			<if test="roleId != null">
-				 role_id,
-			</if>
-			<if test="inductionTime != null">
-				 induction_time,
-			</if>
-			<if test="employeeStatus != null">
-				 employee_status,
-			</if>
-			<if test="createTime != null">
-				 create_Time,
-			</if>
-			<if test="updateTime != null">
-				 update_Time,
-			</if>
-			<if test="deleteStatus != null">
-				 delete_Status,
-			</if>
+    <!-- 添加 （匹配有值的字段）-->
+    <insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.Employee">
+        INSERT INTO t_employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="employeeName != null">
+                employee_name,
+            </if>
+            <if test="employeePassword != null">
+                employee_password,
+            </if>
+            <if test="employeeMobile != null">
+                employee_mobile,
+            </if>
+            <if test="employeeNo != null">
+                employee_no,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="inductionTime != null">
+                induction_time,
+            </if>
+            <if test="employeeStatus != null">
+                employee_status,
+            </if>
+            <if test="createTime != null">
+                create_Time,
+            </if>
+            <if test="updateTime != null">
+                update_Time,
+            </if>
+            <if test="deleteStatus != null">
+                delete_Status,
+            </if>
 
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="id!=null">
-				 #{id},
-			</if>
-			<if test="employeeName!=null">
-				 #{employeeName},
-			</if>
-			<if test="employeePassword!=null">
-				 #{employeePassword},
-			</if>
-			<if test="employeeMobile!=null">
-				 #{employeeMobile},
-			</if>
-			<if test="employeeNo!=null">
-				 #{employeeNo},
-			</if>
-			<if test="roleId!=null">
-				 #{roleId},
-			</if>
-			<if test="inductionTime!=null">
-				 #{inductionTime},
-			</if>
-			<if test="employeeStatus!=null">
-				 #{employeeStatus},
-			</if>
-			<if test="createTime!=null">
-				 #{createTime},
-			</if>
-			<if test="updateTime!=null">
-				 #{updateTime},
-			</if>
-			<if test="deleteStatus!=null">
-				 #{deleteStatus},
-			</if>
-		 </trim>
-	</insert>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="employeeName!=null">
+                #{employeeName},
+            </if>
+            <if test="employeePassword!=null">
+                #{employeePassword},
+            </if>
+            <if test="employeeMobile!=null">
+                #{employeeMobile},
+            </if>
+            <if test="employeeNo!=null">
+                #{employeeNo},
+            </if>
+            <if test="roleId!=null">
+                #{roleId},
+            </if>
+            <if test="inductionTime!=null">
+                #{inductionTime},
+            </if>
+            <if test="employeeStatus!=null">
+                #{employeeStatus},
+            </if>
+            <if test="createTime!=null">
+                #{createTime},
+            </if>
+            <if test="updateTime!=null">
+                #{updateTime},
+            </if>
+            <if test="deleteStatus!=null">
+                #{deleteStatus},
+            </if>
+        </trim>
+    </insert>
 
-	<!-- 修 改-->
-	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.Employee">
-		 UPDATE t_employee
- 		 <set> 
-			<if test="employeeName != null">
-				 employee_name = #{employeeName},
-			</if>
-			<if test="employeePassword != null">
-				 employee_password = #{employeePassword},
-			</if>
-			<if test="employeeMobile != null">
-				 employee_mobile = #{employeeMobile},
-			</if>
-			<if test="employeeNo != null">
-				 employee_no = #{employeeNo},
-			</if>
-			<if test="roleId != null">
-				 role_id = #{roleId},
-			</if>
-			<if test="inductionTime != null">
-				 induction_time = #{inductionTime},
-			</if>
-			<if test="employeeStatus != null">
-				 employee_status = #{employeeStatus},
-			</if>
-			<if test="createTime != null">
-				 create_Time = #{createTime},
-			</if>
-			<if test="updateTime != null">
-				 update_Time = #{updateTime},
-			</if>
-			<if test="deleteStatus != null">
-				 delete_Status = #{deleteStatus},
-			</if>
+    <!-- 修 改-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.Employee">
+        UPDATE t_employee
+        <set>
+            <if test="employeeName != null">
+                employee_name = #{employeeName},
+            </if>
+            <if test="employeePassword != null">
+                employee_password = #{employeePassword},
+            </if>
+            <if test="employeeMobile != null">
+                employee_mobile = #{employeeMobile},
+            </if>
+            <if test="employeeNo != null">
+                employee_no = #{employeeNo},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId},
+            </if>
+            <if test="inductionTime != null">
+                induction_time = #{inductionTime},
+            </if>
+            <if test="employeeStatus != null">
+                employee_status = #{employeeStatus},
+            </if>
+            <if test="createTime != null">
+                create_Time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_Time = #{updateTime},
+            </if>
+            <if test="deleteStatus != null">
+                delete_Status = #{deleteStatus},
+            </if>
 
- 		 </set>
-		 WHERE id = #{id}
-	</update>
-	<select id="selectEmployeeForLogin" resultMap="BaseResultMap">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM
-			t_employee
-		WHERE
-			employee_no = #{employeeNo}
-		AND employee_password = #{password}
-	</select>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <select id="selectEmployeeForLogin" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_employee
+        WHERE
+        employee_no = #{employeeNo}
+        AND employee_password = #{password}
+    </select>
     <select id="selectEmployeeForList" resultType="com.xiaofan.car.persistence.model.Employee"></select>
 
-	<select id="selectUserPermissionVo" resultType="com.xiaofan.car.persistence.vo.UserPermissionVo">
+    <select id="selectUserPermissionVo" resultType="com.xiaofan.car.persistence.vo.UserPermissionVo">
 		SELECT
 			e.employee_name as userName,
 			e.employee_no as employeeNo,
@@ -173,25 +173,38 @@
 		WHERE
 			e.id = #{userId}
 	</select>
-	<select id="selectEmployeeVoByRoleId" resultType="com.xiaofan.car.persistence.vo.EmployeeVo">
-		SELECT
-			id as id,
-			employee_name as employeeName,
-			employee_mobile as employeeMobile,
-			employee_no as employeeNO,
-			DATE_FORMAT(induction_time,'%Y-%m-%d %T') as inductionTime,
-			employee_status as employStatus
-		FROM
-			t_employee
-		WHERE
-			role_id = #{roleId}
-	</select>
-	<select id="selectEmployeeForUpdatePwd" resultMap="BaseResultMap">
-		SELECT
-		<include refid="Base_Column_List" />
-		FROM
-		t_employee
-		WHERE
-		id = #{id} and  employee_password=#{oldPwd}
-	</select>
+    <select id="selectEmployeeVoByUserParam" resultType="com.xiaofan.car.persistence.vo.EmployeeVo"
+            parameterType="com.xiaofan.car.persistence.param.UserQueryParam">
+        SELECT
+        t_employee.id as id,
+        employee_name as employeeName,
+        employee_mobile as employeeMobile,
+        employee_no as employeeNO,
+        DATE_FORMAT(induction_time,'%Y-%m-%d %T') as inductionTime,
+        employee_status as employStatus,
+        role_name as roleName
+        FROM
+        t_employee
+        LEFT JOIN
+        t_role on  t_employee.role_id=t_role.id
+        <where>
+            <if test="roleId != null and roleId != 0">
+                AND role_id = #{roleId}
+            </if>
+            <if test="userName !=null and userName!=''">
+              and employee_name like CONCAT('%',#{userName},'%')
+            </if>
+            <if test="employeeNo !=null and employeeNo!=''">
+              and employee_no like CONCAT('%',#{employeeNo},'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectEmployeeForUpdatePwd" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_employee
+        WHERE
+        id = #{id} and employee_password=#{oldPwd}
+    </select>
 </mapper>
