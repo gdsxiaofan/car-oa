@@ -23,7 +23,7 @@
     </div>
     <Modal v-model="RoleModal.isShow"
            :title="RoleModal.title"
-           >
+    >
       <p>点击确定后，对话框将在 2秒 后关闭。</p>
       <div slot="footer">
         <Button type="ghost" @click="RoleModal.isShow=false" style="margin-left: 8px">取消</Button>
@@ -34,7 +34,10 @@
 </template>
 
 <script>
-  import {getRoleList} from '../../api/role/role'
+  import {
+    getRoleList,
+    delRole
+  } from '../../api/role/role'
 
   export default {
     data() {
@@ -68,7 +71,7 @@
                 },
                 on: {
                   click: () => {
-                    this.RoleModal.isShow=false
+                    this.RoleModal.isShow = false
                   }
                 }
               }, '修改'),
@@ -81,7 +84,7 @@
                 },
                 on: {
                   click: () => {
-                    this.$router.push({ path: 'userRole?id=' + params.row.id })
+                    this.$router.push({path: 'userRole?id=' + params.row.id})
                   }
                 }
               }, '查看用户'),
@@ -96,11 +99,15 @@
                   click: () => {
                     this.$Modal.confirm({
                       title: '是否删除',
-                      content: '<p>' + params.row.name + '</p>',
+                      content: '<p>' + params.row.roleName + '</p>',
                       loading: true,
                       onOk: () => {
-                        this.$Message.info('删除成功');
-                        this.$Modal.remove()
+                        delRole(params.row.id).then(res=>{
+
+                          this.$Message.info(res.data.message);
+                          this.$Modal.remove()
+                        })
+
                       }
                     });
                   }
@@ -110,14 +117,12 @@
           }
         ],
         list: [],
-        RoleModal:{
-          title:'',
-          isShow:false,
-          isLoading:true
+        RoleModal: {
+          title: '',
+          isShow: false,
+          isLoading: true
         },
-        Role:{
-
-        }
+        Role: {}
       }
     },
     methods: {
@@ -135,7 +140,7 @@
         });
       },
     },
-    created(){
+    created() {
       this.getlist()
     }
   }

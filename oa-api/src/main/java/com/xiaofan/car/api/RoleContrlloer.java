@@ -58,18 +58,18 @@ public class RoleContrlloer {
     public JsonResult<String> updateRole(
             @RequestBody RoleParam roleParam
     ){
-
+//todo
 
         return null;
     }
 
 
-    @ApiOperation(value = "删除对应的角色", notes = "删除角色", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping("/delete")
+    @ApiOperation(value = "删除对应的角色", notes = "删除角色", httpMethod = "Delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping("/delete")
     public JsonResult<String> deleteRole(@RequestParam("roleId")Integer roleId){
+        //todo
 
-
-        return null;
+        return new JsonResult<>(1,"删除成功");
     }
 
 }
