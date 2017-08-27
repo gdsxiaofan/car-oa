@@ -2,7 +2,7 @@
   <div class="layout" :class="{'layout-hide-text': spanLeft < 5}">
     <Row type="flex">
       <i-col :span="spanLeft" class="layout-menu-left">
-        <Menu :mode="modeType" theme="dark" width="auto" :active-name="activeNames" :open-names="openNames"
+        <Menu ref="menu" :mode="modeType" theme="dark" width="auto" :active-name="activeNames" :open-names="openNames"
               @on-select="menuSelect" accordion>
           <div class="layout-logo-left">
             <!--<Icon type="paper-airplane" :size="logoSize" v-show="logoIsDisplay"></Icon>-->
@@ -166,7 +166,6 @@
         })
       },
       activeNames() {
-
         return (this.$route.path === '/'||this.menuMain.length===0)? 0 : this.menu.filter(item => {
           return item.href === this.$route.path
         })[0].id
@@ -243,13 +242,17 @@
         this.$router.push({path});
       },
     },
-    async beforeCreate() {
-      let res =await getUserInfo()
-      this.userName = res.data.data.userName
-      this.userRole = res.data.data.roleName
-      this.menu = res.data.data.memuVoList
-    },
     mounted() {
+       getUserInfo().then(res=>{
+         this.userName = res.data.data.userName
+         this.userRole = res.data.data.roleName
+         this.menu = res.data.data.memuVoList
+         this.$nextTick(function(){
+           this.$refs.menu.updateOpened()
+           this.$refs.menu.updateActiveName();
+         });
+       })
+
     }
   }
 </script>
