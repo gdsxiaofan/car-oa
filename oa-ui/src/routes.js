@@ -11,8 +11,7 @@ const Home = resolve => require(['./pages/Home.vue'], resolve)
 const Role = resolve => require(['./pages/role/Role.vue'], resolve)
 /*用户角色管理*/
 const ShowUser = resolve => require(['./pages/role/ShowUser.vue'], resolve)
-/*新增角色*/
-const AddRole = resolve => require(['./pages/role/AddRole.vue'], resolve)
+
 //工单管理         >>>>>>
 /*我的工单*/
 const MyOrder = resolve => require(['./pages/order/My.vue'], resolve)
@@ -44,7 +43,7 @@ let routes = [
     iconCls: 'ios-home', //图标样式class
     children: [
       {path: 'role', meta: {title: '角色管理'}, icon: 'ios-home', component: Role},
-      {path: 'addRole', meta: {title: '新增角色'}, icon: 'ios-home', component: AddRole},
+      // {path: 'addRole', meta: {title: '新增角色'}, icon: 'ios-home', component: AddRole},
       {path: 'userRole', meta: {title: '用户角色管理'}, icon: 'ios-home', component: ShowUser},
       {path: 'myOrder', meta: {title: '我的工单'}, icon: 'ios-home', component: MyOrder},
       {path: 'publishOrder', meta: {title: '发布工单'}, icon: 'ios-home', component: PublishOrder},

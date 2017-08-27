@@ -12,6 +12,9 @@
         <Col :span="2" offset="2">
         <Button type="primary" shape="circle" icon="ios-search" @click="getlist">查询</Button>
         </Col>
+        <Col :span="2" offset="4">
+        <Button type="success" shape="circle" icon="ios-personadd" @click="Role={};RoleModal.isShow=true;RoleModal.title='新建角色'">新建角色</Button>
+        </Col>
       </Row>
     </Card>
     <Table border :columns="columns" @on-selection-change="getSelection" :data="list"></Table>
@@ -24,7 +27,7 @@
     <Modal v-model="RoleModal.isShow"
            :title="RoleModal.title"
     >
-      <p>点击确定后，对话框将在 2秒 后关闭。</p>
+      <p>--------------</p>
       <div slot="footer">
         <Button type="ghost" @click="RoleModal.isShow=false" style="margin-left: 8px">取消</Button>
         <Button type="primary" @click="RoleModal.isShow=false" :loading="RoleModal.isLoading">提交</Button>
@@ -71,7 +74,9 @@
                 },
                 on: {
                   click: () => {
-                    this.RoleModal.isShow = false
+                    //todo 得到角色
+                    this.RoleModal.isShow = true
+                    this.RoleModal.title='修改角色'
                   }
                 }
               }, '修改'),
@@ -121,7 +126,7 @@
         RoleModal: {
           title: '',
           isShow: false,
-          isLoading: true
+          isLoading: false
         },
         Role: {}
       }
