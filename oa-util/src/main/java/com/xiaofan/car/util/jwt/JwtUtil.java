@@ -16,7 +16,7 @@ public class JwtUtil {
     private static String SECRET = "MY SECRET";
 
     private static final Long OUTTIME = 60 * 60 * 1000L;
-//    private static final Long OUTTIME = 1000L;
+//    private static final Long OUTTIME =10* 1000L;
 
     /**
      * @param id  用户主键id

@@ -106,6 +106,7 @@
 
                           this.$Message.info(res.data.message);
                           this.$Modal.remove()
+                          this.getlist()
                         })
 
                       }
