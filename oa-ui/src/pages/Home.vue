@@ -135,24 +135,7 @@
             {required: true, validator: validatePassCheck, trigger: 'blur'}
           ],
         },
-        menu: [
-          {id: 1, href: '', name: '权限管理', icon: 'ios-home', orderTop: 2, parentId: 0},
-          {id: 2, href: '/role', name: '角色管理', icon: 'ios-home', parentId: 1},
-          {id: 3, href: '/addRole', name: '新增角色', icon: 'ios-home', parentId: 1},
-          {id: 4, href: '/userRole', name: '用户角色管理', icon: 'ios-home', parentId: 1},
-          {id: 5, href: '', name: '工单管理', icon: 'ios-home', orderTop: 2, parentId: 0},
-          {id: 6, href: '/myorderTop', name: '我的工单', icon: 'ios-home', parentId: 5},
-          {id: 7, href: '/publishorderTop', name: '发布工单', icon: 'ios-home', parentId: 5},
-          {id: 8, href: '/dispatchorderTop', name: '派发工单', icon: 'ios-home', parentId: 5},
-          {id: 9, href: '/historyorderTop', name: '历史工单', icon: 'ios-home', parentId: 5},
-          {id: 10, href: '/allorderTop', name: '所有工单', icon: 'ios-home', parentId: 5},
-          {id: 11, href: '', name: '员工管理', icon: 'ios-home', orderTop: 2, parentId: 0},
-          {id: 12, href: '/employeeInfo', name: '员工信息管理', icon: 'ios-home', parentId: 11},
-          {id: 13, href: '/employeeAdd', name: '新增员工', icon: 'ios-home', parentId: 11},
-          {id: 14, href: '', name: '设备管理', icon: 'ios-home', orderTop: 2, parentId: 0},
-          {id: 15, href: '/deviceInfo', name: '设备基础信息管理', icon: 'ios-home', parentId: 14},
-          {id: 16, href: '/deviceAdd', name: '新增设备信息', icon: 'ios-home', parentId: 14}
-        ],
+        menu: [],
         userName: '',
         userRole: ''
       }
@@ -183,7 +166,8 @@
         })
       },
       activeNames() {
-        return this.$route.path === '/' ? 0 : this.menu.filter(item => {
+
+        return (this.$route.path === '/'||this.menuMain.length===0)? 0 : this.menu.filter(item => {
           return item.href === this.$route.path
         })[0].id
       },
@@ -195,8 +179,8 @@
         let menucache = this.menu.filter(item => {
           return item.id === this.activeNames
         })[0]
-        bread.push(menucache)
-        while (menucache.parentId !== 0) {
+        if(menucache)bread.push(menucache)
+        while (menucache&&menucache.parentId !== 0) {
           menucache = this.menu.filter(item => {
             return item.id === menucache.parentId
           })[0]
@@ -253,14 +237,13 @@
           return item.id === id
         })[0].href
         this.$router.push({path});
-      }
+      },
     },
-    created() {
-      getUserInfo().then(res => {
-        this.userName = res.data.data.userName
-        this.userRole = res.data.data.roleName
-        this.menu = res.data.data.memuVoList
-      })
+    async beforeCreate() {
+      let res =await getUserInfo()
+      this.userName = res.data.data.userName
+      this.userRole = res.data.data.roleName
+      this.menu = res.data.data.memuVoList
     },
     mounted() {
     }
