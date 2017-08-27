@@ -7,7 +7,7 @@
         名称：
         </Col>
         <Col :span="6">
-        <Input type="text" placeholder="请输入..."></Input>
+        <Input type="text" v-model="roleName" placeholder="请输入..."></Input>
         </Col>
         <Col :span="2" offset="2">
         <Button type="primary" shape="circle" icon="ios-search" @click="getlist">查询</Button>
@@ -34,8 +34,7 @@
         queryCondition: {
           pageSize: 10,
           pageNum: 1,
-          appKey: '',
-          tacticName: '',
+          roleName: '',
           total: 0
         },
         columns: [
@@ -45,7 +44,7 @@
           },
           {
             title: '名称',
-            key: 'name'
+            key: 'roleName'
           },
           {
             title: '操作',
@@ -111,9 +110,9 @@
       getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
         getRoleList(this.queryCondition).then(res => {
-          this.queryCondition.pageNum = res.data.pageNum
-          this.list = res.data.list
-          this.queryCondition.total = res.data.total
+          this.queryCondition.pageNum = res.data.data.pageNum
+          this.list = res.data.data.list
+          this.queryCondition.total = res.data.data.total
         }).catch(err => {
 
         });
