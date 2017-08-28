@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.RoleBiz;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
 import com.xiaofan.car.persistence.param.RoleParam;
-import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.persistence.vo.RoleVo;
 import io.swagger.annotations.Api;
@@ -13,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 角色管理
@@ -64,7 +61,7 @@ public class RoleContrlloer {
     }
 
 
-    @ApiOperation(value = "删除对应的角色", notes = "删除角色", httpMethod = "Delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "删除对应的角色", notes = "删除角色", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @DeleteMapping("/delete")
     public JsonResult<String> deleteRole(@RequestParam("roleId")Integer roleId){
         //todo
