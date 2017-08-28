@@ -29,26 +29,25 @@
     <Modal v-model="RoleModal.isShow"
            :title="RoleModal.title"
     >
-      <Form :model="Role" :label-width="80">
+      <Form :model="Role" :label-width="80" ref="role">
         <Form-item label="角色名：">
           <Input v-model="Role.roleName" placeholder="请输入"></Input>
         </Form-item>
-        <Collapse v-model="value1">
-          <Panel name="1">
-            史蒂夫·乔布斯
-            <p slot="content">史蒂夫·乔布斯（Steve Jobs），1955年2月24日生于美国加利福尼亚州旧金山，美国发明家、企业家、美国苹果公司联合创办人。</p>
-          </Panel>
-          <Panel name="2">
-            斯蒂夫·盖瑞·沃兹尼亚克
-            <p slot="content">
-              斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。</p>
-          </Panel>
-          <Panel name="3">
-            乔纳森·伊夫
-            <p slot="content">
-              乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。</p>
-          </Panel>
-        </Collapse>
+        <Form-item label="权限菜单">
+          <Checkbox-group v-model="checkMenu">
+          <Collapse>
+            <Panel :name="item.name" v-for="item in menuMainGroup" :key="item.id">
+              {{item.name}}
+              <p slot="content">
+                <Checkbox :label="ckbox.id" :key="ckbox.id" v-for="ckbox in allMenu" v-if="ckbox.parentId===item.id">
+                  <Icon :type="ckbox.icon"></Icon>
+                  <span>{{ckbox.name}}</span>
+                </Checkbox>
+              </p>
+            </Panel>
+          </Collapse>
+          </Checkbox-group>
+        </Form-item>
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="RoleModal.isShow=false" style="margin-left: 8px">取消</Button>
@@ -151,9 +150,38 @@
           isLoading: false
         },
         Role: {
-          roleName:''
-        }
+          roleName: ''
+        },
+        allMenu: [{"id": 106, "name": "权限管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
+          {"id": 107, "name": "工单管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
+          {"id": 108, "name": "员工管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
+          {"id": 109, "name": "设备管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
+          {"id": 110, "name": "角色管理", "href": "/role", "icon": "", "orderTop": 2, "parentId": 106},
+          {"id": 112, "name": "用户角色管理", "href": "/userRole", "icon": "", "orderTop": 2, "parentId": 106},
+          {"id": 113, "name": "我的工单", "href": "/myorderTop", "icon": "", "orderTop": 2, "parentId": 107},
+          {"id": 114, "name": "发布工单", "href": "/publishorderTop", "icon": "", "orderTop": 2, "parentId": 107},
+          {"id": 115, "name": "派发工单", "href": "/dispatchorderTop", "icon": "", "orderTop": 2, "parentId": 107},
+          {"id": 116, "name": "历史工单", "href": "/historyorderTop", "icon": "", "orderTop": 2, "parentId": 107},
+          {"id": 117, "name": "所有工单", "href": "/allorderTop", "icon": "", "orderTop": 2, "parentId": 107},
+          {"id": 118, "name": "员工信息管理", "href": "/employeeInfo", "icon": "", "orderTop": 2, "parentId": 108},
+          {"id": 119, "name": "新增员工", "href": "/employeeAdd", "icon": "", "orderTop": 2, "parentId": 108},
+          {"id": 120, "name": "设备基础信息管理", "href": "/deviceInfo", "icon": "", "orderTop": 2, "parentId": 109},
+          {"id": 121, "name": "新增设备信息", "href": "/deviceAdd", "icon": "", "orderTop": 2, "parentId": 109}
+          ],
+        checkMenu:[]
       }
+    },
+    computed:{
+      menuMainGroup() {
+        return this.allMenu.filter(item => {
+          return item.parentId === 0 && item.orderTop===1
+        })
+      },
+      menuMain() {
+        return this.allMenu.filter(item => {
+          return item.parentId === 0 && item.orderTop===2
+        })
+      },
     },
     methods: {
       getSelection(selection) {
