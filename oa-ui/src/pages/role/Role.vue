@@ -51,7 +51,7 @@
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="RoleModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="RoleModal.isShow=false" :loading="RoleModal.isLoading">提交</Button>
+        <Button type="primary" @click="doRole" :loading="RoleModal.isLoading">提交</Button>
       </div>
     </Modal>
   </div>
@@ -197,6 +197,21 @@
 
         });
       },
+      doRole(){
+        let checkMenu=this.allMenu.filter(x=>{
+          //得到所有被选择的菜单
+              return   this.checkMenu.filter(y=>{
+                  return  x.id===y
+                }).length>0
+        }).map(x=>{
+          return x.parentId
+        })
+        this.checkMenu=this.checkMenu.concat(checkMenu)
+        console.log([...new Set(this.checkMenu)])
+
+
+//        this.RoleModal.isShow=false
+      }
     },
     created() {
       this.getlist()
