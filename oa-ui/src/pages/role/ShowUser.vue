@@ -36,6 +36,7 @@
               show-elevator></Page>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -46,6 +47,7 @@
   export default {
     data() {
       return {
+        userInfo: {id: '', roleId: ''},
         selection: '',
         queryCondition: {
           pageSize: 10,
@@ -89,7 +91,16 @@
                 },
                 on: {
                   click: () => {
-//                    this.$router.push({ path: 'ruleManage/' + params.row.tacticId })
+                    this.userInfo.id = params.row.id
+                    this.$Modal.confirm({
+                      title: '修改角色',
+                      content: '<Select v-model="userInfo.roleId" style="width:200px">' +
+                      '      <Option v-for="item in RoleList" :value="item.id" :key="item.id">{{ item.roleName }}</Option>' +
+                      '    </Select>'
+                    });
+                    this.$nextTick(()=>{
+                      this.userInfo.roleId=params.row.roleId
+                    })
                   }
                 }
               }, '更换角色')

@@ -247,7 +247,7 @@
          this.userName = res.data.data.userName
          this.userRole = res.data.data.roleName
          this.menu = res.data.data.memuVoList
-         this.$nextTick(function(){
+         this.$nextTick(()=>{
            this.$refs.menu.updateOpened()
            this.$refs.menu.updateActiveName();
          });

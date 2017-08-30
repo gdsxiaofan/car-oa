@@ -30,7 +30,8 @@ public class EmployeeVo {
     private String inductionTime;
     /**员工角色**/
     private String roleName;
-
+    /**员工角色**/
+    private Integer roleId;
     /**员工状态：1：在职，2休假，3：离职**/
     private Integer employeeStatus;
 

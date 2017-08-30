@@ -76,4 +76,15 @@ public class UserBizImpl implements UserBiz {
         }
 
     }
+
+    /**
+     * 修改用户信息
+     *
+     * @param employee
+     * @return
+     */
+    @Override
+    public void updateUser(Employee employee) {
+         employeeMapper.updateByPrimaryKeySelective(employee);
+    }
 }

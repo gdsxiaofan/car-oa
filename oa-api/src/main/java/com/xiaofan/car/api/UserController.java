@@ -3,6 +3,7 @@ package com.xiaofan.car.api;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.RoleBiz;
 import com.xiaofan.car.biz.UserBiz;
+import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.JsonResult;
@@ -38,18 +39,16 @@ public class UserController {
     @GetMapping("/query/list")
     public JsonResult<PageInfo<EmployeeVo>> getRoleUserList(
             UserQueryParam userQueryParam
-    ){
+    ) {
         JsonResult<PageInfo<EmployeeVo>> jsonReturn = new JsonResult<>();
-        try{
+        try {
             PageInfo<EmployeeVo> employeeVoList = roleBiz.getEmployeeByRoleIdNoName(userQueryParam);
 
             jsonReturn.setData(employeeVoList);
-        }
-        catch(RuntimeException re){
+        } catch (RuntimeException re) {
             jsonReturn.setCode(0);
             jsonReturn.setMessage(re.getMessage());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             jsonReturn.setCode(0);
             jsonReturn.setMessage("系统异常！");
         }
@@ -61,8 +60,8 @@ public class UserController {
     @GetMapping("/query")
     public JsonResult<UserPermissionVo> getUserPermissionVo(
             HttpServletResponse response
-    ){
-        Integer userId= JwtUtil.parseJwt2Id(response.getHeader(Constant.AUTHORIZATION));
+    ) {
+        Integer userId = JwtUtil.parseJwt2Id(response.getHeader(Constant.AUTHORIZATION));
         JsonResult<UserPermissionVo> returnJson = new JsonResult<>();
 
         UserPermissionVo userPermissionVo = userBiz.getUserPermisson(userId);
@@ -72,19 +71,28 @@ public class UserController {
         return returnJson;
     }
 
-    @ApiOperation(value = "修改用户密码", notes = "修改用户密码", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value = "修改登录用户密码", notes = "修改登录用户密码", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PutMapping("/updatePwd")
     public JsonResult<String> updatePwd(
-            String oldPwd,String newPwd,
+            String oldPwd, String newPwd,
             HttpServletResponse response
-    ){
-        Integer userId= JwtUtil.parseJwt2Id(response.getHeader(Constant.AUTHORIZATION));
-        Boolean rs= userBiz.updatePwd(userId,oldPwd,newPwd);
-        if(rs) {
+    ) {
+        Integer userId = JwtUtil.parseJwt2Id(response.getHeader(Constant.AUTHORIZATION));
+        Boolean rs = userBiz.updatePwd(userId, oldPwd, newPwd);
+        if (rs) {
             return new JsonResult<>(1, "修改成功");
-        }else {
+        } else {
             return new JsonResult<>(0, "旧密码不正确");
         }
+    }
+
+    @ApiOperation(value = "修改用户信息", notes = "修改用户信息", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping("/updateUser")
+    public JsonResult<String> updateUser(
+            @RequestBody Employee employee
+    ) {
+        userBiz.updateUser(employee);
+        return new JsonResult<>(1, "修改成功");
     }
 
 }

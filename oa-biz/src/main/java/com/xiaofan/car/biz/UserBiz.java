@@ -26,4 +26,10 @@ public interface UserBiz {
      * @return
      */
     Boolean updatePwd(Integer userId, String oldPwd, String newPwd);
+    /**
+     * 修改用户信息
+     * @param employee
+     * @return
+     */
+    void updateUser(Employee employee);
 }

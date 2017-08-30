@@ -177,6 +177,7 @@
             parameterType="com.xiaofan.car.persistence.param.UserQueryParam">
         SELECT
         t_employee.id as id,
+        t_employee.role_id as roleId,
         employee_name as employeeName,
         employee_mobile as employeeMobile,
         employee_no as employeeNO,

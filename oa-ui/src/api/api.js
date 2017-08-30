@@ -2,7 +2,7 @@ import {fetch,qs} from '../lib/utils/fetch'
 
 let base = '';
 
-//修改密码 TODO
+//修改密码
 export function updatePwd(oldPwd, newPwd) {
   return fetch({
     url: `/v1/user/updatePwd`,
