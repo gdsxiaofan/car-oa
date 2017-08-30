@@ -14,7 +14,8 @@
         </Col>
         <Col :span="2" offset="4">
         <Button type="success" shape="circle" icon="ios-personadd"
-                @click="Role={};RoleModal.isShow=true;RoleModal.title='新建角色'">新建角色
+                @click="Role={id:'',roleName: '',checkMenu: []};RoleModal.isShow=true;RoleModal.title='新建角色';collapse=[]">
+          新建角色
         </Button>
         </Col>
       </Row>
@@ -34,18 +35,18 @@
           <Input v-model="Role.roleName" placeholder="请输入"></Input>
         </Form-item>
         <Form-item label="权限菜单">
-          <Checkbox-group v-model="checkMenu">
-          <Collapse>
-            <Panel :name="item.name" v-for="item in menuMainGroup" :key="item.id">
-              {{item.name}}
-              <p slot="content">
-                <Checkbox :label="ckbox.id" :key="ckbox.id" v-for="ckbox in allMenu" v-if="ckbox.parentId===item.id">
-                  <Icon :type="ckbox.icon"></Icon>
-                  <span>{{ckbox.name}}</span>
-                </Checkbox>
-              </p>
-            </Panel>
-          </Collapse>
+          <Checkbox-group v-model="Role.checkMenu">
+            <Collapse v-model="collapse">
+              <Panel :name="item.name" v-for="item in menuMainGroup" :key="item.id">
+                {{item.name}}
+                <p slot="content">
+                  <Checkbox :label="ckbox.id" :key="ckbox.id" v-for="ckbox in allMenu" v-if="ckbox.parentId===item.id">
+                    <Icon :type="ckbox.icon"></Icon>
+                    <span>{{ckbox.name}}</span>
+                  </Checkbox>
+                </p>
+              </Panel>
+            </Collapse>
           </Checkbox-group>
         </Form-item>
       </Form>
@@ -60,12 +61,16 @@
 <script>
   import {
     getRoleList,
-    delRole
+    getRoleById,
+    delRole,
+    addRole,
+    updateRole
   } from '../../api/role/role'
 
   export default {
     data() {
       return {
+        collapse:[],
         selection: '',
         queryCondition: {
           pageSize: 10,
@@ -96,8 +101,13 @@
                 on: {
                   click: () => {
                     //todo 得到角色
-                    this.RoleModal.isShow = true
-                    this.RoleModal.title = '修改角色'
+                    getRoleById(params.row.id).then(res=>{
+                      this.Role = res.data.data
+                      this.RoleModal.isShow = true
+                      this.RoleModal.title = '修改角色'
+                      this.collapse=[]
+                    })
+
                   }
                 }
               }, '修改'),
@@ -129,8 +139,7 @@
                       loading: true,
                       onOk: () => {
                         delRole(params.row.id).then(res => {
-
-                          this.$Message.info(res.data.message);
+                          this.$Message.success(res.data.message);
                           this.$Modal.remove()
                           this.getlist()
                         })
@@ -150,7 +159,9 @@
           isLoading: false
         },
         Role: {
-          roleName: ''
+          id: '',
+          roleName: '',
+          checkMenu: []
         },
         allMenu: [{"id": 106, "name": "权限管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
           {"id": 107, "name": "工单管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
@@ -167,19 +178,19 @@
           {"id": 119, "name": "新增员工", "href": "/employeeAdd", "icon": "", "orderTop": 2, "parentId": 108},
           {"id": 120, "name": "设备基础信息管理", "href": "/deviceInfo", "icon": "", "orderTop": 2, "parentId": 109},
           {"id": 121, "name": "新增设备信息", "href": "/deviceAdd", "icon": "", "orderTop": 2, "parentId": 109}
-          ],
-        checkMenu:[]
+        ],
+
       }
     },
-    computed:{
+    computed: {
       menuMainGroup() {
         return this.allMenu.filter(item => {
-          return item.parentId === 0 && item.orderTop===1
+          return item.parentId === 0 && item.orderTop === 1
         })
       },
       menuMain() {
         return this.allMenu.filter(item => {
-          return item.parentId === 0 && item.orderTop===2
+          return item.parentId === 0 && item.orderTop === 2
         })
       },
     },
@@ -197,19 +208,43 @@
 
         });
       },
-      doRole(){
-        let checkMenu=this.allMenu.filter(x=>{
+      doRole() {
+        this.RoleModal.isLoading=true
+        let indexOf = function (ary, val) {
+          for (let i = 0; i < ary.length; i++) {
+            if (ary[i] === val) return i;
+          }
+          return -1;
+        }
+        let checkMenu = this.allMenu.filter(x => {
           //得到所有被选择的菜单
-              return   this.checkMenu.filter(y=>{
-                  return  x.id===y
-                }).length>0
-        }).map(x=>{
+          return this.Role.checkMenu.filter(y => {
+            return x.id === y
+          }).length > 0
+        }).map(x => {
           return x.parentId
         })
-        this.checkMenu=this.checkMenu.concat(checkMenu)
-        console.log([...new Set(this.checkMenu)])
 
-
+        this.Role.checkMenu = Array.from(new Set(this.Role.checkMenu.concat(checkMenu)))
+        console.log(this.Role.checkMenu)
+        //删除id为0的menu
+        let index = indexOf(this.Role.checkMenu, 0)
+        this.Role.checkMenu.splice(index, index === -1 ? 0 : 1)
+        if (this.RoleModal.title === '新建角色') {
+          addRole(this.Role).then(res => {
+            this.$Message.success(res.data.message);
+            this.RoleModal.isLoading=false
+            this.RoleModal.isShow=false
+            this.getlist()
+          })
+        } else if (this.RoleModal.title === '修改角色') {
+          updateRole(this.Role).then(res => {
+            this.$Message.success(res.data.message);
+            this.RoleModal.isLoading=false
+            this.RoleModal.isShow=false
+            this.getlist()
+          })
+        }
 //        this.RoleModal.isShow=false
       }
     },

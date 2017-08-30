@@ -30,7 +30,7 @@ public class RoleContrlloer {
     private RoleBiz roleBiz;
 
     @ApiOperation(value = "查找角色列表", notes = "查找角色", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping("/query")
+    @GetMapping("/query")
     public JsonResult<PageInfo<RoleVo>> getRoleList(RoleListQueryParam roleListQueryParam){
         JsonResult<PageInfo<RoleVo>> jsonReturn = new JsonResult<>();
         try{
@@ -50,16 +50,25 @@ public class RoleContrlloer {
         return jsonReturn;
     }
 
-    @ApiOperation(value = "更新对应的角色信息", notes = "更新角色", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @RequestMapping("/update")
+    @ApiOperation(value = "更新对应的角色信息", notes = "更新角色", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping("/update")
     public JsonResult<String> updateRole(
             @RequestBody RoleParam roleParam
     ){
 //todo
 
-        return null;
+        return new JsonResult<>(1,"更新成功");
     }
 
+    @ApiOperation(value = "新增角色信息", notes = "新增角色", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping("/add")
+    public JsonResult<String> addRole(
+            @RequestBody RoleParam roleParam
+    ){
+//todo
+
+        return new JsonResult<>(1,"新增成功");
+    }
 
     @ApiOperation(value = "删除对应的角色", notes = "删除角色", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @DeleteMapping("/delete")

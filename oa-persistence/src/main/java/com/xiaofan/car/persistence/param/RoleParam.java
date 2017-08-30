@@ -2,8 +2,9 @@ package com.xiaofan.car.persistence.param;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
- * TODO: 请添加描述
  *
  * @author gongdaoshun
  * @date 2017/8/26
@@ -11,5 +12,7 @@ import lombok.Data;
  */
 @Data
 public class RoleParam {
-    private String name;
+    private Integer id;
+    private String roleName;
+    private List<Integer> checkMenu;
 }
