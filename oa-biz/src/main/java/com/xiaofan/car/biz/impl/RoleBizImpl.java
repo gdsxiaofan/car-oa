@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.RoleBiz;
 import com.xiaofan.car.dao.repository.EmployeeMapper;
 import com.xiaofan.car.dao.repository.RoleMapper;
-import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.model.Role;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
 import com.xiaofan.car.persistence.param.UserQueryParam;
@@ -67,7 +66,8 @@ public class RoleBizImpl implements RoleBiz{
     }
 
     @Override
-    public boolean deleteRole(Integer roleId) {
-        return false;
+    public void deleteRole(Integer roleId) {
+
+        roleMapper.deleteByPrimaryKey(roleId);
     }
 }

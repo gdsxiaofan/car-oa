@@ -60,11 +60,12 @@
 
 <script>
   import {
+    getAllMenu,
     getRoleList,
     getRoleById,
     delRole,
     addRole,
-    updateRole
+    updateRole,
   } from '../../api/role/role'
 
   export default {
@@ -100,9 +101,11 @@
                 },
                 on: {
                   click: () => {
+                    this.Role.id=params.row.id
+                    this.Role.roleName=params.row.roleName
                     //todo 得到角色
                     getRoleById(params.row.id).then(res=>{
-                      this.Role = res.data.data
+                      this.Role.checkMenu = res.data.data.checkMenu
                       this.RoleModal.isShow = true
                       this.RoleModal.title = '修改角色'
                       this.collapse=[]
@@ -163,21 +166,7 @@
           roleName: '',
           checkMenu: []
         },
-        allMenu: [{"id": 106, "name": "权限管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
-          {"id": 107, "name": "工单管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
-          {"id": 108, "name": "员工管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
-          {"id": 109, "name": "设备管理", "href": "", "icon": "", "orderTop": 1, "parentId": 0},
-          {"id": 110, "name": "角色管理", "href": "/role", "icon": "", "orderTop": 2, "parentId": 106},
-          {"id": 112, "name": "用户角色管理", "href": "/userRole", "icon": "", "orderTop": 2, "parentId": 106},
-          {"id": 113, "name": "我的工单", "href": "/myorderTop", "icon": "", "orderTop": 2, "parentId": 107},
-          {"id": 114, "name": "发布工单", "href": "/publishorderTop", "icon": "", "orderTop": 2, "parentId": 107},
-          {"id": 115, "name": "派发工单", "href": "/dispatchorderTop", "icon": "", "orderTop": 2, "parentId": 107},
-          {"id": 116, "name": "历史工单", "href": "/historyorderTop", "icon": "", "orderTop": 2, "parentId": 107},
-          {"id": 117, "name": "所有工单", "href": "/allorderTop", "icon": "", "orderTop": 2, "parentId": 107},
-          {"id": 118, "name": "员工信息管理", "href": "/employeeInfo", "icon": "", "orderTop": 2, "parentId": 108},
-          {"id": 119, "name": "新增员工", "href": "/employeeAdd", "icon": "", "orderTop": 2, "parentId": 108},
-          {"id": 120, "name": "设备基础信息管理", "href": "/deviceInfo", "icon": "", "orderTop": 2, "parentId": 109},
-          {"id": 121, "name": "新增设备信息", "href": "/deviceAdd", "icon": "", "orderTop": 2, "parentId": 109}
+        allMenu: [
         ],
 
       }
@@ -232,14 +221,14 @@
         this.Role.checkMenu.splice(index, index === -1 ? 0 : 1)
         if (this.RoleModal.title === '新建角色') {
           addRole(this.Role).then(res => {
-            this.$Message.success(res.data.message);
+            this.$Message.success(res.data.message)
             this.RoleModal.isLoading=false
             this.RoleModal.isShow=false
             this.getlist()
           })
         } else if (this.RoleModal.title === '修改角色') {
           updateRole(this.Role).then(res => {
-            this.$Message.success(res.data.message);
+            this.$Message.success(res.data.message)
             this.RoleModal.isLoading=false
             this.RoleModal.isShow=false
             this.getlist()
@@ -250,6 +239,9 @@
     },
     created() {
       this.getlist()
+      getAllMenu().then(res=>{
+        this.allMenu=res.data.data
+      })
     }
   }
 </script>

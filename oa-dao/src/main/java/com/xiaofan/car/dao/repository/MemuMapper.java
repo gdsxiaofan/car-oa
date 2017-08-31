@@ -24,4 +24,6 @@ public interface MemuMapper{
     );
 
     public Integer updateByPrimaryKeySelective();
+
+    List<Memu> getAllMenu();
 }

@@ -1,16 +1,11 @@
 package com.xiaofan.car.biz;
 
 import com.github.pagehelper.PageInfo;
-import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.model.Role;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
 import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.RoleVo;
-import lombok.Data;
-
-import javax.management.relation.RoleList;
-import java.util.List;
 
 /**
  *
@@ -46,5 +41,5 @@ public interface RoleBiz {
      * @param roleId
      * @return
      */
-    public boolean deleteRole(Integer roleId);
+    public void deleteRole(Integer roleId);
 }

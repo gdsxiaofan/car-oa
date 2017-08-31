@@ -1,5 +1,11 @@
 import {fetch,qs} from '../../lib/utils/fetch'
 
+export function getAllMenu() {
+  return fetch({
+    url: 'v1/role/getAllMenu',
+    method: 'get',
+  });
+}
 export function getRoleList(queryCondition) {
   return fetch({
     url: 'v1/role/query',
@@ -9,9 +15,9 @@ export function getRoleList(queryCondition) {
 }
 export function getRoleById(id) {
   return fetch({
-    url: 'v1/role/getRoleMenu',
+    url: 'v1/role/getAllMenuByRoleId',
     method: 'get',
-    params: id
+    params: {id}
   });
 }
 export function delRole(roleId) {

@@ -46,9 +46,15 @@
 				WHERE
 					role_id = #{roleId}
 			)
+		and delete_status=1
 	</select>
-
-
+	<select id="getAllMenu" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		t_memu
+		where delete_status=1
+	</select>
 
 
 	<!-- 添加 （匹配有值的字段）-->
