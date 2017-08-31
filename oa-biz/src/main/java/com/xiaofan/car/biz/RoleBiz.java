@@ -1,8 +1,8 @@
 package com.xiaofan.car.biz;
 
 import com.github.pagehelper.PageInfo;
-import com.xiaofan.car.persistence.model.Role;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
+import com.xiaofan.car.persistence.param.RoleParam;
 import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.RoleVo;
@@ -31,10 +31,10 @@ public interface RoleBiz {
 
     /**
      * 更新对应的权限信息
-     * @param role
+     * @param roleParam
      * @return
      */
-    public boolean updateRole(Role role);
+    public void updateRole(RoleParam roleParam);
 
     /**
      * 删除对应的权限信息
@@ -42,4 +42,10 @@ public interface RoleBiz {
      * @return
      */
     public void deleteRole(Integer roleId);
+    /**
+     * 新增角色
+     * @param roleParam
+     * @return
+     */
+    void insertRole(RoleParam roleParam);
 }

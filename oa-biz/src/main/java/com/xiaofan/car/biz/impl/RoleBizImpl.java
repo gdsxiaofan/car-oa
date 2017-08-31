@@ -7,11 +7,13 @@ import com.xiaofan.car.dao.repository.EmployeeMapper;
 import com.xiaofan.car.dao.repository.RoleMapper;
 import com.xiaofan.car.persistence.model.Role;
 import com.xiaofan.car.persistence.param.RoleListQueryParam;
+import com.xiaofan.car.persistence.param.RoleParam;
 import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
@@ -61,13 +63,38 @@ public class RoleBizImpl implements RoleBiz{
     }
 
     @Override
-    public boolean updateRole(Role role) {
-        return false;
+    @Transactional
+    public void updateRole(RoleParam roleParam) {
+        //1.删除所有权限
+        roleMapper.deletePermissionByRoleId(roleParam.getId());
+        //2.添加权限
+        roleMapper.insertPermissionWithRoleId(roleParam);
+        Role role = new Role();
+        role.setId(roleParam.getId());
+        role.setRoleName(roleParam.getRoleName());
+        //3.修改角色名
+        roleMapper.updateByPrimaryKeySelective(role);
     }
 
     @Override
     public void deleteRole(Integer roleId) {
 
         roleMapper.deleteByPrimaryKey(roleId);
+    }
+
+    /**
+     * 新增角色
+     *
+     * @param roleParam
+     * @return
+     */
+    @Override
+    @Transactional
+    public void insertRole(RoleParam roleParam) {
+        Role role = new Role();
+        role.setRoleName(roleParam.getRoleName());
+        roleMapper.insertSelective(role);
+        roleParam.setId(role.getId());
+        roleMapper.insertPermissionWithRoleId(roleParam);
     }
 }

@@ -1,5 +1,7 @@
 package com.xiaofan.car.dao.repository;
 
+import com.xiaofan.car.persistence.model.Role;
+import com.xiaofan.car.persistence.param.RoleParam;
 import com.xiaofan.car.persistence.vo.RoleVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +20,12 @@ public interface RoleMapper {
     );
 
     int deleteByPrimaryKey(@Param("id") Integer id);
+
+    int deletePermissionByRoleId(Integer id);
+
+    void insertPermissionWithRoleId(RoleParam roleParam);
+
+    void updateByPrimaryKeySelective(Role role);
+
+    void insertSelective(Role role);
 }

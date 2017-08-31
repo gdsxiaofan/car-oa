@@ -24,9 +24,11 @@
 
     <!-- 通用查询结果列-->
     <sql id="Base_Column_List">
-	id,	role_name
-role_name,	parent_role_id,	role_code,	delete_staus,	create_time,	update_time
+	id,	role_name,	parent_role_id,	role_code,	delete_staus,	create_time,	update_time
 	</sql>
+    <delete id="deletePermissionByRoleId">
+        delete  FROM t_permission where role_id=#{id}
+    </delete>
 
     <!-- 查询（根据主键ID查询） -->
     <select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.Role"
@@ -49,7 +51,7 @@ role_name,	parent_role_id,	role_code,	delete_staus,	create_time,	update_time
 
 
     <!-- 添加 （匹配有值的字段）-->
-    <insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.Role">
+    <insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.Role" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -98,6 +100,13 @@ role_name,	parent_role_id,	role_code,	delete_staus,	create_time,	update_time
                 #{updateTime},
             </if>
         </trim>
+    </insert>
+    <insert id="insertPermissionWithRoleId">
+        INSERT   INTO t_permission (role_id,memu_id)
+        VALUES
+        <foreach collection="checkMenu" item="item" index="index" separator=",">
+            (#{id},#{item})
+        </foreach>
     </insert>
 
     <!-- 修 改-->

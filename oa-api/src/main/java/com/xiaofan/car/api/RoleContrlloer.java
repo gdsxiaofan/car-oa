@@ -34,66 +34,68 @@ public class RoleContrlloer {
     private RoleBiz roleBiz;
     @Autowired
     private MemuService memuService;
+
     @ApiOperation(value = "查找角色列表", notes = "查找角色", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/query")
-    public JsonResult<PageInfo<RoleVo>> getRoleList(RoleListQueryParam roleListQueryParam){
+    public JsonResult<PageInfo<RoleVo>> getRoleList(RoleListQueryParam roleListQueryParam) {
         JsonResult<PageInfo<RoleVo>> jsonReturn = new JsonResult<>();
-        try{
+        try {
             PageInfo<RoleVo> roleVoPageInfo = roleBiz.getRoleList(roleListQueryParam);
 
             jsonReturn.setData(roleVoPageInfo);
-        }
-        catch(RuntimeException re){
+        } catch (RuntimeException re) {
             jsonReturn.setCode(0);
             jsonReturn.setMessage(re.getMessage());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             jsonReturn.setCode(0);
             jsonReturn.setMessage("系统异常！");
         }
 
         return jsonReturn;
     }
+
     @ApiOperation(value = "获取所有菜单", notes = "获取所有菜单", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getAllMenu")
-    public JsonResult<List<Memu>> getAllMenu(){
-        List<Memu> memus= memuService.getAllMenu();
+    public JsonResult<List<Memu>> getAllMenu() {
+        List<Memu> memus = memuService.getAllMenu();
 
-        return new JsonResult<List<Memu>>(1,"获取成功",memus);
+        return new JsonResult<List<Memu>>(1, "获取成功", memus);
     }
+
     @ApiOperation(value = "获取角色所有菜单", notes = "获取角色所有菜单", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getAllMenuByRoleId")
-    public JsonResult<RoleParam> getAllMenuByRoleId(Integer id){
-        RoleParam memus= memuService.getAllMenuByRoleId(id);
+    public JsonResult<RoleParam> getAllMenuByRoleId(Integer id) {
+        RoleParam memus = memuService.getAllMenuByRoleId(id);
 
-        return new JsonResult<RoleParam>(1,"获取成功",memus);
+        return new JsonResult<RoleParam>(1, "获取成功", memus);
     }
+
     @ApiOperation(value = "更新对应的角色信息", notes = "更新角色", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PutMapping("/update")
     public JsonResult<String> updateRole(
             @RequestBody RoleParam roleParam
-    ){
-//todo
+    ) {
+        roleBiz.updateRole(roleParam);
 
-        return new JsonResult<>(1,"更新成功");
+        return new JsonResult<>(1, "更新成功");
     }
 
     @ApiOperation(value = "新增角色信息", notes = "新增角色", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/add")
     public JsonResult<String> addRole(
             @RequestBody RoleParam roleParam
-    ){
-//todo
+    ) {
+        roleBiz.insertRole(roleParam);
 
-        return new JsonResult<>(1,"新增成功");
+        return new JsonResult<>(1, "新增成功");
     }
 
     @ApiOperation(value = "删除对应的角色", notes = "删除角色", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @DeleteMapping("/delete")
-    public JsonResult<String> deleteRole(@RequestParam("roleId")Integer roleId){
+    public JsonResult<String> deleteRole(@RequestParam("roleId") Integer roleId) {
         roleBiz.deleteRole(roleId);
 
-        return new JsonResult<>(1,"删除成功");
+        return new JsonResult<>(1, "删除成功");
     }
 
 }
