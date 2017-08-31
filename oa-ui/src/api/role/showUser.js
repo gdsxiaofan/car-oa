@@ -7,3 +7,10 @@ export function getUserList(queryCondition) {
     params: queryCondition
   });
 }
+export function updateUser(user) {
+  return fetch({
+    url: 'v1/user/updateUser',
+    method: 'put',
+    data: user
+  });
+}

@@ -18,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Created by gongdaoshun on 2017/8/26.
@@ -91,7 +90,12 @@ public class UserController {
     public JsonResult<String> updateUser(
             @RequestBody Employee employee
     ) {
-        userBiz.updateUser(employee);
+        try{
+            userBiz.updateUser(employee);
+        }catch (Exception e){
+            return new JsonResult<>(0, "修改失败");
+        }
+
         return new JsonResult<>(1, "修改成功");
     }
 

@@ -36,18 +36,42 @@
               show-elevator></Page>
       </div>
     </div>
-
+    <Modal v-model="userModal.isShow"
+           title="更改角色"
+    >
+      <Form :model="userInfo" :label-width="80" ref="role">
+        <Form-item label="用户名：">
+          {{userInfo.name}}
+        </Form-item>
+        <Form-item label="当前角色：">
+          {{userInfo.roleName}}
+        </Form-item>
+        <Form-item label="角色">
+          <Select v-model="userInfo.roleId" style="width:200px">
+            <Option v-for="item in RoleList" :value="item.id" :key="item.id">{{ item.roleName }}</Option>
+          </Select>
+        </Form-item>
+      </Form>
+      <div slot="footer">
+        <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
+        <Button type="primary" @click="updateUser" :loading="userModal.isLoading">提交</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
 <script>
-  import {getUserList} from '../../api/role/showUser'
+  import {getUserList,updateUser} from '../../api/role/showUser'
   import {getRoleList} from '../../api/role/role'
 
   export default {
     data() {
       return {
-        userInfo: {id: '', roleId: ''},
+        userInfo: {id: '', roleId: '', roleName: '', name: ''},
+        userModal: {
+          isShow: false,
+          isLoading: false
+        },
         selection: '',
         queryCondition: {
           pageSize: 10,
@@ -83,36 +107,28 @@
             width: 300,
             render: (h, params) => h('div', [
               h('Button', {
-                props: {
-                  type: 'info'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.userInfo.id = params.row.id
-                    this.$Modal.confirm({
-                      title: '修改角色',
-                      content: '<Select v-model="userInfo.roleId" style="width:200px">' +
-                      '      <Option v-for="item in RoleList" :value="item.id" :key="item.id">{{ item.roleName }}</Option>' +
-                      '    </Select>'
-                    });
-                    this.$nextTick(()=>{
-                      this.userInfo.roleId=params.row.roleId
-                    })
+                  props: {
+                    type: 'info'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.userInfo.id = params.row.id
+                      this.userInfo.roleName = params.row.roleName
+                      this.userInfo.name = params.row.employeeName
+                      this.userInfo.roleId = params.row.roleId
+                      this.userModal.isShow = true
+                    }
                   }
-                }
-              }, '更换角色')
+                },
+                '更换角色'
+              )
             ])
           }
         ],
         list: [],
-        RoleModal: {
-          title: '',
-          isShow: false,
-          isLoading: true
-        },
         RoleList: []
       }
     },
@@ -130,7 +146,17 @@
 
         });
       },
-    },
+      updateUser(){
+        this.userModal.isLoading=true
+        updateUser(this.userInfo).then(res=>{
+          this.userModal.isLoading=false
+          this.userModal.isShow=false
+          this.$Message.success("修改成功")
+          this.getlist()
+        })
+      }
+    }
+    ,
     created() {
 //获取rolelist
       getRoleList({pageSize: 0, pageNum: 1}).then(res => {
