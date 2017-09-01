@@ -86,7 +86,7 @@ router.beforeEach((to, from, next) => {
   }
   let jwt = sessionStorage.getItem("Authorization");
   if (!jwt && to.path != '/login') {
-    next({ path: '/login' })
+    next({ path: '/login',query:{ redirect: to.fullPath} })
     iview.LoadingBar.finish();
     window.scrollTo(0, 0);
   } else {

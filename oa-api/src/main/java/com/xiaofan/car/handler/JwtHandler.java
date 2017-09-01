@@ -2,12 +2,12 @@ package com.xiaofan.car.handler;
 
 import com.xiaofan.car.util.Constant;
 import com.xiaofan.car.util.jwt.JwtUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 /**
  * @Author:duhongda
@@ -18,8 +18,12 @@ public class JwtHandler implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String jwt = request.getHeader(Constant.AUTHORIZATION);
+        if (StringUtils.isBlank(jwt)) {//判断jwt是否为空
+            response.setStatus(401);
+            return false;
+        }
         Integer id = JwtUtil.parseJwt2Id(jwt);
-        if (id == null) {
+        if (id == null) {//判断jwt是否为真或是否过期
             response.setStatus(401);
             return false;
         }

@@ -37,7 +37,7 @@ fetch.interceptors.request.use(config => {
 // respone拦截器
 fetch.interceptors.response.use(
   response => {
-    sessionStorage.setItem("Authorization",response.headers.authorization)
+    sessionStorage.setItem("Authorization", response.headers.authorization)
     return response
   }
 
@@ -63,7 +63,8 @@ fetch.interceptors.response.use(
   ,
   error => {
     if (error.response.status === 401) {
-      router.push({path: '/login'})
+      console.log(this.$route)
+      router.replace({path: '/login', query: {redirect: router.currentRoute.fullPath}})
       Message.error("请重新登录", 3);
       Modal.remove()
       return Promise.reject(error);
