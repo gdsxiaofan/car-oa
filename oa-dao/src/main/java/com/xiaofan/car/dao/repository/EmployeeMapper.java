@@ -11,44 +11,41 @@ import java.util.List;
 
 
 /**
- * 
  * EmployeeMapper数据库操作接口类
- * 
  **/
 @Repository
-public interface EmployeeMapper{
+public interface EmployeeMapper {
 
     /**
      * 插入员工信息
+     *
      * @param employee
      * @return
      */
-    public Integer insertSelective(
+    Integer insertSelective(
             Employee employee
     );
 
-    public Employee selectEmployeeForLogin(
+    Employee selectEmployeeForLogin(
             @Param("employeeNo") String employeeNo,
             @Param("password") String password
     );
 
+
+    UserPermissionVo selectUserPermissionVo(
+            @Param("userId") Integer userId
+    );
+
     /**
      * 列表查询对应得员工信息
+     *
      * @param userQueryParam
      * @return
      */
-    public Employee selectEmployeeForList(
-            UserQueryParam userQueryParam
+    List<EmployeeVo> selectEmployeeVoByUserParam(UserQueryParam userQueryParam
     );
 
-    public UserPermissionVo selectUserPermissionVo(
-            @Param("userId")Integer userId
-    );
-
-    public List<EmployeeVo> selectEmployeeVoByUserParam(UserQueryParam userQueryParam
-    );
-
-    Employee selectEmployeeForUpdatePwd(@Param("id")Integer id, @Param("oldPwd")String oldPwd);
+    Employee selectEmployeeForUpdatePwd(@Param("id") Integer id, @Param("oldPwd") String oldPwd);
 
 
     void updateByPrimaryKeySelective(Employee employee);

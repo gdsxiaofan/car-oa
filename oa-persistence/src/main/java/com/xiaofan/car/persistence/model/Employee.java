@@ -39,6 +39,8 @@ public class Employee{
 
 	/**更新时间**/
 	private java.util.Date updateTime;
+	/**是否可用0:停用1:可用**/
+	private Boolean isActive;
 
 	/**删除状态：1：正常状态，0：删除**/
 	private Integer deleteStatus;

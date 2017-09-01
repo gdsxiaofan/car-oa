@@ -27,6 +27,12 @@
         <Col :span="2" offset="1">
         <Button type="primary" shape="circle" icon="ios-search" @click="getlist">查询</Button>
         </Col>
+        <Col :span="2" offset="1">
+        <Button type="success" shape="circle" icon="ios-personadd"
+                @click="">
+          新建用户
+        </Button>
+        </Col>
       </Row>
     </Card>
     <Table border :columns="columns" @on-selection-change="getSelection" :data="list"></Table>

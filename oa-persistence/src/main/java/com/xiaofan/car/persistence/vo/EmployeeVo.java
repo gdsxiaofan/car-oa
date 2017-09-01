@@ -32,6 +32,8 @@ public class EmployeeVo {
     private String roleName;
     /**员工角色**/
     private Integer roleId;
+    /**是否可用0:停用1:可用**/
+    private Boolean isActive;
     /**员工状态：1：在职，2休假，3：离职**/
     private Integer employeeStatus;
 

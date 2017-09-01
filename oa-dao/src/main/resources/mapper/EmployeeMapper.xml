@@ -25,6 +25,8 @@
         <result property="createTime" column="create_Time"/>
         <!--更新时间-->
         <result property="updateTime" column="update_Time"/>
+        <!--是否可用：1：正常状态，0：删除-->
+        <result property="isActive" column="is_active"/>
         <!--删除状态：1：正常状态，0：删除-->
         <result property="deleteStatus" column="delete_Status"/>
     </resultMap>
@@ -32,7 +34,7 @@
 
     <!-- 通用查询结果列-->
     <sql id="Base_Column_List">
-	id,	employee_name,	employee_password,	employee_mobile,	employee_no,	role_id,	induction_time,	employee_status,	create_Time,	update_Time,	delete_Status
+	id,	employee_name,	employee_password,	employee_mobile,	employee_no,	role_id,	induction_time,	employee_status,	create_Time,	update_Time,is_active,	delete_Status
 	</sql>
 
 
@@ -70,6 +72,9 @@
             <if test="updateTime != null">
                 update_Time,
             </if>
+            <if test="is_active != null">
+                isActive,
+            </if>
             <if test="deleteStatus != null">
                 delete_Status,
             </if>
@@ -105,6 +110,9 @@
             </if>
             <if test="updateTime!=null">
                 #{updateTime},
+            </if>
+            <if test="is_active != null">
+                isActive,
             </if>
             <if test="deleteStatus!=null">
                 #{deleteStatus},
@@ -143,6 +151,9 @@
             <if test="updateTime != null">
                 update_Time = #{updateTime},
             </if>
+            <if test="is_active != null">
+                is_active=#{isActive},
+            </if>
             <if test="deleteStatus != null">
                 delete_Status = #{deleteStatus},
             </if>
@@ -157,9 +168,8 @@
         t_employee
         WHERE
         employee_no = #{employeeNo}
-        AND employee_password = #{password}
+        AND employee_password = #{password} and  is_active=1  and  delete_Status=1
     </select>
-    <select id="selectEmployeeForList" resultType="com.xiaofan.car.persistence.model.Employee"></select>
 
     <select id="selectUserPermissionVo" resultType="com.xiaofan.car.persistence.vo.UserPermissionVo">
 		SELECT
@@ -183,20 +193,21 @@
         employee_no as employeeNO,
         DATE_FORMAT(induction_time,'%Y-%m-%d %T') as inductionTime,
         employee_status as employStatus,
-        role_name as roleName
+        role_name as roleName,
+        is_active as isActive
         FROM
         t_employee
         LEFT JOIN
-        t_role on  t_employee.role_id=t_role.id
+        t_role on t_employee.role_id=t_role.id
         <where>
             <if test="roleId != null and roleId != 0">
                 AND role_id = #{roleId}
             </if>
             <if test="userName !=null and userName!=''">
-              and employee_name like CONCAT('%',#{userName},'%')
+                and employee_name like CONCAT('%',#{userName},'%')
             </if>
             <if test="employeeNo !=null and employeeNo!=''">
-              and employee_no like CONCAT('%',#{employeeNo},'%')
+                and employee_no like CONCAT('%',#{employeeNo},'%')
             </if>
         </where>
     </select>
