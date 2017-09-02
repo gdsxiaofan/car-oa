@@ -84,7 +84,49 @@ public class UserBizImpl implements UserBiz {
      * @return
      */
     @Override
+    @Transactional
     public void updateUser(Employee employee) {
          employeeMapper.updateByPrimaryKeySelective(employee);
+    }
+
+    /**
+     * 删除用户
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional
+    public void delUser(Integer id) {
+        Employee employee= new Employee();
+        employee.setId(id);
+        employee.setDeleteStatus(0);
+        employeeMapper.updateByPrimaryKeySelective(employee);
+    }
+    /**
+     * 是否启用用户
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional
+    public void isActiveUser(Integer id,Boolean isActive) {
+        Employee employee= new Employee();
+        employee.setId(id);
+        employee.setIsActive(isActive);
+        employeeMapper.updateByPrimaryKeySelective(employee);
+    }
+
+    /**
+     * 新增用户信息
+     *
+     * @param employee
+     * @return
+     */
+    @Override
+    @Transactional
+    public void addUser(Employee employee) {
+        employeeMapper.insertSelective(employee);
     }
 }

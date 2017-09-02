@@ -10,9 +10,11 @@ import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.persistence.vo.UserPermissionVo;
 import com.xiaofan.car.util.Constant;
 import com.xiaofan.car.util.jwt.JwtUtil;
+import com.xiaofan.car.util.lang.MD5Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -85,19 +87,70 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "新增用户信息", notes = "新增用户信息", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping("/addUser")
+    public JsonResult<String> addUser(
+            @RequestBody Employee employee
+    ) {
+        try {
+            String pwd = employee.getEmployeePassword();
+            employee.setEmployeePassword(MD5Util.encode(pwd));
+            userBiz.addUser(employee);
+        } catch (Exception e) {
+            log.error("新增用户信息失败:{}",e.getMessage());
+            return new JsonResult<>(0, "新增失败");
+        }
+        return new JsonResult<>(1, "新增成功");
+    }
+
     @ApiOperation(value = "修改用户信息", notes = "修改用户信息", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PutMapping("/updateUser")
     public JsonResult<String> updateUser(
             @RequestBody Employee employee
     ) {
-        try{
+        try {
+            String pwd = employee.getEmployeePassword();
+            if (StringUtils.isNotBlank(pwd)) {
+                employee.setEmployeePassword(MD5Util.encode(pwd));
+            } else {
+                employee.setEmployeePassword(null);
+            }
             userBiz.updateUser(employee);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new JsonResult<>(0, "修改失败");
         }
 
         return new JsonResult<>(1, "修改成功");
     }
 
+    @ApiOperation(value = "删除用户", notes = "删除用户", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping("/delUser")
+    public JsonResult<String> delUser(
+            Integer id
+    ) {
+        try {
+            userBiz.delUser(id);
+        } catch (Exception e) {
+            return new JsonResult<>(0, "删除失败");
+        }
+
+        return new JsonResult<>(1, "删除成功");
+    }
+
+    @ApiOperation(value = "是否停用用户", notes = "是否停用用户", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping("/isActiveUser")
+    public JsonResult<String> isActiveUser(
+            Integer id,
+            Boolean isActive
+    ) {
+        try {
+            userBiz.isActiveUser(id, isActive);
+        } catch (Exception e) {
+            log.error("是否停用用户 :{}", e.getMessage());
+            return new JsonResult<>(0, "删除失败");
+        }
+
+        return new JsonResult<>(1, "删除成功");
+    }
 }
 

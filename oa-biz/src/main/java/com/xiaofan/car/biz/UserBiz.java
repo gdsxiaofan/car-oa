@@ -32,4 +32,23 @@ public interface UserBiz {
      * @return
      */
     void updateUser(Employee employee);
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    void delUser(Integer id);
+    /**
+     * 删除用户
+     * @param id
+     * @param isActive
+     * @return
+     */
+    void isActiveUser(Integer id,Boolean isActive);
+    /**
+     * 新增用户信息
+     * @param employee
+     * @return
+     */
+    void addUser(Employee employee);
 }

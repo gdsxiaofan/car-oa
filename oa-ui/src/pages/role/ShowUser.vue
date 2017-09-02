@@ -29,7 +29,7 @@
         </Col>
         <Col :span="2" offset="1">
         <Button type="success" shape="circle" icon="ios-personadd"
-                @click="">
+                @click="add">
           新建用户
         </Button>
         </Col>
@@ -43,16 +43,26 @@
       </div>
     </div>
     <Modal v-model="userModal.isShow"
-           title="更改角色"
+           :title="userModal.title"
     >
-      <Form :model="userInfo" :label-width="80" ref="role">
-        <Form-item label="用户名：">
-          {{userInfo.name}}
+      <Form ref="user" :model="userInfo" :rules="userRules" :label-width="80">
+        <Form-item label="工号：" prop="employeeNo">
+          <Input type="text" v-model="userInfo.employeeNo" placeholder="工号">
+          <Icon type="ios-person-outline" slot="prepend"></Icon>
+          </Input>
         </Form-item>
-        <Form-item label="当前角色：">
-          {{userInfo.roleName}}
+        <FormItem label="密码：" :prop="userModal.title==='修改用户'?'':'employeePassword'">
+          <Input type="password" v-model="userInfo.employeePassword" :placeholder="userModal.title==='修改用户'?'不填则不修改':'密码'">
+          <Icon type="ios-locked-outline" slot="prepend"></Icon>
+          </Input>
+        </FormItem>
+        <Form-item label="姓名：" prop="employeeName">
+          <Input type="text" v-model="userInfo.employeeName" placeholder=""/>
         </Form-item>
-        <Form-item label="角色">
+        <Form-item label="手机号码：" prop="employeeMobile">
+          <Input type="text" v-model="userInfo.employeeMobile" placeholder=""/>
+        </Form-item>
+        <Form-item label="角色" prop="roleId">
           <Select v-model="userInfo.roleId" style="width:200px">
             <Option v-for="item in RoleList" :value="item.id" :key="item.id">{{ item.roleName }}</Option>
           </Select>
@@ -60,23 +70,55 @@
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="updateUser" :loading="userModal.isLoading">提交</Button>
+        <Button type="primary" @click="doUser" :loading="userModal.isLoading">提交</Button>
       </div>
     </Modal>
   </div>
 </template>
 
 <script>
-  import {getUserList,updateUser} from '../../api/role/showUser'
+  import {
+    getUserList,
+    updateUser,
+    delUser,
+    addUser,
+    isActiveUser
+  } from '../../api/role/showUser'
   import {getRoleList} from '../../api/role/role'
 
   export default {
     data() {
       return {
-        userInfo: {id: '', roleId: '', roleName: '', name: ''},
+        userInfo: {
+          id: '',
+          roleId: '',
+          roleName: '',
+          employeeMobile: '',
+          employeeNo: '',
+          employeeName: '',
+          employeePassword: ''
+        },
+        userRules: {
+          employeeNo: [
+            {required: true, message: '请填写工号', trigger: 'blur'}
+          ],
+          employeeName: [
+            {required: true, message: '请填写姓名', trigger: 'blur'}
+          ],
+          employeeMobile: [
+            {required: true, message: '请填写手机号', trigger: 'blur'}
+          ],
+          employeePassword: [
+            {required: true, message: '请填写密码', trigger: 'blur'}
+          ],
+          roleId: [
+            {type:'number',required: true, message: '请选择角色', trigger: 'change'},
+          ]
+        },
         userModal: {
           isShow: false,
-          isLoading: false
+          isLoading: false,
+          title: ''
         },
         selection: '',
         queryCondition: {
@@ -113,6 +155,31 @@
             width: 300,
             render: (h, params) => h('div', [
               h('Button', {
+                props: {
+                  type: 'ghost'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.$Modal.confirm({
+                      title: params.row.isActive ? '是否停用' : '是否启用',
+                      content: '<p>' + params.row.employeeName + '</p>',
+                      loading: true,
+                      onOk: () => {
+                        isActiveUser(params.row.id, !params.row.isActive).then(res => {
+                          this.$Message.success(res.data.message);
+                          this.$Modal.remove()
+                          this.getlist()
+                        })
+
+                      }
+                    });
+                  }
+                }
+              }, params.row.isActive ? '停用' : '启用'),
+              h('Button', {
                   props: {
                     type: 'info'
                   },
@@ -121,17 +188,46 @@
                   },
                   on: {
                     click: () => {
+                      this.$refs['user'].resetFields()
                       this.userInfo.id = params.row.id
                       this.userInfo.roleName = params.row.roleName
-                      this.userInfo.name = params.row.employeeName
+                      this.userInfo.employeeName = params.row.employeeName
+                      this.userInfo.employeeNo = params.row.employeeNo
+                      this.userInfo.employeeMobile = params.row.employeeMobile
                       this.userInfo.roleId = params.row.roleId
                       this.userModal.isShow = true
+                      this.userModal.title = '修改用户'
                     }
                   }
                 },
-                '更换角色'
-              )
-            ])
+                '修改'
+              ),
+              h('Button', {
+                props: {
+                  type: 'error'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.$Modal.confirm({
+                      title: '是否删除',
+                      content: '<p>' + params.row.employeeName + '</p>',
+                      loading: true,
+                      onOk: () => {
+                        delUser(params.row.id).then(res => {
+                          this.$Message.success(res.data.message);
+                          this.$Modal.remove()
+                          this.getlist()
+                        })
+
+                      }
+                    });
+                  }
+                }
+              }, '删除')]
+            )
           }
         ],
         list: [],
@@ -139,6 +235,12 @@
       }
     },
     methods: {
+      add() {
+        this.$refs['user'].resetFields()
+        this.userModal.title = '新增用户'
+        this.userModal.isShow = true
+
+      },
       getSelection(selection) {
         this.selection = selection
       },
@@ -152,17 +254,29 @@
 
         });
       },
-      updateUser(){
-        this.userModal.isLoading=true
-        updateUser(this.userInfo).then(res=>{
-          this.userModal.isLoading=false
-          this.userModal.isShow=false
-          this.$Message.success("修改成功")
-          this.getlist()
+      doUser() {
+        this.$refs['user'].validate((valid) => {
+          if (valid) {
+            this.userModal.isLoading = true
+            if (this.userModal.title === '修改用户') {
+              updateUser(this.userInfo).then(res => {
+                this.userModal.isLoading = false
+                this.userModal.isShow = false
+                this.$Message.success(res.data.message)
+                this.getlist()
+              })
+            } else if (this.userModal.title === '新增用户') {
+              addUser(this.userInfo).then(res => {
+                this.userModal.isLoading = false
+                this.userModal.isShow = false
+                this.$Message.success(res.data.message)
+                this.getlist()
+              })
+            }
+          }
         })
       }
-    }
-    ,
+    },
     created() {
 //获取rolelist
       getRoleList({pageSize: 0, pageNum: 1}).then(res => {
