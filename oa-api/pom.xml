@@ -11,7 +11,9 @@
 
     <artifactId>oa-api</artifactId>
     <packaging>jar</packaging>
-
+    <properties>
+        <docker.image.prefix>car</docker.image.prefix>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.xiaofan</groupId>
@@ -35,6 +37,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -50,6 +53,24 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- tag::plugin[] -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.3</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${artifactId}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+            <!-- end::plugin[] -->
         </plugins>
     </build>
 </project>
