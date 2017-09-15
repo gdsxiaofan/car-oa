@@ -67,7 +67,7 @@ fetch.interceptors.response.use(
       router.replace({path: '/login', query: {redirect: router.currentRoute.fullPath}})
       Message.error("请重新登录", 3);
       Modal.remove()
-      return Promise.reject(error);
+      return Promise.reject("请重新登录");
     }
     console.error('err' + error);// for debug
     Message.error(response.msg, 3);

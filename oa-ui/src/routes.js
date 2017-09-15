@@ -31,8 +31,8 @@ const EmployeeAdd = resolve => require(['./pages/employee/Add.vue'], resolve)
 //设备管理          >>>>>>
 /*信息*/
 const DeviceInfo = resolve => require(['./pages/device/Info.vue'], resolve)
-/*新增*/
-const DeviceAdd = resolve => require(['./pages/device/Add.vue'], resolve)
+/*服务*/
+const Service = resolve => require(['./pages/device/Service.vue'], resolve)
 let routes = [
   {
     path: '/',
@@ -53,7 +53,7 @@ let routes = [
       {path: 'employeeInfo', meta: {title: '员工信息'}, icon: 'ios-home', component: EmployeeInfo},
       {path: 'employeeAdd', meta: {title: '员工新增'}, icon: 'ios-home', component: EmployeeAdd},
       {path: 'deviceInfo', meta: {title: '设备信息'}, icon: 'ios-home', component: DeviceInfo},
-      {path: 'deviceAdd', meta: {title: '设备新增'}, icon: 'ios-home', component: DeviceAdd},
+      {path: 'service', meta: {title: '服务信息'}, icon: 'ios-home', component: Service},
 
     ]
   },

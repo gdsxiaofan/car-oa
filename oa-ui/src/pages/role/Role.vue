@@ -103,7 +103,6 @@
                   click: () => {
                     this.Role.id=params.row.id
                     this.Role.roleName=params.row.roleName
-                    //todo 得到角色
                     getRoleById(params.row.id).then(res=>{
                       this.Role.checkMenu = res.data.data.checkMenu
                       this.RoleModal.isShow = true
@@ -234,7 +233,6 @@
             this.getlist()
           })
         }
-//        this.RoleModal.isShow=false
       }
     },
     created() {
