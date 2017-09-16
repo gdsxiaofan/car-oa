@@ -3,16 +3,16 @@
     <Card>
       <p slot="title">条件查询</p>
       <Row>
-        <Col :span="2" style="margin-top:0.2%">
+        <Col :span="4" style="margin-top:0.2%">
         服务名称：
         </Col>
-        <Col :span="3">
+        <Col :span="4">
         <Input type="text" v-model="queryCondition.name" placeholder="请输入..."></Input>
         </Col>
-        <Col :span="2" offset="1">
+        <Col :span="3" offset="1">
         <Button type="primary" shape="circle" icon="ios-search" @click="getlist">查询</Button>
         </Col>
-        <Col :span="2" offset="1">
+        <Col :span="3" offset="1">
         <Button type="success" shape="circle" icon="ios-personadd"
                 @click="add">
           新建服务
@@ -30,32 +30,30 @@
     <Modal v-model="userModal.isShow"
            :title="userModal.title"
     >
-      <Form ref="user" :model="userInfo" :rules="userRules" :label-width="80">
-        <Form-item label="工号：" prop="employeeNo">
-          <Input type="text" v-model="userInfo.employeeNo" placeholder="工号">
-          <Icon type="ios-person-outline" slot="prepend"></Icon>
-          </Input>
+      <Form ref="user" :model="service" :rules="serviceRules" :label-width="80">
+        <Form-item label="服务名称：" prop="serviceName">
+          <Input type="text" v-model="service.serviceName" placeholder="服务名称" />
         </Form-item>
-        <FormItem label="密码：" :prop="userModal.title==='修改用户'?'':'employeePassword'">
-          <Input type="password" v-model="userInfo.employeePassword" :placeholder="userModal.title==='修改用户'?'不填则不修改':'密码'">
-          <Icon type="ios-locked-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <Form-item label="姓名：" prop="employeeName">
-          <Input type="text" v-model="userInfo.employeeName" placeholder=""/>
+        <Form-item label="属性一：" prop="serviceName">
+          <Input type="text" v-model="service.serviceName" placeholder="属性一" />
         </Form-item>
-        <Form-item label="手机号码：" prop="employeeMobile">
-          <Input type="text" v-model="userInfo.employeeMobile" placeholder=""/>
+        <Form-item label="属性二：" prop="serviceName">
+          <Input type="text" v-model="service.serviceName" placeholder="属性二" />
         </Form-item>
-        <Form-item label="角色" prop="roleId">
-          <Select v-model="userInfo.roleId" style="width:200px">
-            <Option v-for="item in RoleList" :value="item.id" :key="item.id">{{ item.roleName }}</Option>
-          </Select>
+        <Form-item label="属性三：" prop="serviceName">
+          <Input type="text" v-model="service.serviceName" placeholder="属性三" />
         </Form-item>
+        <Form-item label="属性四：" prop="serviceName">
+          <Input type="text" v-model="service.serviceName" placeholder="属性四" />
+        </Form-item>
+        <Form-item label="描述：" prop="serviceName">
+          <Input type="text" v-model="service.serviceName" placeholder="描述" />
+        </Form-item>
+
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="doUser" :loading="userModal.isLoading">提交</Button>
+        <Button type="primary" @click="doService" :loading="userModal.isLoading">提交</Button>
       </div>
     </Modal>
   </div>
@@ -65,7 +63,8 @@
   import {
     addService,
     getServiceList,
-    updateService
+    updateService,
+    delService
   } from '../../api/device/service'
 
   export default {
@@ -76,7 +75,7 @@
           serviceName: '',
 
         },
-        userRules: {
+        serviceRules: {
           serviceName: [
             {required: true, message: '请填写工号', trigger: 'blur'}
           ],
@@ -90,8 +89,7 @@
         queryCondition: {
           pageSize: 10,
           pageNum: 1,
-          deviceId: null,
-          serviceName:"",
+          deviceId: 0,
           name: '',
           total: 0
         },
@@ -106,7 +104,9 @@
           },
           {
             title: '设备名称',
-            key: 'deviceName'
+            render:(h,params)=>{
+              return h('div',this.$route.query.serviceName)
+            }
           },
           {
             title: '属性一',
@@ -126,33 +126,8 @@
           },
           {
             title: '操作',
-            width: 300,
+            width:240,
             render: (h, params) => h('div', [
-              h('Button', {
-                props: {
-                  type: 'ghost'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.$Modal.confirm({
-                      title: params.row.isActive ? '是否停用' : '是否启用',
-                      content: '<p>' + params.row.employeeName + '</p>',
-                      loading: true,
-                      onOk: () => {
-                        isActiveUser(params.row.id, !params.row.isActive).then(res => {
-                          this.$Message.success(res.data.message);
-                          this.$Modal.remove()
-                          this.getlist()
-                        })
-
-                      }
-                    });
-                  }
-                }
-              }, params.row.isActive ? '停用' : '启用'),
               h('Button', {
                   props: {
                     type: 'info'
@@ -163,14 +138,10 @@
                   on: {
                     click: () => {
                       this.$refs['user'].resetFields()
-                      this.userInfo.id = params.row.id
-                      this.userInfo.roleName = params.row.roleName
-                      this.userInfo.employeeName = params.row.employeeName
-                      this.userInfo.employeeNo = params.row.employeeNo
-                      this.userInfo.employeeMobile = params.row.employeeMobile
-                      this.userInfo.roleId = params.row.roleId
+                      this.service.id = params.row.id
+                      this.service.serviceName = params.row.serviceName
                       this.userModal.isShow = true
-                      this.userModal.title = '修改用户'
+                      this.userModal.title = '修改服务'
                     }
                   }
                 },
@@ -187,10 +158,10 @@
                   click: () => {
                     this.$Modal.confirm({
                       title: '是否删除',
-                      content: '<p>' + params.row.employeeName + '</p>',
+                      content: '<p>' + params.row.serviceName + '</p>',
                       loading: true,
                       onOk: () => {
-                        delUser(params.row.id).then(res => {
+                        delService(params.row.id).then(res => {
                           this.$Message.success(res.data.message);
                           this.$Modal.remove()
                           this.getlist()
@@ -204,14 +175,14 @@
             )
           }
         ],
-        list: [],
+        list: [{id:1,serviceName:'aaa'}],
         RoleList: []
       }
     },
     methods: {
       add() {
         this.$refs['user'].resetFields()
-        this.userModal.title = '新增用户'
+        this.userModal.title = '新增服务'
         this.userModal.isShow = true
 
       },
@@ -225,19 +196,19 @@
 
         });
       },
-      doUser() {
+      doService() {
         this.$refs['user'].validate((valid) => {
           if (valid) {
             this.userModal.isLoading = true
-            if (this.userModal.title === '修改用户') {
-              updateUser(this.userInfo).then(res => {
+            if (this.userModal.title === '修改服务') {
+              updateService(this.userInfo).then(res => {
                 this.userModal.isLoading = false
                 this.userModal.isShow = false
                 this.$Message.success(res.data.message)
                 this.getlist()
               })
             } else if (this.userModal.title === '新增用户') {
-              addUser(this.userInfo).then(res => {
+              addService(this.userInfo).then(res => {
                 this.userModal.isLoading = false
                 this.userModal.isShow = false
                 this.$Message.success(res.data.message)
@@ -250,7 +221,6 @@
     },
     created() {
           this.queryCondition.deviceId = this.$route.query.deviceId ? Number(this.$route.query.deviceId) : 0
-          this.queryCondition.serviceName = this.$route.query.serviceName
     }
   }
 </script>

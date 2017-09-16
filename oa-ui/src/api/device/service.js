@@ -24,3 +24,11 @@ export function updateService(device) {
     data: device
   })
 }
+//删除
+export function delService(device) {
+  return fetch({
+    url: `/v1/service/del`,
+    method: 'delete',
+    data: device
+  })
+}
