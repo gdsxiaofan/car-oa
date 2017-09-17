@@ -95,6 +95,8 @@ public class RoleBizImpl implements RoleBiz{
         role.setRoleName(roleParam.getRoleName());
         roleMapper.insertSelective(role);
         roleParam.setId(role.getId());
-        roleMapper.insertPermissionWithRoleId(roleParam);
+        if(roleParam.getCheckMenu()!=null&&!roleParam.getCheckMenu().isEmpty()){
+            roleMapper.insertPermissionWithRoleId(roleParam);
+        }
     }
 }
