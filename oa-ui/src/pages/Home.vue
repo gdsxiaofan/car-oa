@@ -6,7 +6,7 @@
               @on-select="menuSelect" accordion>
           <div class="layout-logo-left">
             <!--<Icon type="paper-airplane" :size="logoSize" v-show="logoIsDisplay"></Icon>-->
-            <h3>工单管理系统</h3>
+            <h3>总装车间TPM管理系统</h3>
           </div>
           <template v-for="(item,index) in menuMain">
             <Submenu :name="item.id" v-if="item.orderTop==1">
