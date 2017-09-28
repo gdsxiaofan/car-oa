@@ -16,7 +16,7 @@
     </Form-item>
     <Form-item class="login-no-bottom">
       <Checkbox-group v-model="formLogin.remember">
-        <Checkbox label="ck" >记住密码</Checkbox>
+        <Checkbox label="ck">记住密码</Checkbox>
       </Checkbox-group>
     </Form-item>
     <Form-item class="login-no-bottom">
@@ -29,8 +29,8 @@
         </i-col>
       </Row>
       <!--<Row>-->
-        <!--<Icon type="ios-download-outline" size="54px"></Icon>-->
-        <!--<a href="http://print.gtscloud.cc/SetupforWin64.zip">下载并安装打印组件</a>-->
+      <!--<Icon type="ios-download-outline" size="54px"></Icon>-->
+      <!--<a href="http://print.gtscloud.cc/SetupforWin64.zip">下载并安装打印组件</a>-->
       <!--</Row>-->
     </Form-item>
   </i-form>
@@ -79,7 +79,7 @@
                 this.$Message.error(res.data.message);
               }
             }).catch(err => {
-
+              this.$Message.error('系统异常!e:' + err);
             })
 
           } else {
