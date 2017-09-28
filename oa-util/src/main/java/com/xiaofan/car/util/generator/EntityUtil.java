@@ -675,7 +675,9 @@ public class EntityUtil {
 //            tables.add("t_role");
 //            tables.add("t_vip");
 //            tables.add("t_vip_level");
-            tables.add("t_memu");
+            tables.add("t_device_info");
+            tables.add("t_service_info");
+//            tables.add("t_memu");
             new EntityUtil().generate(tables);
             // 自动打开生成文件的目录
             Runtime.getRuntime().exec("cmd /c start explorer D:\\");

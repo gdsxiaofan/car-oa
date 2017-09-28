@@ -42,5 +42,12 @@ public class ServiceController {
 
         return new JsonResult<DeviceParam>(1, "删除成功");
     }
+
+    @ApiOperation(value = "获取服务详细信息", notes = "获取服务详细信息", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping("/get")
+    public JsonResult<DeviceParam> getDetail(Device param) {
+
+        return new JsonResult<DeviceParam>(1, "获取成功");
+    }
 }
 

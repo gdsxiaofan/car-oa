@@ -13,6 +13,7 @@ import lombok.Data;
 public class ServiceParam {
 
     String roleName;
+    String serviceName;
     int deviceId;
     int pageSize;
     int pageNum;
