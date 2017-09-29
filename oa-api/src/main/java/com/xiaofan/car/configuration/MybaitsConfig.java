@@ -20,6 +20,7 @@ public class MybaitsConfig {
         p.setProperty("offsetAsPageNum", "true");
         p.setProperty("rowBoundsWithCount", "true");
         p.setProperty("reasonable", "true");
+        p.setProperty("pageSizeZero", "true");
         pageHelper.setProperties(p);
         return pageHelper;
     }
