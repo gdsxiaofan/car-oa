@@ -3,31 +3,35 @@
     <Card>
       <p slot="title">条件查询</p>
       <Row>
-        <Col :span="4" >
+        <Col :span="4">
         工单号：
         </Col>
         <Col :span="7">
         <Input type="text" v-model="queryCondition.name" placeholder="请输入..."></Input>
         </Col>
-        <Col :span="4" :offset="2" >
+        <Col :span="4" :offset="2">
         工单状态：
         </Col>
         <Col :span="7">
         <Select>
-          <i-option value="null">全部</i-option>
+          <Option value="null">全部</Option>
+          <Option value="null">未完成</Option>
+          <Option value="null">已完成</Option>
         </Select>
         </Col>
       </Row>
       <Row style="margin-top:2%">
-        <Col :span="4" >
+        <Col :span="4">
         工单类别：
         </Col>
         <Col :span="7">
         <Select>
-          <i-option value="null">全部</i-option>
+          <Option value="null">全部</Option>
+          <Option value="0">巡检</Option>
+          <Option value="1">维修</Option>
         </Select>
         </Col>
-        <Col :span="4" :offset="2" >
+        <Col :span="4" :offset="2">
         处理人：
         </Col>
         <Col :span="7">
@@ -35,7 +39,7 @@
         </Col>
         <Col :span="3" offset="18" style="margin-top:2%">
         <Button type="success" shape="circle" icon="ios-personadd"
-                @click="add">
+                @click="getlist">
           查询
         </Button>
         </Col>
@@ -48,49 +52,81 @@
               show-elevator></Page>
       </div>
     </div>
-    <Modal v-model="userModal.isShow"
+    <Modal v-model="userModal.isShow" width="800"
            :title="userModal.title"
     >
-      <Form ref="user" :model="service" :rules="serviceRules" :label-width="80">
-        <Form-item label="服务名称：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="服务名称"/>
-        </Form-item>
-        <Form-item label="属性一：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="属性一"/>
-        </Form-item>
-        <Form-item label="属性二：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="属性二"/>
-        </Form-item>
-        <Form-item label="属性三：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="属性三"/>
-        </Form-item>
-        <Form-item label="属性四：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="属性四"/>
-        </Form-item>
-        <Form-item label="描述：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="描述"/>
-        </Form-item>
-
-      </Form>
-      <div slot="footer">
-        <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="doService" :loading="userModal.isLoading">提交</Button>
-      </div>
+      <Row>
+        <Col  span="16">
+      <Row>
+        <Col  span="10">
+        <strong class="label">label="工单号："</strong>
+        </Col>
+        <Col span="14">
+        <p class="label">label="工单号："</p>
+        </Col>
+        <Col  span="10">
+        <strong class="label">label="工单号："</strong>
+        </Col>
+        <Col span="14">
+        <p class="label">label="工单号："</p>
+        </Col>
+        <Col  span="10">
+        <strong class="label">label="工单号："</strong>
+        </Col>
+        <Col span="14">
+        <p class="label">label="工单号："</p>
+        </Col>
+        <Col  span="10">
+        <strong class="label">label="工单号："</strong>
+        </Col>
+        <Col span="14">
+        <p class="label">label="工单号："</p>
+        </Col>
+        <Col span="10">
+        <strong class="label">label="工单号："</strong>
+        </Col>
+        <Col span="14">
+        <p class="label">label="工单号："</p>
+        </Col>
+        <Col  span="10">
+        <strong class="label">label="工单号："</strong>
+        </Col>
+        <Col span="14">
+        label="描述："
+        </Col>
+      </Row>
+        </Col >
+        <Col  span="8">
+        <Timeline>
+          <TimelineItem>
+            <p class="time">事件：1976年</p>
+            <p class="content">Apple I 问世</p>
+          </TimelineItem>
+          <TimelineItem>
+            <p class="time">事件：1976年</p>
+            <p class="content">Apple I 问世</p>
+          </TimelineItem>
+          <TimelineItem>
+            <p class="time">事件：1976年</p>
+            <p class="content">Apple I 问世</p>
+          </TimelineItem>
+        </Timeline>
+        </Col>
+      </Row>
+      <!--<div slot="footer">-->
+        <!--<Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>-->
+        <!--<Button type="primary" @click="doService" :loading="userModal.isLoading">提交</Button>-->
+      <!--</div>-->
     </Modal>
   </div>
 </template>
 
 <script>
   import {
-    addService,
-    getServiceList,
-    updateService,
-    delService
-  } from '../../api/device/service'
-  import IOption from "../../../node_modules/iview/src/components/select/option.vue";
+    getOrderList,
+  } from '../../api/order'
 
   export default {
-    components: {IOption},
     data() {
       return {
         service: {
@@ -118,33 +154,29 @@
         },
         columns: [
           {
-            title: '序号',
+            title: '工单号',
             key: 'id'
           },
           {
-            title: '服务名称',
+            title: '工单名称',
             key: 'serviceName'
           },
           {
-            title: '设备名称',
+            title: '维修设备',
             render: (h, params) => {
               return h('div', this.$route.query.serviceName)
             }
           },
           {
-            title: '属性一',
+            title: '负责人',
             key: 'serviceName'
           },
           {
-            title: '属性二',
+            title: '工单类型',
             key: 'serviceName'
           },
           {
-            title: '属性三',
-            key: 'serviceName'
-          },
-          {
-            title: '属性四',
+            title: '状态',
             key: 'serviceName'
           },
           {
@@ -160,7 +192,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs['user'].resetFields()
+//                      this.$refs['user'].resetFields()
                       this.service.id = params.row.id
                       this.service.serviceName = params.row.serviceName
                       this.userModal.isShow = true
@@ -168,33 +200,8 @@
                     }
                   }
                 },
-                '修改'
-              ),
-              h('Button', {
-                props: {
-                  type: 'error'
-                },
-                style: {
-                  marginRight: '5px'
-                },
-                on: {
-                  click: () => {
-                    this.$Modal.confirm({
-                      title: '是否删除',
-                      content: '<p>' + params.row.serviceName + '</p>',
-                      loading: true,
-                      onOk: () => {
-                        delService(params.row.id).then(res => {
-                          this.$Message.success(res.data.message);
-                          this.$Modal.remove()
-                          this.getlist()
-                        })
-
-                      }
-                    });
-                  }
-                }
-              }, '删除')]
+                '详情'
+              )]
             )
           }
         ],
@@ -204,14 +211,14 @@
     },
     methods: {
       add() {
-        this.$refs['user'].resetFields()
+//        this.$refs['user'].resetFields()
         this.userModal.title = '新增服务'
         this.userModal.isShow = true
 
       },
       getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
-        getServiceList(this.queryCondition).then(res => {
+        getOrderList(this.queryCondition).then(res => {
           this.queryCondition.pageNum = res.data.data.pageNum
           this.list = res.data.data.list
           this.queryCondition.total = res.data.data.total
@@ -248,6 +255,15 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+  .label{
+    font-size: 14px;
+  }
+  .time{
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .content{
+    padding-left: 5px;
+  }
 </style>
