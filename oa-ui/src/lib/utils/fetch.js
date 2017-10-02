@@ -69,8 +69,7 @@ fetch.interceptors.response.use(
       Modal.remove()
       return Promise.reject("请重新登录");
     }
-    console.error('err' + error);// for debug
-    Message.error(response.msg, 3);
+    Message.error('err' + error);
     return Promise.reject(error);
   }
 )

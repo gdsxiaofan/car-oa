@@ -41,7 +41,7 @@ public class LoginController {
     public JsonResult Login(HttpServletResponse response,
                             String username,
                             String password) {
-        log.info("用户名：{}；密码：{}", username, password);
+//        log.info("用户名：{}；密码：{}", username, password);
         Employee employee=loginBiz.verificationForLogin(username,password);
         if(employee!=null){
             String jwt = JwtUtil.getJWTString(employee.getId());

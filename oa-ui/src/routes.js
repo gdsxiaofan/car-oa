@@ -13,14 +13,10 @@ const Role = resolve => require(['./pages/role/Role.vue'], resolve)
 const ShowUser = resolve => require(['./pages/role/ShowUser.vue'], resolve)
 
 //工单管理         >>>>>>
-/*我的工单*/
-const MyOrder = resolve => require(['./pages/order/My.vue'], resolve)
-/*发布工单*/
-const PublishOrder = resolve => require(['./pages/order/Publish.vue'], resolve)
-/*分发工单*/
-const DispatchOrder = resolve => require(['./pages/order/Dispatch.vue'], resolve)
-/*历史工单*/
-const HistoryOrder = resolve => require(['./pages/order/History.vue'], resolve)
+const LookOrder = resolve => require(['./pages/order/look.vue'], resolve)
+const fixOrder = resolve => require(['./pages/order/fix.vue'], resolve)
+const verifyOrder = resolve => require(['./pages/order/verify.vue'], resolve)
+const configOrder = resolve => require(['./pages/order/config.vue'], resolve)
 /*所有工单*/
 const AllOrder = resolve => require(['./pages/order/All.vue'], resolve)
 //员工管理          >>>>>>
@@ -45,10 +41,10 @@ let routes = [
       {path: 'role', meta: {title: '角色管理'}, icon: 'ios-home', component: Role},
       // {path: 'addRole', meta: {title: '新增角色'}, icon: 'ios-home', component: AddRole},
       {path: 'userRole', meta: {title: '用户角色管理'}, icon: 'ios-home', component: ShowUser},
-      {path: 'myOrder', meta: {title: '我的工单'}, icon: 'ios-home', component: MyOrder},
-      {path: 'publishOrder', meta: {title: '发布工单'}, icon: 'ios-home', component: PublishOrder},
-      {path: 'dispatchOrder', meta: {title: '分发工单'}, icon: 'ios-home', component: DispatchOrder},
-      {path: 'historyOrder', meta: {title: '历史工单'}, icon: 'ios-home', component: HistoryOrder},
+      {path: 'lookOrder', meta: {title: '巡检工单'}, icon: 'ios-home', component: LookOrder},
+      {path: 'fixOrder', meta: {title: '维修工单'}, icon: 'ios-home', component: fixOrder},
+      {path: 'verifyOrder', meta: {title: '审核工单'}, icon: 'ios-home', component: verifyOrder},
+      {path: 'configOrder', meta: {title: '配置工单'}, icon: 'ios-home', component: configOrder},
       {path: 'allOrder', meta: {title: '所有工单'}, icon: 'ios-home', component: AllOrder},
       {path: 'employeeInfo', meta: {title: '员工信息'}, icon: 'ios-home', component: EmployeeInfo},
       {path: 'employeeAdd', meta: {title: '员工新增'}, icon: 'ios-home', component: EmployeeAdd},

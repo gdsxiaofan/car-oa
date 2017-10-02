@@ -3,32 +3,25 @@ import {fetch,qs} from '../../lib/utils/fetch'
 //获取列表
 export function getOrderList(param) {
   return fetch({
-    url: `/v1/service/getlist`,
+    url: `/v1/order/list`,
     method: 'get',
-    params: param
+    // params: param
   })
 }
-//新增
-export function addService(device) {
+//获取工单详情
+export function getOrderInfo(id) {
   return fetch({
-    url: `/v1/service/add`,
-    method: 'post',
-    data: device
+    url: `/v1/order/info`,
+    method: 'get',
+    params: {id}
   })
 }
-//修改
-export function updateService(device) {
+//处理工单
+export function doOrder(orderParam) {
   return fetch({
-    url: `/v1/service/update`,
+    url: `/v1/order/do`,
     method: 'put',
-    data: device
+    data:  orderParam,
   })
 }
-//删除
-export function delService(device) {
-  return fetch({
-    url: `/v1/service/del`,
-    method: 'delete',
-    data: device
-  })
-}
+

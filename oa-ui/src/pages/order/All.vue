@@ -53,7 +53,7 @@
       </div>
     </div>
     <Modal v-model="userModal.isShow" width="800"
-           :title="userModal.title"
+           title="工单详情"
     >
       <Row>
         <Col  span="16">
@@ -113,10 +113,6 @@
         </Timeline>
         </Col>
       </Row>
-      <!--<div slot="footer">-->
-        <!--<Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>-->
-        <!--<Button type="primary" @click="doService" :loading="userModal.isLoading">提交</Button>-->
-      <!--</div>-->
     </Modal>
   </div>
 </template>
@@ -124,6 +120,7 @@
 <script>
   import {
     getOrderList,
+    getOrderInfo
   } from '../../api/order'
 
   export default {
@@ -132,12 +129,6 @@
         service: {
           id: '',
           serviceName: '',
-
-        },
-        serviceRules: {
-          serviceName: [
-            {required: true, message: '请填写工号', trigger: 'blur'}
-          ],
 
         },
         userModal: {
@@ -163,9 +154,8 @@
           },
           {
             title: '维修设备',
-            render: (h, params) => {
-              return h('div', this.$route.query.serviceName)
-            }
+            key:"serviceName"
+
           },
           {
             title: '负责人',
@@ -192,11 +182,11 @@
                   },
                   on: {
                     click: () => {
-//                      this.$refs['user'].resetFields()
-                      this.service.id = params.row.id
-                      this.service.serviceName = params.row.serviceName
-                      this.userModal.isShow = true
-                      this.userModal.title = '修改服务'
+                      getOrderInfo(params.row.id).then(res=>{
+                        this.service.id = params.row.id
+                        this.service.serviceName = params.row.serviceName
+                        this.userModal.isShow = true
+                      })
                     }
                   }
                 },
@@ -225,28 +215,6 @@
         }).catch(err => {
 
         });
-      },
-      doService() {
-        this.$refs['user'].validate((valid) => {
-          if (valid) {
-            this.userModal.isLoading = true
-            if (this.userModal.title === '修改服务') {
-              updateService(this.userInfo).then(res => {
-                this.userModal.isLoading = false
-                this.userModal.isShow = false
-                this.$Message.success(res.data.message)
-                this.getlist()
-              })
-            } else if (this.userModal.title === '新增用户') {
-              addService(this.userInfo).then(res => {
-                this.userModal.isLoading = false
-                this.userModal.isShow = false
-                this.$Message.success(res.data.message)
-                this.getlist()
-              })
-            }
-          }
-        })
       }
     },
     created() {

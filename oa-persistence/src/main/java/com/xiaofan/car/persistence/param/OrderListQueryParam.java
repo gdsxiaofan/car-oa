@@ -1,0 +1,35 @@
+package com.xiaofan.car.persistence.param;
+
+import lombok.Data;
+
+/**
+ * 工单列表
+ *
+ * @author gongdaoshun
+ * @date 2017/8/26
+ * @since 1.0.0
+ */
+@Data
+public class OrderListQueryParam {
+
+    String orderNo;//工单号
+    String orderStatus;//工单状态
+    String orderType;//工单类别
+    String doPerson;//处理人
+    int pageSize;
+    int pageNum;
+
+    public void setPageSize(Integer pageSize){
+        if(pageSize==null){
+            pageSize=10;
+        }
+        this.pageSize=pageSize;
+    }
+
+    public void setPageNum(Integer pageNum){
+        if(pageNum==null){
+            pageNum=10;
+        }
+        this.pageNum=pageNum;
+    }
+}
