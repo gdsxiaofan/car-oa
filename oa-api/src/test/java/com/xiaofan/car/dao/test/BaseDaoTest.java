@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("dev")
 @Slf4j
 @Transactional
-@Rollback
+@Rollback(false)
 public class BaseDaoTest {
 
     @Test
