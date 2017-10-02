@@ -47,7 +47,7 @@
           <Input type="text" v-model="service.serviceName" placeholder="属性四" />
         </Form-item>
         <Form-item label="描述：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="描述" />
+          <Input type="textarea" autosize v-model="service.serviceName" placeholder="描述" />
         </Form-item>
 
       </Form>

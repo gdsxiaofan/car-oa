@@ -14,7 +14,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtHandler())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/error","/login","/swagger-resources","/v2/api-docs","/configuration/*");
+                .excludePathPatterns("/error","/login","/swagger-resources","/v2/api-docs","/configuration/*","/v1/image/sosOutImg/**");
         super.addInterceptors(registry);
     }
 

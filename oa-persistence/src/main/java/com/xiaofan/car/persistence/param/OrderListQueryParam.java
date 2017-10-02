@@ -1,5 +1,7 @@
 package com.xiaofan.car.persistence.param;
 
+import com.xiaofan.car.persistence.enumType.OrderStatus;
+import com.xiaofan.car.persistence.enumType.OrderType;
 import lombok.Data;
 
 /**
@@ -13,8 +15,8 @@ import lombok.Data;
 public class OrderListQueryParam {
 
     String orderNo;//工单号
-    String orderStatus;//工单状态
-    String orderType;//工单类别
+    OrderStatus orderStatus;//工单状态
+    OrderType orderType;//工单类别
     String doPerson;//处理人
     int pageSize;
     int pageNum;

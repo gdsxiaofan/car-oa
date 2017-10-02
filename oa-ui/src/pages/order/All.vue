@@ -7,16 +7,16 @@
         工单号：
         </Col>
         <Col :span="7">
-        <Input type="text" v-model="queryCondition.name" placeholder="请输入..."></Input>
+        <Input type="text" v-model="queryCondition.orderNo" placeholder="请输入..."/>
         </Col>
         <Col :span="4" :offset="2">
         工单状态：
         </Col>
         <Col :span="7">
-        <Select>
-          <Option value="null">全部</Option>
-          <Option value="null">未完成</Option>
-          <Option value="null">已完成</Option>
+        <Select v-model="queryCondition.orderStatus">
+          <Option value="all">全部</Option>
+          <Option value="doing">未完成</Option>
+          <Option value="done">已完成</Option>
         </Select>
         </Col>
       </Row>
@@ -25,17 +25,17 @@
         工单类别：
         </Col>
         <Col :span="7">
-        <Select>
-          <Option value="null">全部</Option>
-          <Option value="0">巡检</Option>
-          <Option value="1">维修</Option>
+        <Select v-model="queryCondition.orderType">
+          <Option value="all">全部</Option>
+          <Option value="look">巡检</Option>
+          <Option value="fix">维修</Option>
         </Select>
         </Col>
         <Col :span="4" :offset="2">
         处理人：
         </Col>
         <Col :span="7">
-        <Input type="text" v-model="queryCondition.name" placeholder="请输入..."></Input>
+        <Input type="text" v-model="queryCondition.doPerson" placeholder="请输入..."/>
         </Col>
         <Col :span="3" offset="18" style="margin-top:2%">
         <Button type="success" shape="circle" icon="ios-personadd"
@@ -126,11 +126,6 @@
   export default {
     data() {
       return {
-        service: {
-          id: '',
-          serviceName: '',
-
-        },
         userModal: {
           isShow: false,
           isLoading: false,
@@ -139,8 +134,10 @@
         queryCondition: {
           pageSize: 10,
           pageNum: 1,
-          deviceId: 0,
-          name: '',
+          orderStatus:'all',
+          orderType:'all',
+          doPerson: '',
+          orderNo: '',
           total: 0
         },
         columns: [

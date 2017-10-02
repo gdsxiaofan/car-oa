@@ -41,15 +41,13 @@ public class OrderController {
 
         return jsonReturn;
     }
-    @ApiOperation(value = "根据工号密码修改工单状态", notes = "根据工号密码修改工单状态", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @PutMapping("/do")
-    public JsonResult<PageInfo<RoleVo>> updateOrderStatus(@RequestBody OrderParam orderParam) {
-        Employee user=loginBiz.verificationForLogin(orderParam.getEmployee().getEmployeeNo(),orderParam.getEmployee().getEmployeePassword());
+    @ApiOperation(value = "根据工号密码修改工单状态", notes = "根据工号密码修改工单状态", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping("/checkUser")
+    public JsonResult<PageInfo<RoleVo>> updateOrderStatus(Employee employee) {
+        Employee user=loginBiz.verificationForLogin(employee.getEmployeeNo(),employee.getEmployeePassword());
         if(user==null){
             return new JsonResult<>(0, "工号或密码不正确");
         }
-        //改变工单状态 todo
-
         return new JsonResult<>();
     }
 

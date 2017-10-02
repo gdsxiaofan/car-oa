@@ -5,7 +5,7 @@ export function getOrderList(param) {
   return fetch({
     url: `/v1/order/list`,
     method: 'get',
-    // params: param
+    params: param
   })
 }
 //获取工单详情
@@ -14,6 +14,14 @@ export function getOrderInfo(id) {
     url: `/v1/order/info`,
     method: 'get',
     params: {id}
+  })
+}
+//处理工单
+export function checkUser(orderParam) {
+  return fetch({
+    url: `/v1/order/checkUser`,
+    method: 'get',
+    params:  orderParam,
   })
 }
 //处理工单
