@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -84,14 +85,22 @@ public class OrderController {
             String desc,
             MultipartFile[] file) {
         //todo
-        try {
+        List<String> imgs = new ArrayList<String>();
+
+        try
+        {
             for (MultipartFile x : file) {
                 String filename = FileUtil.upload(ROOTPATH, x, UUID.randomUUID().toString());
+                imgs.add(filename);
             }
-        } catch (IOException e) {
+            return new JsonResult<>(1, "",imgs );
+        } catch (
+                IOException e)
+
+        {
             return new JsonResult<>(0, "文件上传失败");
         }
-        return new JsonResult<>();
+
     }
 
 }
