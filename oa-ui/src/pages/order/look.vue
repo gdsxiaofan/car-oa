@@ -196,7 +196,7 @@
               <Icon type="ios-trash-outline" @click.native="handleRemove(index)"></Icon>
             </div>
           </div>
-          <Upload
+          <upload
             ref="uploads"
             action=""
             :show-upload-list="false"
@@ -207,7 +207,7 @@
             <div style="width: 58px;height:58px;line-height: 58px;">
               <Icon type="camera" size="20"></Icon>
             </div>
-          </Upload>
+          </upload>
           </Col>
         </Row>
         <Row class="ModalRow">
@@ -237,7 +237,7 @@
     checkUser,
     doOrder
   } from '../../api/order'
-
+  import  upload  from '../upload.vue'
   export default {
     data() {
       return {
