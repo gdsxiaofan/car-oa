@@ -189,42 +189,25 @@
           <strong class="label">报修图片</strong>
           </Col>
           <Col span="14">
-          <div class="demo-upload-list" v-for="item in uploadList">
-            <template v-if="item.status === 'finished'">
-              <img :src=" up.url+'/v1/image/sosOutImg' + item.url">
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
-                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-              </div>
-            </template>
-            <template v-else>
-              <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-            </template>
+          <div class="demo-upload-list" v-for="(item,index) in uploadList">
+            <img :src="imgList[index]">
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-eye-outline" @click.native="handleView(imgList[index])"></Icon>
+              <Icon type="ios-trash-outline" @click.native="handleRemove(index)"></Icon>
+            </div>
           </div>
           <Upload
             ref="uploads"
-            :action="up.url+'/v1/image/upPic'"
-            :headers="up.header"
+            action=""
             :show-upload-list="false"
-            :default-file-list="defaultList"
-            :on-success="handleSuccess"
-            :format="['jpg','jpeg','png']"
-            :max-size="2048"
-            :on-format-error="handleFormatError"
-            :on-exceeded-size="handleMaxSize"
             :before-upload="handleBeforeUpload"
-            :on-error="handleError"
             multiple
             type="drag"
-
             style="display: inline-block;width:58px;">
             <div style="width: 58px;height:58px;line-height: 58px;">
               <Icon type="camera" size="20"></Icon>
             </div>
           </Upload>
-          <Modal title="查看图片" v-model="visible">
-            <img :src="up.url+'/v1/image/sosOutImg' + imgUrl" v-if="visible" style="width: 100%">
-          </Modal>
           </Col>
         </Row>
         <Row class="ModalRow">
@@ -236,10 +219,13 @@
           </Col>
         </Row>
       </div>
-      <!--<div slot="footer">-->
-      <!--<Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>-->
-      <!--<Button type="primary" @click="doService" :loading="userModal.isLoading">提交</Button>-->
-      <!--</div>-->
+      <div slot="footer">
+        <Button type="ghost" @click="doModal.isShow=false" style="margin-left: 8px">取消</Button>
+        <Button type="primary" @click="doOrder" :loading="doModal.isLoading">提交</Button>
+      </div>
+    </Modal>
+    <Modal title="查看图片" v-model="visible">
+      <img :src=" img" v-if="visible" style="width: 100%">
     </Modal>
   </div>
 </template>
@@ -255,15 +241,10 @@
   export default {
     data() {
       return {
-        up: {
-          url: process.env.NODE_ENV === 'production' ? '' : 'car' ,
-          header: {'Authorization': sessionStorage.getItem('Authorization')}
-        },
-        defaultList: [
-        ],
-        imgUrl: '',
+        img: '',
         visible: false,
         uploadList: [],
+        imgList: [],
         value6: "",
         value5: "fix",
         userModal: {
@@ -411,50 +392,74 @@
           }
         })
       },
-      handleView(url) {
-        this.imgUrl = url;
+      doOrder() {
+        this.doModal.isLoading=true
+        let orderParam = new FormData();
+        this.uploadList.forEach(x=>{
+          orderParam.append("file",x)
+        })
+        doOrder(orderParam).then(res => {
+          this.doModal.isLoading=false
+          this.$Message.success(res.data.message)
+        }).catch(e=>{
+          this.doModal.isLoading=false
+//          this.$Message.error(e)
+        })
+      },
+      handleView(img) {
+        this.img = img;
         this.visible = true;
       },
-      handleRemove(file) {
-        // 从 upload 实例删除数据
-        const fileList = this.$refs.upload.fileList;
-        this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+      handleRemove(index) {
+        this.uploadList.splice(index, 1);
+        this.imgList.splice(index, 1);
       },
-      handleSuccess(res, file) {
-        // 因为上传过程为实例，这里模拟添加 url
-        console.log(res)
-        file.url = res.message
-        file.name = res.data
-      },
-      handleError(e) {
-        if (e.status === 401) {
-          this.$router.replace({path: '/login', query: {redirect: this.$router.currentRoute.fullPath}})
-        }
-      },
-      handleFormatError(file) {
-        this.$Notice.warning({
-          title: '文件格式不正确',
-          desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
-        });
-      },
-      handleMaxSize(file) {
-        this.$Notice.warning({
-          title: '超出文件大小限制',
-          desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
-        });
-      },
-      handleBeforeUpload() {
+      handleBeforeUpload(file) {
+
+        const format=['jpg','jpeg','png'];
+        const maxsize="2048";
         const check = this.uploadList.length < 5;
         if (!check) {
           this.$Notice.warning({
             title: '最多只能上传 5 张图片。'
           });
+        } else if(this.checkImg(file,format,maxsize)){
+          let reader = new FileReader();
+          reader.onload = (e) => {
+            this.imgList.push(e.target.result)
+          };
+          reader.readAsDataURL(file);
+          this.uploadList.push(file)
         }
-        return check;
+        return false
+      },
+      checkImg(file,format,maxSize){
+        // check format
+        if (format.length) {
+          const _file_format = file.name.split('.').pop().toLocaleLowerCase();
+          const checked = format.some(item => item.toLocaleLowerCase() === _file_format);
+          if (!checked) {
+            this.$Notice.warning({
+              title: '文件格式不正确',
+              desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
+            });
+            return false;
+          }
+        }
+        // check maxSize
+        if (maxSize) {
+          if (file.size > this.maxSize * 1024) {
+            this.$Notice.warning({
+              title: '超出文件大小限制',
+              desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
+            });
+            return false;
+          }
+        }
+        return true
       }
     },
     mounted() {
-      this.uploadList = this.$refs.uploads.fileList;
     }
   }
 </script>
@@ -498,17 +503,13 @@
   }
 
   .demo-upload-list-cover {
-    display: none;
+    display: block;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, .6);
-  }
-
-  .demo-upload-list:hover .demo-upload-list-cover {
-    display: block;
   }
 
   .demo-upload-list-cover i {

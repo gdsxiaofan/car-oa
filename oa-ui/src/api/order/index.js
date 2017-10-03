@@ -27,9 +27,10 @@ export function checkUser(orderParam) {
 //处理工单
 export function doOrder(orderParam) {
   return fetch({
-    url: `/v1/order/do`,
+    url: `/v1/order/doOrder`,
     method: 'put',
-    data:  orderParam,
+    data: orderParam,
+    headers: {'Content-Type': 'multipart/form-data'}
   })
 }
 

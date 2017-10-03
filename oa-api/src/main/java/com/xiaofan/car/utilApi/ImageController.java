@@ -1,4 +1,4 @@
-package com.xiaofan.car.api;
+package com.xiaofan.car.utilApi;
 
 import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.util.file.FileUtil;
@@ -6,7 +6,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -28,9 +26,9 @@ import java.util.UUID;
  */
 @RequestMapping("v1/image")
 @RestController
-public class UtilsController {
+public class ImageController {
 
-    private static final Logger log = LoggerFactory.getLogger(UtilsController.class);
+    private static final Logger log = LoggerFactory.getLogger(ImageController.class);
 
     @Value(value = "${root-path}")
     private String ROOTPATH;
@@ -42,17 +40,17 @@ public class UtilsController {
      * @return
      */
     @RequestMapping("/upPic")
-    public JsonResult upPic(
+    public JsonResult<String> upPic(
             HttpServletRequest request,
             @RequestParam("file") MultipartFile file
 
     ) {
         try {
             String filename= FileUtil.upload(ROOTPATH , file, UUID.randomUUID().toString());
-            return new JsonResult(1,filename,file.getOriginalFilename());
+            return new JsonResult<>(1,filename,file.getOriginalFilename());
         } catch (Exception e) {
             log.error("上传图片失败 :{}",e.getMessage());
-            return new JsonResult(0,"上传图片失败");
+            return new JsonResult<>(0,"上传图片失败");
         }
     }
 
