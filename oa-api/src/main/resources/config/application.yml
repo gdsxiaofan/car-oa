@@ -2,7 +2,11 @@ spring:
   profiles:
     active: dev
   application:
-    name: 汽车服务
+    name: car-oa
+  http:
+    multipart:
+      max-file-size: 5Mb
+      max-request-size: 5Mb
 server:
   port: 8011
 

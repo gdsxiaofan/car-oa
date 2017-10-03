@@ -28,7 +28,7 @@ export function checkUser(orderParam) {
 export function doOrder(orderParam) {
   return fetch({
     url: `/v1/order/doOrder`,
-    method: 'put',
+    method: 'post',
     data: orderParam,
     headers: {'Content-Type': 'multipart/form-data'}
   })

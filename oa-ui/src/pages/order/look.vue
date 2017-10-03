@@ -97,10 +97,10 @@
         </Timeline>
         </Col>
       </Row>
-      <!--<div slot="footer">-->
-      <!--<Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>-->
-      <!--<Button type="primary" @click="doService" :loading="userModal.isLoading">提交</Button>-->
-      <!--</div>-->
+      <div slot="footer">
+        <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
+        <Button type="primary" @click="userModal.isShow=false;checkModal.isShow=true">开始处理</Button>
+      </div>
     </Modal>
     <Modal v-model="checkModal.isShow"
            title="验证身份"
@@ -160,7 +160,7 @@
         <strong class="label">描述</strong>
         </Col>
         <Col span="14">
-        <Input v-model="value6" type="textarea" disabled placeholder="请输入..." autosize/>
+        <Input v-model="desc" type="textarea" disabled placeholder="请输入..." autosize/>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -168,22 +168,22 @@
         <strong class="label">处理方式</strong>
         </Col>
         <Col span="14">
-        <Select v-model="value5" placeholder="请输入..." autosize>
+        <Select v-model="orderType" placeholder="请输入..." autosize>
           <Option value="verify" selected>巡检完成</Option>
           <Option value="fix">报修</Option>
         </Select>
         </Col>
       </Row>
 
-      <Row class="ModalRow" v-show="value5==='verify'">
+      <Row class="ModalRow" v-show="orderType==='verify'">
         <Col span="10">
         <strong class="label">巡检批注</strong>
         </Col>
         <Col span="14">
-        <Input v-model="value6" type="textarea" placeholder="请输入..." autosize/>
+        <Input v-model="desc" type="textarea" placeholder="请输入..." autosize/>
         </Col>
       </Row>
-      <div v-show="value5!=='verify'">
+      <div v-show="orderType!=='verify'">
         <Row class="ModalRow">
           <Col span="10">
           <strong class="label">报修图片</strong>
@@ -215,7 +215,7 @@
           <strong class="label">报修描述</strong>
           </Col>
           <Col span="14">
-          <Input v-model="value6" type="textarea" placeholder="请输入..." autosize/>
+          <Input v-model="desc" type="textarea" placeholder="请输入..." autosize/>
           </Col>
         </Row>
       </div>
@@ -237,7 +237,8 @@
     checkUser,
     doOrder
   } from '../../api/order'
-  import  upload  from '../upload.vue'
+  import upload from '../upload.vue'
+
   export default {
     data() {
       return {
@@ -245,13 +246,13 @@
         visible: false,
         uploadList: [],
         imgList: [],
-        value6: "",
-        value5: "fix",
+        desc: "",
+        orderType: "fix",
         userModal: {
           isShow: false,
           isLoading: false,
         },
-        orderId: '',
+        doUserId: '',
         employee: {
 
           employeeNo: "",
@@ -319,13 +320,10 @@
                   },
                   on: {
                     click: () => {
-//                      this.$refs['user'].resetFields()
                       getOrderInfo(params.row.id).then(res => {
-                        this.employee.orderId = params.row.id
+                        //todo
                         this.userModal.isShow = true
-
                       })
-
                     }
                   }
                 },
@@ -372,12 +370,12 @@
         });
       },
       checkUser() {
-
         this.$refs['checkUser'].validate((valid) => {
           if (valid) {
             this.checkModal.isLoading = true
             checkUser(this.employee).then(res => {
               if (res.data.code === 1) {
+                this.doUserId = res.data.data
                 this.checkModal.isShow = false
                 this.checkModal.isLoading = false
                 this.doModal.isShow = true
@@ -387,22 +385,30 @@
               }
             }).catch(e => {
               this.checkModal.isLoading = false
-//          this.$Message.error(e);
             })
           }
         })
       },
       doOrder() {
-        this.doModal.isLoading=true
+        this.doModal.isLoading = true
         let orderParam = new FormData();
-        this.uploadList.forEach(x=>{
-          orderParam.append("file",x)
-        })
+        orderParam.append("doUserId",this.doUserId)
+        orderParam.append("orderType",this.orderType)
+        orderParam.append("desc",this.desc)
+        if (this.uploadList) {
+          this.uploadList.forEach(x => {
+            orderParam.append("file", x)
+          })
+        } else {
+          orderParam.append("file", null)
+        }
         doOrder(orderParam).then(res => {
-          this.doModal.isLoading=false
+          this.doModal.isLoading = false
+          this.doModal.isShow = false
           this.$Message.success(res.data.message)
-        }).catch(e=>{
-          this.doModal.isLoading=false
+          this.getlist()
+        }).catch(e => {
+          this.doModal.isLoading = false
 //          this.$Message.error(e)
         })
       },
@@ -416,14 +422,14 @@
       },
       handleBeforeUpload(file) {
 
-        const format=['jpg','jpeg','png'];
-        const maxsize="2048";
+        const format = ['jpg', 'jpeg', 'png'];
+        const maxsize = "2048";
         const check = this.uploadList.length < 5;
         if (!check) {
           this.$Notice.warning({
             title: '最多只能上传 5 张图片。'
           });
-        } else if(this.checkImg(file,format,maxsize)){
+        } else if (this.checkImg(file, format, maxsize)) {
           let reader = new FileReader();
           reader.onload = (e) => {
             this.imgList.push(e.target.result)
@@ -433,7 +439,7 @@
         }
         return false
       },
-      checkImg(file,format,maxSize){
+      checkImg(file, format, maxSize) {
         // check format
         if (format.length) {
           const _file_format = file.name.split('.').pop().toLocaleLowerCase();
