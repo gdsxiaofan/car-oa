@@ -22,7 +22,7 @@
       </Row>
       <Row style="margin-top:2%">
         <Col :span="3" offset="18" style="margin-top:2%">
-        <Button type="success" shape="circle" icon="ios-personadd"
+        <Button type="primary" shape="circle" icon="ios-search"
                 @click="getlist">
           查询
         </Button>
@@ -313,7 +313,7 @@
             render: (h, params) => {
               let button = [h('Button', {
                   props: {
-                    type: 'info'
+                    type: 'primary'
                   },
                   style: {
                     marginRight: '5px'

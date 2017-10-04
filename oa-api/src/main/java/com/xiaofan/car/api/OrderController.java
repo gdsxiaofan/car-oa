@@ -5,8 +5,6 @@ import com.xiaofan.car.biz.LoginBiz;
 import com.xiaofan.car.persistence.enumType.OrderType;
 import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.param.OrderListQueryParam;
-import com.xiaofan.car.persistence.param.OrderParam;
-import com.xiaofan.car.persistence.param.RoleListQueryParam;
 import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.persistence.vo.RoleVo;
 import com.xiaofan.car.util.file.FileUtil;
@@ -15,15 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +35,7 @@ public class OrderController {
     @Autowired
     private LoginBiz loginBiz;
     @Value(value = "${root-path}")
-    private String ROOTPATH;
+    private String rootPath;
 
     @ApiOperation(value = "查找工单列表", notes = "工单", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/list")
@@ -85,12 +80,12 @@ public class OrderController {
             String desc,
             MultipartFile[] file) {
         //todo
-        List<String> imgs = new ArrayList<String>();
+        List<String> imgs = new ArrayList<>();
 
         try
         {
             for (MultipartFile x : file) {
-                String filename = FileUtil.upload(ROOTPATH, x, UUID.randomUUID().toString());
+                String filename = FileUtil.upload(rootPath, x, UUID.randomUUID().toString());
                 imgs.add(filename);
             }
             return new JsonResult<>(1, "",imgs );
