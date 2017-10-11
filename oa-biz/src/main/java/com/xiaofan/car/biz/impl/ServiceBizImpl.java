@@ -83,7 +83,7 @@ public class ServiceBizImpl implements ServiceBiz {
     public boolean saveServiceInfo(ServiceInfoParam serviceInfoParam, String userName, Integer userId){
 
         //1.处理参数
-        ServiceInfo serviceInfo = new ServiceInfo().builder()
+        ServiceInfo serviceInfo = ServiceInfo.builder()
                 .id(serviceInfoParam.getId())
                 .serviceDescription(serviceInfoParam.getComment())
                 .serviceName(serviceInfoParam.getServiceName())

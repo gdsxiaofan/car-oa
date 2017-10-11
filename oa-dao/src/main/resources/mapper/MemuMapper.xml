@@ -46,7 +46,7 @@
 				WHERE
 					role_id = #{roleId}
 			)
-		and delete_status=1
+
 	</select>
 	<select id="getAllMenu" resultMap="BaseResultMap">
 		SELECT

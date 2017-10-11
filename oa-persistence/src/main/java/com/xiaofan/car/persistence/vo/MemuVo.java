@@ -28,5 +28,8 @@ public class MemuVo {
 
     /**父菜单id**/
     private Integer parentId;
+
+    /****/
+    private Integer deleteStatus;
 }
 

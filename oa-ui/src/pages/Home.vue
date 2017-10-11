@@ -14,7 +14,7 @@
                 <Icon :type="item.icon" :size="iconSize"></Icon>
                 <span class="layout-text">{{item.name}}</span>
               </template>
-              <template v-for="(child,childIndex) in menu" v-if="child.parentId==item.id">
+              <template v-for="(child,childIndex) in menu" v-if="child.parentId==item.id&&child.deleteStatus===1">
                 <Menu-item :name="child.id">
                   <Icon :type="child.icon" :size="iconSize"></Icon>
                   <span class="layout-text">{{child.name}}</span>

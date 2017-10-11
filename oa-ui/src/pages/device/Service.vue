@@ -1,6 +1,23 @@
 <template>
   <div>
     <Card>
+      <p slot="title">设备信息</p>
+      <Row>
+        <Col :span="2" :offset="2" style="margin-top:0.2%">
+        设备名称：
+        </Col>
+        <Col :span="6">
+        设备名字
+        </Col>
+        <Col :span="2" offset="2">
+        设备名字
+        </Col>
+        <Col :span="2" offset="4">
+        设备名字
+        </Col>
+      </Row>
+    </Card>
+    <Card>
       <p slot="title">条件查询</p>
       <Row>
         <Col :span="4" style="margin-top:0.2%">
