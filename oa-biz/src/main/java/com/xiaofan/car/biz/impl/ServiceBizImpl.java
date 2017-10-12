@@ -38,7 +38,7 @@ public class ServiceBizImpl implements ServiceBiz {
 
         //2设置分页参数查询对应的数据
         PageHelper.startPage(pageNum,pageSize);
-        List<ServiceInfoVo> serviceInfoVos = serviceInfoMapper.getServiceInfoList(serviceParam.getServiceName());
+        List<ServiceInfoVo> serviceInfoVos = serviceInfoMapper.getServiceInfoList(serviceParam.getDeviceId());
 
         //3.处理返回参数
         if(CollectionUtils.isEmpty(serviceInfoVos)){
@@ -84,7 +84,7 @@ public class ServiceBizImpl implements ServiceBiz {
 
         //1.处理参数
         ServiceInfo serviceInfo = ServiceInfo.builder()
-                .id(serviceInfoParam.getId())
+                .id(null)
                 .serviceDescription(serviceInfoParam.getComment())
                 .serviceName(serviceInfoParam.getServiceName())
                 .property1(serviceInfoParam.getProperty1())

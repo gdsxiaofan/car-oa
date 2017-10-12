@@ -203,8 +203,8 @@
 		t_service_info si
 	LEFT JOIN t_device_info di ON si.device_id = di.id
 	<where>
-		<if test="serviceName!=null and serviceName !=''">
-			service_name = #{serviceName}
+		<if test="deviceId!=null and deviceId !=''">
+			si.device_id = #{deviceId}
 		</if>
 	</where>
 	</select>

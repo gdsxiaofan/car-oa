@@ -17,7 +17,7 @@ import java.util.List;
 public interface ServiceInfoMapper{
 
     public List<ServiceInfoVo> getServiceInfoList(
-            @Param("serviceName") String serviceName
+            @Param("deviceId") int deviceId
     );
 
     public ServiceInfoVo getServiceDetail(

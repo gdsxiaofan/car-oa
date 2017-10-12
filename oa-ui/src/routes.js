@@ -77,11 +77,11 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
   iview.LoadingBar.start();
-  if (to.path == '/login') {
+  if (to.path === '/login') {
     sessionStorage.removeItem('Authorization');
   }
   let jwt = sessionStorage.getItem("Authorization");
-  if (!jwt && to.path != '/login') {
+  if (!jwt && to.path !== '/login') {
     next({ path: '/login',query:{ redirect: to.fullPath} })
     iview.LoadingBar.finish();
     window.scrollTo(0, 0);

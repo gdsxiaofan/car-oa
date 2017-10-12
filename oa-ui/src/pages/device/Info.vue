@@ -131,7 +131,7 @@
                 on: {
                   click: () => {
                     let device=params.row
-                    this.$router.push({path: 'service',query:{deviceId:device.id,serviceName:device.roleName}})
+                    this.$router.push({path: 'service',query:{deviceId:device.id}})
                   }
                 }
               }, '服务列表'),

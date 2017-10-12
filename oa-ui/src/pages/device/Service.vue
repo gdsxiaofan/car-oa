@@ -49,28 +49,29 @@
     >
       <Form ref="user" :model="service" :rules="serviceRules" :label-width="80">
         <Form-item label="服务名称：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="服务名称" />
+          <Input type="text" v-model="service.serviceName" :disabled="userModal.disabled" placeholder="服务名称" />
         </Form-item>
-        <Form-item label="属性一：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="属性一" />
+        <Form-item label="属性一：" >
+          <Input type="text" v-model="service.property1" :disabled="userModal.disabled" placeholder="属性一" />
         </Form-item>
-        <Form-item label="属性二：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="属性二" />
+        <Form-item label="属性二：">
+          <Input type="text" v-model="service.property2" :disabled="userModal.disabled" placeholder="属性二" />
         </Form-item>
-        <Form-item label="属性三：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="属性三" />
+        <Form-item label="属性三：" >
+          <Input type="text" v-model="service.property3" :disabled="userModal.disabled" placeholder="属性三" />
         </Form-item>
-        <Form-item label="属性四：" prop="serviceName">
-          <Input type="text" v-model="service.serviceName" placeholder="属性四" />
+        <Form-item label="属性四：" >
+          <Input type="text" v-model="service.property4" :disabled="userModal.disabled" placeholder="属性四" />
         </Form-item>
-        <Form-item label="描述：" prop="serviceName">
-          <Input type="textarea" autosize v-model="service.serviceName" placeholder="描述" />
+        <Form-item label="描述："   >
+          <Input type="textarea" autosize :disabled="userModal.disabled" v-model="service.serviceDescrible" placeholder="描述" />
         </Form-item>
 
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="doService" :loading="userModal.isLoading">提交</Button>
+        <Button type="primary" @click="doService" :loading="userModal.isLoading" v-if="!userModal.disabled">提交</Button>
+        <Button type="primary" @click="userModal.isShow=false"  v-else>确认</Button>
       </div>
     </Modal>
   </div>
@@ -90,11 +91,15 @@
         service: {
           id: '',
           serviceName: '',
-
+          property1:'',
+          property2:'',
+          property3:'',
+          property4:'',
+          serviceDescrible:'',
         },
         serviceRules: {
           serviceName: [
-            {required: true, message: '请填写工号', trigger: 'blur'}
+            {required: true, message: '请填写服务名', trigger: 'blur'}
           ],
 
         },
@@ -121,25 +126,23 @@
           },
           {
             title: '设备名称',
-            render:(h,params)=>{
-              return h('div',this.$route.query.serviceName)
-            }
+            key: 'deviceName'
           },
           {
             title: '属性一',
-            key: 'serviceName'
+            key: 'property1'
           },
           {
             title: '属性二',
-            key: 'serviceName'
+            key: 'property2'
           },
           {
             title: '属性三',
-            key: 'serviceName'
+            key: 'property3'
           },
           {
             title: '属性四',
-            key: 'serviceName'
+            key: 'property4'
           },
           {
             title: '操作',
@@ -154,11 +157,22 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs['user'].resetFields()
-                      this.service.id = params.row.id
-                      this.service.serviceName = params.row.serviceName
-                      this.userModal.isShow = true
-                      this.userModal.title = '修改服务'
+                      this.showServiceInfo('服务详情',params)
+                    }
+                  }
+                },
+                '详情'
+              ),
+              h('Button', {
+                  props: {
+                    type: 'info'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.showServiceInfo('修改服务',params)
                     }
                   }
                 },
@@ -198,10 +212,18 @@
     },
     methods: {
       add() {
-        this.$refs['user'].resetFields()
+        this.service={
+          id: '',
+          serviceName: '',
+          property1:'',
+          property2:'',
+          property3:'',
+          property4:'',
+          serviceDescrible:'',
+        }
         this.userModal.title = '新增服务'
         this.userModal.isShow = true
-
+        this.userModal.disabled = false
       },
       getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
@@ -213,19 +235,33 @@
 
         });
       },
+      showServiceInfo(type,params){
+        this.$refs['user'].resetFields()
+        this.service.id = params.row.id
+        this.service.serviceName = params.row.serviceName
+        this.service.property1 = params.row.property1
+        this.service.property2 = params.row.property2
+        this.service.property3 = params.row.property3
+        this.service.property4 = params.row.property4
+        this.service.serviceDescrible = params.row.serviceDescrible
+        this.userModal.isShow = true
+        this.userModal.title = type
+        this.userModal.disabled = type==='服务详情'
+      },
       doService() {
         this.$refs['user'].validate((valid) => {
           if (valid) {
+            console.log(valid)
             this.userModal.isLoading = true
             if (this.userModal.title === '修改服务') {
-              updateService(this.userInfo).then(res => {
+              updateService(this.service).then(res => {
                 this.userModal.isLoading = false
                 this.userModal.isShow = false
                 this.$Message.success(res.data.message)
                 this.getlist()
               })
-            } else if (this.userModal.title === '新增用户') {
-              addService(this.userInfo).then(res => {
+            } else if (this.userModal.title === '新增服务') {
+              addService(this.service).then(res => {
                 this.userModal.isLoading = false
                 this.userModal.isShow = false
                 this.$Message.success(res.data.message)
