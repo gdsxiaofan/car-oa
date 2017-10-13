@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaofan.car.dao.repository.TpmBillMapper">
+
+	<!--实体映射-->
+	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.TpmBill">
+		<!---->
+		<id property="id" column="id" />
+		<!--工单名称-->
+		<result property="tpmName" column="tpm_name" />
+		<!---->
+		<result property="tpmNo" column="tpm_no" />
+		<!--设备id-->
+		<result property="deviceId" column="device_id" />
+		<!--设备名称-->
+		<result property="deviceName" column="device_name" />
+		<!--设备位置-->
+		<result property="deviceLocation" column="device_location" />
+		<!--设备区域-->
+		<result property="deviceArea" column="device_area" />
+		<!--工单完成时间-->
+		<result property="finishTime" column="finish_time" />
+		<!--工单审核时间-->
+		<result property="auditTime" column="audit_time" />
+		<!--审核驳回原因-->
+		<result property="rejectReason" column="reject_reason" />
+		<!--工单状态：1，待处理，2：待审核，3：故障维修，4：修复完成，5处理完成-->
+		<result property="tpmStatus" column="tpm_status" />
+		<!--工单类型：1：巡检工单，2：维修工单-->
+		<result property="tpmType" column="tpm_type" />
+		<!--班次：1，早班；2，中班-->
+		<result property="shiftsNo" column="shifts_no" />
+		<!--有效状态：0，无效；1：有效-->
+		<result property="deleteStatus" column="delete_status" />
+		<!--工单创建时间-->
+		<result property="createTime" column="create_time" />
+		<!--更新时间-->
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+	id,	tpm_name,	tpm_no,	device_id,	device_name,	device_location,	device_area,	finish_time,	audit_time,	reject_reason,	tpm_status,	tpm_type,	shifts_no,	delete_status,	create_time,	update_time
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.TpmBill" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_tpm_bill
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		 DELETE FROM t_tpm_bill
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.TpmBill">
+		 INSERT INTO t_tpm_bill
+ 		(id,tpm_name,tpm_no,device_id,device_name,device_location,device_area,finish_time,audit_time,reject_reason,tpm_status,tpm_type,shifts_no,delete_status,create_time,update_time) 
+		 VALUES 
+ 		(#{id},#{tpmName},#{tpmNo},#{deviceId},#{deviceName},#{deviceLocation},#{deviceArea},#{finishTime},#{auditTime},#{rejectReason},#{tpmStatus},#{tpmType},#{shiftsNo},#{deleteStatus},#{createTime},#{updateTime}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.TpmBill">
+		 INSERT INTO t_tpm_bill
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="tpmName != null">
+				 tpm_name,
+			</if>
+			<if test="tpmNo != null">
+				 tpm_no,
+			</if>
+			<if test="deviceId != null">
+				 device_id,
+			</if>
+			<if test="deviceName != null">
+				 device_name,
+			</if>
+			<if test="deviceLocation != null">
+				 device_location,
+			</if>
+			<if test="deviceArea != null">
+				 device_area,
+			</if>
+			<if test="finishTime != null">
+				 finish_time,
+			</if>
+			<if test="auditTime != null">
+				 audit_time,
+			</if>
+			<if test="rejectReason != null">
+				 reject_reason,
+			</if>
+			<if test="tpmStatus != null">
+				 tpm_status,
+			</if>
+			<if test="tpmType != null">
+				 tpm_type,
+			</if>
+			<if test="shiftsNo != null">
+				 shifts_no,
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+			<if test="updateTime != null">
+				 update_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="tpmName!=null">
+				 #{tpmName},
+			</if>
+			<if test="tpmNo!=null">
+				 #{tpmNo},
+			</if>
+			<if test="deviceId!=null">
+				 #{deviceId},
+			</if>
+			<if test="deviceName!=null">
+				 #{deviceName},
+			</if>
+			<if test="deviceLocation!=null">
+				 #{deviceLocation},
+			</if>
+			<if test="deviceArea!=null">
+				 #{deviceArea},
+			</if>
+			<if test="finishTime!=null">
+				 #{finishTime},
+			</if>
+			<if test="auditTime!=null">
+				 #{auditTime},
+			</if>
+			<if test="rejectReason!=null">
+				 #{rejectReason},
+			</if>
+			<if test="tpmStatus!=null">
+				 #{tpmStatus},
+			</if>
+			<if test="tpmType!=null">
+				 #{tpmType},
+			</if>
+			<if test="shiftsNo!=null">
+				 #{shiftsNo},
+			</if>
+			<if test="deleteStatus!=null">
+				 #{deleteStatus},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.TpmBill">
+		 UPDATE t_tpm_bill
+ 		 <set> 
+			<if test="tpmName != null">
+				 tpm_name = #{tpmName},
+			</if>
+			<if test="tpmNo != null">
+				 tpm_no = #{tpmNo},
+			</if>
+			<if test="deviceId != null">
+				 device_id = #{deviceId},
+			</if>
+			<if test="deviceName != null">
+				 device_name = #{deviceName},
+			</if>
+			<if test="deviceLocation != null">
+				 device_location = #{deviceLocation},
+			</if>
+			<if test="deviceArea != null">
+				 device_area = #{deviceArea},
+			</if>
+			<if test="finishTime != null">
+				 finish_time = #{finishTime},
+			</if>
+			<if test="auditTime != null">
+				 audit_time = #{auditTime},
+			</if>
+			<if test="rejectReason != null">
+				 reject_reason = #{rejectReason},
+			</if>
+			<if test="tpmStatus != null">
+				 tpm_status = #{tpmStatus},
+			</if>
+			<if test="tpmType != null">
+				 tpm_type = #{tpmType},
+			</if>
+			<if test="shiftsNo != null">
+				 shifts_no = #{shiftsNo},
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status = #{deleteStatus},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				 update_time = #{updateTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.TpmBill">
+		 UPDATE t_tpm_bill
+		 SET 
+			 tpm_name = #{tpmName},
+			 tpm_no = #{tpmNo},
+			 device_id = #{deviceId},
+			 device_name = #{deviceName},
+			 device_location = #{deviceLocation},
+			 device_area = #{deviceArea},
+			 finish_time = #{finishTime},
+			 audit_time = #{auditTime},
+			 reject_reason = #{rejectReason},
+			 tpm_status = #{tpmStatus},
+			 tpm_type = #{tpmType},
+			 shifts_no = #{shiftsNo},
+			 delete_status = #{deleteStatus},
+			 create_time = #{createTime},
+			 update_time = #{updateTime}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaofan.car.dao.repository.TpmProblemLogMapper">
+
+	<!--实体映射-->
+	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.TpmProblemLog">
+		<!---->
+		<id property="id" column="id" />
+		<!--设备id-->
+		<result property="deviceId" column="device_id" />
+		<!--设备名称-->
+		<result property="deviceName" column="device_name" />
+		<!--问题发现时间-->
+		<result property="findDate" column="find_date" />
+		<!--问题描述-->
+		<result property="problemDes" column="problem_des" />
+		<!--措施-->
+		<result property="measures" column="measures" />
+		<!--责任人id-->
+		<result property="responsibleUseId" column="responsible_use_id" />
+		<!--责任人姓名-->
+		<result property="responsibleUseName" column="responsible_use_name" />
+		<!--计划完成时间-->
+		<result property="planFinshDate" column="plan_finsh_date" />
+		<!--实际完成时间-->
+		<result property="realFinshDate" column="real_finsh_date" />
+		<!--备注-->
+		<result property="comment" column="comment" />
+		<!--有效状态：1：有效，0无效-->
+		<result property="deleteStatus" column="delete_status" />
+		<!--创建时间-->
+		<result property="createTime" column="create_time" />
+		<!--更新时间-->
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+	id,	device_id,	device_name,	find_date,	problem_des,	measures,	responsible_use_id,	responsible_use_name,	plan_finsh_date,	real_finsh_date,	comment,	delete_status,	create_time,	update_time
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.TpmProblemLog" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_tpm_problem_log
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		 DELETE FROM t_tpm_problem_log
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.TpmProblemLog">
+		 INSERT INTO t_tpm_problem_log
+ 		(id,device_id,device_name,find_date,problem_des,measures,responsible_use_id,responsible_use_name,plan_finsh_date,real_finsh_date,comment,delete_status,create_time,update_time) 
+		 VALUES 
+ 		(#{id},#{deviceId},#{deviceName},#{findDate},#{problemDes},#{measures},#{responsibleUseId},#{responsibleUseName},#{planFinshDate},#{realFinshDate},#{comment},#{deleteStatus},#{createTime},#{updateTime}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.TpmProblemLog">
+		 INSERT INTO t_tpm_problem_log
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="deviceId != null">
+				 device_id,
+			</if>
+			<if test="deviceName != null">
+				 device_name,
+			</if>
+			<if test="findDate != null">
+				 find_date,
+			</if>
+			<if test="problemDes != null">
+				 problem_des,
+			</if>
+			<if test="measures != null">
+				 measures,
+			</if>
+			<if test="responsibleUseId != null">
+				 responsible_use_id,
+			</if>
+			<if test="responsibleUseName != null">
+				 responsible_use_name,
+			</if>
+			<if test="planFinshDate != null">
+				 plan_finsh_date,
+			</if>
+			<if test="realFinshDate != null">
+				 real_finsh_date,
+			</if>
+			<if test="comment != null">
+				 comment,
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+			<if test="updateTime != null">
+				 update_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="deviceId!=null">
+				 #{deviceId},
+			</if>
+			<if test="deviceName!=null">
+				 #{deviceName},
+			</if>
+			<if test="findDate!=null">
+				 #{findDate},
+			</if>
+			<if test="problemDes!=null">
+				 #{problemDes},
+			</if>
+			<if test="measures!=null">
+				 #{measures},
+			</if>
+			<if test="responsibleUseId!=null">
+				 #{responsibleUseId},
+			</if>
+			<if test="responsibleUseName!=null">
+				 #{responsibleUseName},
+			</if>
+			<if test="planFinshDate!=null">
+				 #{planFinshDate},
+			</if>
+			<if test="realFinshDate!=null">
+				 #{realFinshDate},
+			</if>
+			<if test="comment!=null">
+				 #{comment},
+			</if>
+			<if test="deleteStatus!=null">
+				 #{deleteStatus},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.TpmProblemLog">
+		 UPDATE t_tpm_problem_log
+ 		 <set> 
+			<if test="deviceId != null">
+				 device_id = #{deviceId},
+			</if>
+			<if test="deviceName != null">
+				 device_name = #{deviceName},
+			</if>
+			<if test="findDate != null">
+				 find_date = #{findDate},
+			</if>
+			<if test="problemDes != null">
+				 problem_des = #{problemDes},
+			</if>
+			<if test="measures != null">
+				 measures = #{measures},
+			</if>
+			<if test="responsibleUseId != null">
+				 responsible_use_id = #{responsibleUseId},
+			</if>
+			<if test="responsibleUseName != null">
+				 responsible_use_name = #{responsibleUseName},
+			</if>
+			<if test="planFinshDate != null">
+				 plan_finsh_date = #{planFinshDate},
+			</if>
+			<if test="realFinshDate != null">
+				 real_finsh_date = #{realFinshDate},
+			</if>
+			<if test="comment != null">
+				 comment = #{comment},
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status = #{deleteStatus},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				 update_time = #{updateTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.TpmProblemLog">
+		 UPDATE t_tpm_problem_log
+		 SET 
+			 device_id = #{deviceId},
+			 device_name = #{deviceName},
+			 find_date = #{findDate},
+			 problem_des = #{problemDes},
+			 measures = #{measures},
+			 responsible_use_id = #{responsibleUseId},
+			 responsible_use_name = #{responsibleUseName},
+			 plan_finsh_date = #{planFinshDate},
+			 real_finsh_date = #{realFinshDate},
+			 comment = #{comment},
+			 delete_status = #{deleteStatus},
+			 create_time = #{createTime},
+			 update_time = #{updateTime}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaofan.car.dao.repository.TpmBillDetailMapper">
+
+	<!--实体映射-->
+	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.TpmBillDetail">
+		<!---->
+		<id property="id" column="id" />
+		<!--检查信息id-->
+		<result property="checkId" column="check_id" />
+		<!--系统名称-->
+		<result property="systemName" column="system_name" />
+		<!--检查点-->
+		<result property="checkPoint" column="check_point" />
+		<!--检查/维护工作-->
+		<result property="checkComment" column="check_comment" />
+		<!--设定值-->
+		<result property="setValue" column="set_value" />
+		<!--检查标记：0，待确认，1，正常，2，有故障，3，修复-->
+		<result property="checkStatus" column="check_status" />
+		<!--有效状态：1，有效；0，无效-->
+		<result property="deleteStatus" column="delete_status" />
+		<!--创建时间-->
+		<result property="createTime" column="create_time" />
+		<!--更新时间-->
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+	id,	check_id,	system_name,	check_point,	check_comment,	set_value,	check_status,	delete_status,	create_time,	update_time
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.TpmBillDetail" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_tpm_bill_detail
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		 DELETE FROM t_tpm_bill_detail
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.TpmBillDetail">
+		 INSERT INTO t_tpm_bill_detail
+ 		(id,check_id,system_name,check_point,check_comment,set_value,check_status,delete_status,create_time,update_time) 
+		 VALUES 
+ 		(#{id},#{checkId},#{systemName},#{checkPoint},#{checkComment},#{setValue},#{checkStatus},#{deleteStatus},#{createTime},#{updateTime}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.TpmBillDetail">
+		 INSERT INTO t_tpm_bill_detail
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="checkId != null">
+				 check_id,
+			</if>
+			<if test="systemName != null">
+				 system_name,
+			</if>
+			<if test="checkPoint != null">
+				 check_point,
+			</if>
+			<if test="checkComment != null">
+				 check_comment,
+			</if>
+			<if test="setValue != null">
+				 set_value,
+			</if>
+			<if test="checkStatus != null">
+				 check_status,
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+			<if test="updateTime != null">
+				 update_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="checkId!=null">
+				 #{checkId},
+			</if>
+			<if test="systemName!=null">
+				 #{systemName},
+			</if>
+			<if test="checkPoint!=null">
+				 #{checkPoint},
+			</if>
+			<if test="checkComment!=null">
+				 #{checkComment},
+			</if>
+			<if test="setValue!=null">
+				 #{setValue},
+			</if>
+			<if test="checkStatus!=null">
+				 #{checkStatus},
+			</if>
+			<if test="deleteStatus!=null">
+				 #{deleteStatus},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.TpmBillDetail">
+		 UPDATE t_tpm_bill_detail
+ 		 <set> 
+			<if test="checkId != null">
+				 check_id = #{checkId},
+			</if>
+			<if test="systemName != null">
+				 system_name = #{systemName},
+			</if>
+			<if test="checkPoint != null">
+				 check_point = #{checkPoint},
+			</if>
+			<if test="checkComment != null">
+				 check_comment = #{checkComment},
+			</if>
+			<if test="setValue != null">
+				 set_value = #{setValue},
+			</if>
+			<if test="checkStatus != null">
+				 check_status = #{checkStatus},
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status = #{deleteStatus},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				 update_time = #{updateTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.TpmBillDetail">
+		 UPDATE t_tpm_bill_detail
+		 SET 
+			 check_id = #{checkId},
+			 system_name = #{systemName},
+			 check_point = #{checkPoint},
+			 check_comment = #{checkComment},
+			 set_value = #{setValue},
+			 check_status = #{checkStatus},
+			 delete_status = #{deleteStatus},
+			 create_time = #{createTime},
+			 update_time = #{updateTime}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

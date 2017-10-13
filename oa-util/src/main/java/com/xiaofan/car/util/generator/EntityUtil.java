@@ -676,7 +676,12 @@ public class EntityUtil {
 //            tables.add("t_vip");
 //            tables.add("t_vip_level");
             tables.add("t_device_info");
-            tables.add("t_service_info");
+            tables.add("t_check_info");
+            tables.add("t_tpm_bill");
+            tables.add("t_tmp_bill_detail");
+            tables.add("t_tmp_problem_log");
+//            tables.add("t_device_info");
+//            tables.add("t_service_info");
 //            tables.add("t_memu");
             new EntityUtil().generate(tables);
             // 自动打开生成文件的目录

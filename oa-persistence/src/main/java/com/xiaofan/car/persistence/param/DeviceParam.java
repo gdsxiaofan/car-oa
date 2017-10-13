@@ -15,6 +15,7 @@ public class DeviceParam {
     String roleName;
     int pageSize;
     int pageNum;
+    String deviceName;
 
     public void setPageSize(Integer pageSize){
         if(pageSize==null){

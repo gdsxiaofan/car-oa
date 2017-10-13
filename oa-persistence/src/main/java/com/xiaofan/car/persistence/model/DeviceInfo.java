@@ -19,14 +19,17 @@ public class DeviceInfo{
 	/**设备名称**/
 	private String deviceName;
 
-	/**属性一**/
-	private String property1;
+	/**区域**/
+	private String area;
 
-	/**属性二**/
-	private String property2;
+	/**位置**/
+	private String location;
 
-	/**属性三**/
-	private String property3;
+	/**开始时间**/
+	private java.util.Date fromDate;
+
+	/**结束时间**/
+	private java.util.Date toDate;
 
 	/**是否有效：1：是，0：无效**/
 	private Integer deleteStatus;
@@ -36,6 +39,9 @@ public class DeviceInfo{
 
 	/**更新时间**/
 	private java.util.Date updateTime;
+
+	/**创建人id**/
+	private Integer createUseId;
 
 
 
@@ -63,28 +69,36 @@ public class DeviceInfo{
 		return this.deviceName;
 	}
 
-	public void setProperty1(String property1){
-		this.property1=property1;
+	public void setArea(String area){
+		this.area=area;
 	}
 
-	public String getProperty1(){
-		return this.property1;
+	public String getArea(){
+		return this.area;
 	}
 
-	public void setProperty2(String property2){
-		this.property2=property2;
+	public void setLocation(String location){
+		this.location=location;
 	}
 
-	public String getProperty2(){
-		return this.property2;
+	public String getLocation(){
+		return this.location;
 	}
 
-	public void setProperty3(String property3){
-		this.property3=property3;
+	public void setFromDate(java.util.Date fromDate){
+		this.fromDate=fromDate;
 	}
 
-	public String getProperty3(){
-		return this.property3;
+	public java.util.Date getFromDate(){
+		return this.fromDate;
+	}
+
+	public void setToDate(java.util.Date toDate){
+		this.toDate=toDate;
+	}
+
+	public java.util.Date getToDate(){
+		return this.toDate;
 	}
 
 	public void setDeleteStatus(Integer deleteStatus){
@@ -109,6 +123,14 @@ public class DeviceInfo{
 
 	public java.util.Date getUpdateTime(){
 		return this.updateTime;
+	}
+
+	public void setCreateUseId(Integer createUseId){
+		this.createUseId=createUseId;
+	}
+
+	public Integer getCreateUseId(){
+		return this.createUseId;
 	}
 
 }
