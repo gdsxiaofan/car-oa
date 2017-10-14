@@ -24,3 +24,19 @@ export function updateDevcie(device) {
     data: device
   })
 }
+//详情
+export function devcieInfo(id) {
+  return fetch({
+    url: `/v1/device/detail`,
+    method: 'get',
+    params: {id}
+  })
+}
+//删除
+export function delDevcie(device) {
+  return fetch({
+    url: `/v1/device/delete`,
+    method: 'delete',
+    data: device
+  })
+}

@@ -1,5 +1,7 @@
 package com.xiaofan.car.persistence.param;
 
+import lombok.Data;
+
 /**
  * TODO: 请添加描述
  *
@@ -7,6 +9,7 @@ package com.xiaofan.car.persistence.param;
  * @date 2017/10/13
  * @since 1.0.0
  */
+@Data
 public class DeviceInfoParam {
     /****/
     private Integer id;

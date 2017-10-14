@@ -7,14 +7,20 @@
         设备名称：
         </Col>
         <Col :span="6">
-        <Input type="text" v-model="queryCondition.roleName" placeholder="请输入..."></Input>
+        <Input type="text" v-model="queryCondition.deviceName" placeholder="请输入..."></Input>
         </Col>
         <Col :span="2" offset="2">
         <Button type="primary" shape="circle" icon="ios-search" @click="getlist">查询</Button>
         </Col>
         <Col :span="2" offset="4">
         <Button type="success" shape="circle" icon="ios-personadd"
-                @click="Device={id:'',roleName: ''};DeviceModal.isShow=true;DeviceModal.title='新建设备';collapse=[]">
+                @click="Device={
+          id: '',
+          deviceName: '',
+          routingDays:1,
+          area:'',
+          location:''
+        };DeviceModal.isShow=true;DeviceModal.title='新建设备';DeviceModal.disabled=false">
           新建设备
         </Button>
         </Col>
@@ -31,25 +37,23 @@
            :title="DeviceModal.title"
     >
       <Form :model="Device" :rules="rule" :label-width="80" ref="device">
-        <Form-item prop="roleName" label="设备名：">
-          <Input v-model="Device.roleName" placeholder="请输入"></Input>
+        <Form-item prop="deviceName" label="设备名：">
+          <Input v-model="Device.deviceName" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
         <Form-item label="巡检天数">
-          <Input v-model="Device.roleName" placeholder="请输入"></Input>
+          <InputNumber :min="1" v-model="Device.routingDays" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
-        <Form-item label="属性一">
-          <Input v-model="Device.roleName" placeholder="请输入"></Input>
+        <Form-item label="区域">
+          <Input v-model="Device.area" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
-        <Form-item label="属性二">
-          <Input v-model="Device.roleName" placeholder="请输入"></Input>
-        </Form-item>
-        <Form-item label="属性三">
-          <Input v-model="Device.roleName" placeholder="请输入"></Input>
+        <Form-item label="位置">
+          <Input v-model="Device.location" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="DeviceModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="doDevice" :loading="DeviceModal.isLoading">提交</Button>
+        <Button type="primary" @click="doDevice" :loading="DeviceModal.isLoading" v-if="!DeviceModal.disabled">提交</Button>
+        <Button type="primary" @click="DeviceModal.isShow=false"  v-else>确认</Button>
       </div>
     </Modal>
   </div>
@@ -65,13 +69,11 @@
   export default {
     data() {
       return {
-        list: [
-          {id: 1, roleName: "备用"}
-        ],
+        list: [],
         queryCondition: {
           pageSize: 10,
           pageNum: 1,
-          roleName: '',
+          deviceName: '',
           total: 0
         },
         columns: [
@@ -81,19 +83,19 @@
           },
           {
             title: '巡检天数',
-            key: 'roleName'
+            key: 'routingDays'
           },
           {
-            title: '属性一',
-            key: 'roleName'
+            title: '设备名称',
+            key: 'deviceName'
           },
           {
-            title: '属性二',
-            key: 'roleName'
+            title: '区域',
+            key: 'area'
           },
           {
-            title: '属性三',
-            key: 'roleName'
+            title: '位置',
+            key: 'location'
           },
           {
             title: '操作',
@@ -108,19 +110,40 @@
                 },
                 on: {
                   click: () => {
-
                     this.Device.id = params.row.id
-                    this.Device.roleName = params.row.roleName
-//                    getDeviceById(params.row.id).then(res=>{
-//                      this.Device.checkMenu = res.data.data.checkMenu
+                    this.Device.deviceName = params.row.deviceName
+                    this.Device.routingDays = params.row.routingDays
+                    this.Device.area = params.row.area
+                    this.Device.location = params.row.location
                     this.DeviceModal.isShow = true
                     this.DeviceModal.title = '修改设备'
-//                      this.collapse=[]
-//                    })
-
+                    this.DeviceModal.disabled = false
+                    this.$refs['device'].validate()
                   }
                 }
               }, '修改'),
+              h('Button', {
+                props: {
+                  type: 'primary'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.Device.id = params.row.id
+                    this.Device.deviceName = params.row.deviceName
+                    this.Device.routingDays = params.row.routingDays
+                    this.Device.area = params.row.area
+                    this.Device.location = params.row.location
+                    this.DeviceModal.isShow = true
+                    this.DeviceModal.title = '修改设备'
+                    this.DeviceModal.disabled = true
+                    this.$refs['device'].validate()
+
+                  }
+                }
+              }, '详情'),
               h('Button', {
                 props: {
                   type: 'success'
@@ -130,27 +153,30 @@
                 },
                 on: {
                   click: () => {
-                    let device=params.row
-                    this.$router.push({path: 'service',query:{deviceId:device.id}})
+                    this.$router.push({path: 'service', query: {deviceId: params.row.id}})
                   }
                 }
               }, '服务列表'),
             ])
           }
         ],
-        rule:{
-          roleName: [
+        rule: {
+          deviceName: [
             {required: true, message: '不可为空', trigger: 'blur'}
           ],
         },
         DeviceModal: {
           title: '',
           isShow: false,
-          isLoading: false
+          isLoading: false,
+          disabled:false
         },
         Device: {
           id: '',
-          roleName: ''
+          deviceName: '',
+          routingDays:1,
+          area:'',
+          location:''
         },
       }
     },
@@ -158,9 +184,9 @@
       getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
         getDeviceList(this.queryCondition).then(res => {
-//          this.queryCondition.pageNum = res.data.data.pageNum
-//          this.list = res.data.data.list
-//          this.queryCondition.total = res.data.data.total
+          this.queryCondition.pageNum = res.data.data.pageNum
+          this.list = res.data.data.list
+          this.queryCondition.total = res.data.data.total
         }).catch(err => {
 
         });

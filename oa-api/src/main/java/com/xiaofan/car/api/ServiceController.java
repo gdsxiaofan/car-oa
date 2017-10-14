@@ -35,26 +35,26 @@ public class ServiceController {
     }
     @ApiOperation(value = "新增设备服务", notes = "新增设备服务", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/add")
-    public JsonResult<String> add(ServiceInfoParam param) {
+    public JsonResult<String> add(@RequestBody ServiceInfoParam param) {
         serviceBiz.saveServiceInfo(param,null,null);
         return new JsonResult<String>(1, "新增成功");
     }
     @ApiOperation(value = "修改设备服务", notes = "修改设备服务", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PutMapping("/update")
-    public JsonResult<DeviceParam> update(ServiceInfoParam param) {
+    public JsonResult<DeviceParam> update(@RequestBody ServiceInfoParam param) {
         serviceBiz.updateServiceInfo(param,null,null);
         return new JsonResult<DeviceParam>(1, "修改成功");
     }
     @ApiOperation(value = "删除设备服务", notes = "删除设备服务", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @DeleteMapping("/del")
-    public JsonResult<DeviceParam> del(ServiceInfoParam param) {
+    public JsonResult<DeviceParam> del(@RequestBody ServiceInfoParam param) {
         serviceBiz.deleteServiceInfo(param.getId(),null,null);
         return new JsonResult<DeviceParam>(1, "删除成功");
     }
 
     @ApiOperation(value = "获取服务详细信息", notes = "获取服务详细信息", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @DeleteMapping("/get")
-    public JsonResult<ServiceInfoVo> getDetail(ServiceInfoParam param) {
+    public JsonResult<ServiceInfoVo> getDetail(@RequestBody ServiceInfoParam param) {
         ServiceInfoVo serviceInfoVo = serviceBiz.getServiceInfoVoDetail(param.getId(),null,null);
         return new JsonResult<ServiceInfoVo>(1, "获取成功",serviceInfoVo);
     }

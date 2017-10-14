@@ -157,26 +157,26 @@
                   },
                   on: {
                     click: () => {
-                      this.showServiceInfo('服务详情',params)
+                      this.showServiceInfo('修改服务',params)
                     }
                   }
                 },
-                '详情'
+                '修改'
               ),
               h('Button', {
                   props: {
-                    type: 'info'
+                    type: 'primary'
                   },
                   style: {
                     marginRight: '5px'
                   },
                   on: {
                     click: () => {
-                      this.showServiceInfo('修改服务',params)
+                      this.showServiceInfo('服务详情',params)
                     }
                   }
                 },
-                '修改'
+                '详情'
               ),
               h('Button', {
                 props: {
