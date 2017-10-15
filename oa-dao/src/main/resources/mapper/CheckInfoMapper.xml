@@ -45,7 +45,8 @@
 		 WHERE id = #{id}
 	</select>
 
-	<!--删除：根据主键ID删除-->
+
+    <!--删除：根据主键ID删除-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		 DELETE FROM t_check_info
 		 WHERE id = #{id}
@@ -201,4 +202,19 @@
 		 WHERE id = #{id}
 	</update>
 
+	<select id="getCheckInfoByDeviceId" resultType="com.xiaofan.car.persistence.vo.CheckInfoVo">
+		SELECT
+			id AS id,
+			device_id AS deviceId,
+			system_id AS systemId,
+			system_name AS systemName,
+			check_point AS checkPoint,
+			check_comment AS checkComment,
+			set_value AS setValue,
+			shifts_no AS shiftsNo
+		FROM
+			t_check_info
+		WHERE
+			device_id = #{deviceId}
+	</select>
 </mapper>

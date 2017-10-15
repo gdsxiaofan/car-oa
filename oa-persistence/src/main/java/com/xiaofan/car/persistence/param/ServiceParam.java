@@ -1,6 +1,9 @@
 package com.xiaofan.car.persistence.param;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -10,6 +13,9 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ServiceParam {
 
     String roleName;

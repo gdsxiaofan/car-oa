@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -91,6 +93,7 @@ public class ServiceBizImpl implements ServiceBiz {
                 .property2(serviceInfoParam.getProperty2())
                 .property3(serviceInfoParam.getProperty3())
                 .property4(serviceInfoParam.getProperty4())
+                .createTime(Calendar.getInstance().getTime())
                 .build();
         // 2.保存数据
         Integer count = serviceInfoMapper.saveServiceInfo(serviceInfo);

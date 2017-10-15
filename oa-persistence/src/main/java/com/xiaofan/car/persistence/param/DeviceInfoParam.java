@@ -27,9 +27,9 @@ public class DeviceInfoParam {
     private String location;
 
     /**开始时间**/
-    private java.util.Date fromDate;
+    private String fromDate;
 
     /**结束时间**/
-    private java.util.Date toDate;
+    private String toDate;
 
 }

@@ -1,12 +1,23 @@
 package com.xiaofan.car.biz.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.DeviceBiz;
+import com.xiaofan.car.dao.repository.CheckInfoMapper;
+import com.xiaofan.car.dao.repository.DeviceInfoMapper;
+import com.xiaofan.car.persistence.model.DeviceInfo;
 import com.xiaofan.car.persistence.param.DeviceInfoParam;
 import com.xiaofan.car.persistence.param.DeviceParam;
+import com.xiaofan.car.persistence.vo.CheckInfoVo;
 import com.xiaofan.car.persistence.vo.DeviceInfoVo;
+import com.xiaofan.car.service.DeviceService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * TODO: 请添加描述
@@ -19,6 +30,15 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class DeviceBizImpl implements DeviceBiz {
 
+    @Autowired
+    private DeviceInfoMapper deviceInfoMapper;
+
+    @Autowired
+    private CheckInfoMapper checkInfoMapper;
+
+    @Autowired
+    private DeviceService deviceService;
+
     /**
      * 查询设备列表
      * @param deviceParam
@@ -26,8 +46,17 @@ public class DeviceBizImpl implements DeviceBiz {
      */
     @Override
     public PageInfo<DeviceInfoVo> getDeviceList(DeviceParam deviceParam) {
-        // 1.
-        return null;
+        // 1.设置分页参数
+        PageHelper.startPage(deviceParam.getPageNum(),deviceParam.getPageSize());
+        // 2.查询对应的设备列表数据
+        List<DeviceInfoVo> deviceInfoVoList = deviceInfoMapper.selectDeviceList(deviceParam.getDeviceName());
+
+        if(CollectionUtils.isEmpty(deviceInfoVoList)){
+            return null;
+        }
+        // 3.处理返回数据
+        PageInfo<DeviceInfoVo> returnVo = new PageInfo<>(deviceInfoVoList);
+        return returnVo;
     }
 
     /**
@@ -36,8 +65,20 @@ public class DeviceBizImpl implements DeviceBiz {
      * @return
      */
     @Override
-    public DeviceInfoVo getDeviceDetail(int deviceId) {
-        return null;
+    public DeviceInfoVo getDeviceDetail(Integer deviceId) {
+        // 1.校验参数
+        Assert.notNull(deviceId,"请选中对应的设备");
+        // 2.查询对应的设备信息
+        DeviceInfoVo deviceInfoVo = deviceInfoMapper.selectDeviceById(deviceId);
+        if(deviceInfoVo==null){
+            return null;
+        }
+        // 3.查询设备关联的检查项信息
+        List<CheckInfoVo> checkInfoVos = checkInfoMapper.getCheckInfoByDeviceId(deviceId);
+
+        deviceInfoVo.setCheckInfoVoList(checkInfoVos);
+
+        return deviceInfoVo;
     }
 
     /**
@@ -47,6 +88,7 @@ public class DeviceBizImpl implements DeviceBiz {
      */
     @Override
     public DeviceInfoVo addDevice(DeviceInfoParam deviceInfoParam) {
+        deviceService.saveDevice(deviceInfoParam);
         return null;
     }
 
@@ -55,8 +97,8 @@ public class DeviceBizImpl implements DeviceBiz {
      * @param deviceId
      */
     @Override
-    public void deleteDevice(int deviceId) {
-
+    public void deleteDevice(Integer deviceId) {
+        deviceService.deleteDevice(deviceId);
     }
 
     /**
@@ -65,6 +107,6 @@ public class DeviceBizImpl implements DeviceBiz {
      */
     @Override
     public void updateDevice(DeviceInfoParam deviceInfoParam) {
-
+        deviceService.updateDevice(deviceInfoParam);
     }
 }

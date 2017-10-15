@@ -26,7 +26,7 @@ public interface DeviceBiz {
      * @param deviceId
      * @return
      */
-    public DeviceInfoVo getDeviceDetail(int deviceId);
+    public DeviceInfoVo getDeviceDetail(Integer deviceId);
 
     /**
      * 新增设备信息
@@ -39,7 +39,7 @@ public interface DeviceBiz {
      * 删除设备信息
      * @param deviceId
      */
-    public void deleteDevice(int deviceId);
+    public void deleteDevice(Integer deviceId);
 
     /**
      * 更新设备信息

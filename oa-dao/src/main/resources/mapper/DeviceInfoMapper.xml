@@ -43,10 +43,17 @@
 		 WHERE id = #{id}
 	</select>
 
-	<!--删除：根据主键ID删除-->
+
+    <!--删除：根据主键ID删除-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		 DELETE FROM t_device_info
 		 WHERE id = #{id}
+	</delete>
+	<delete id="deleteDevice">
+		UPDATE t_device_info
+		SET delete_status = 0
+		WHERE
+			id = #{id}
 	</delete>
 
 	<!-- 添加 -->
@@ -58,7 +65,7 @@
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.DeviceInfo">
+	<insert id="saveDevice" parameterType="com.xiaofan.car.persistence.model.DeviceInfo">
 		 INSERT INTO t_device_info
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null">
@@ -189,4 +196,36 @@
 		 WHERE id = #{id}
 	</update>
 
+	<select id="selectDeviceList" resultType="com.xiaofan.car.persistence.vo.DeviceInfoVo">
+		SELECT
+			id,
+			routing_days AS routingDays,
+			device_name AS deviceName,
+			area AS area,
+			location AS location,
+			DATE_FORMAT(from_date, '%Y-%m-%d') AS fromDate,
+			DATE_FORMAT(to_date, '%Y-%m-%d') AS toDate
+		FROM
+			t_device_info
+		WHERE
+			delete_status=1 
+			<if test="deviceName !=null and deviceName !=''">
+				and device_name like CONCAT('%',#{deviceName},'%')
+			</if>
+	</select>
+	<select id="selectDeviceById" resultType="com.xiaofan.car.persistence.vo.DeviceInfoVo">
+		SELECT
+			id,
+			routing_days AS routingDays,
+			device_name AS deviceName,
+			area AS area,
+			location AS location,
+			DATE_FORMAT(from_date, '%Y-%m-%d') AS fromDate,
+			DATE_FORMAT(to_date, '%Y-%m-%d') AS toDate
+		FROM
+			t_device_info
+		WHERE
+			delete_status=1
+			and id = #{deviceId}
+	</select>
 </mapper>
