@@ -1,17 +1,17 @@
 import {fetch,qs} from '../../lib/utils/fetch'
-
+const baseurl='/v1/check/'
 //获取列表
-export function getServiceList(param) {
+export function getServiceList(deviceId) {
   return fetch({
-    url: `/v1/service/getlist`,
+    url: `${baseurl}getlist`,
     method: 'get',
-    params: param
+    params: {deviceId}
   })
 }
 //新增
 export function addService(device) {
   return fetch({
-    url: `/v1/service/add`,
+    url: `${baseurl}add`,
     method: 'post',
     data: device
   })
@@ -19,7 +19,7 @@ export function addService(device) {
 //修改
 export function updateService(device) {
   return fetch({
-    url: `/v1/service/update`,
+    url: `${baseurl}update`,
     method: 'put',
     data: device
   })
@@ -27,7 +27,7 @@ export function updateService(device) {
 //删除
 export function delService(device) {
   return fetch({
-    url: `/v1/service/del`,
+    url: `${baseurl}delete`,
     method: 'delete',
     data: device
   })

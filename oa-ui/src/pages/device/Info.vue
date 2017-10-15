@@ -63,7 +63,8 @@
   import {
     getDeviceList,
     addDevcie,
-    updateDevcie
+    updateDevcie,
+    delDevcie
   } from '../../api/device/device'
 
   export default {
@@ -99,7 +100,7 @@
           },
           {
             title: '操作',
-            width: 300,
+            width: 320,
             render: (h, params) => h('div', [
               h('Button', {
                 props: {
@@ -157,6 +158,31 @@
                   }
                 }
               }, '服务列表'),
+              h('Button', {
+                props: {
+                  type: 'error'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.$Modal.confirm({
+                      title: '是否删除',
+                      content: '<p>' + params.row.deviceName + '</p>',
+                      loading: true,
+                      onOk: () => {
+                        delDevcie(params.row.id).then(res => {
+                          this.$Message.success(res.data.message);
+                          this.$Modal.remove()
+                          this.getlist()
+                        })
+
+                      }
+                    });
+                  }
+                }
+              }, '删除')
             ])
           }
         ],

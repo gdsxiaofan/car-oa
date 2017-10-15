@@ -33,10 +33,10 @@ export function devcieInfo(id) {
   })
 }
 //删除
-export function delDevcie(device) {
+export function delDevcie(id) {
   return fetch({
     url: `/v1/device/delete`,
     method: 'delete',
-    data: device
+    data: {id}
   })
 }
