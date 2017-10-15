@@ -1,5 +1,7 @@
 package com.xiaofan.car.persistence.param;
 
+import lombok.Data;
+
 /**
  * 检查信息的参数
  *
@@ -7,6 +9,7 @@ package com.xiaofan.car.persistence.param;
  * @date 2017/10/13
  * @since 1.0.0
  */
+@Data
 public class CheckInfoParam {
     /****/
     private Integer id;

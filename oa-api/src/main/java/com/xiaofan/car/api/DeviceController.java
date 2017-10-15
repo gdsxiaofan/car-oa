@@ -55,7 +55,12 @@ public class DeviceController {
     @GetMapping("/detail")
     public JsonResult<DeviceInfoVo> getDetail(int id) {
 
-        return new JsonResult<DeviceInfoVo>(1, "获取成功");
+        return new JsonResult<DeviceInfoVo>(1, "获取成功",DeviceInfoVo.builder()
+                .id(1)
+                .routingDays(2)
+                .area("Area")
+                .deviceName("name")
+                .location("location").build());
     }
 
     @ApiOperation(value = "删除设备信息", notes = "删除设备信息", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
