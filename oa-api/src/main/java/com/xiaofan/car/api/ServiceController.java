@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/service")
 @Slf4j
+@Deprecated
 public class ServiceController {
 
     @Autowired
