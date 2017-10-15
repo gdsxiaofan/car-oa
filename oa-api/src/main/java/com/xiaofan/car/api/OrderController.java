@@ -30,6 +30,7 @@ import java.util.UUID;
 @RestController
 @Slf4j
 @RequestMapping("/v1/order")
+@Deprecated
 public class OrderController {
 
     @Autowired

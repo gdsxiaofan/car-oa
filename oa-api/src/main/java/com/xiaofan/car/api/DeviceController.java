@@ -33,16 +33,7 @@ public class DeviceController {
 
     @ApiOperation(value = "获取所有设备", notes = "获取所有设备", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getlist")
-    public JsonResult<PageInfo<DeviceInfoVo>> getlist(@RequestBody DeviceParam param) {
-        //为模拟测试数据，后端开发后删除
-//        List list = new ArrayList<>();
-//        list.add(DeviceInfoVo.builder()
-//                .id(1)
-//                .routingDays(2)
-//        .area("Area")
-//        .deviceName("name")
-//        .location("local")
-//        .build());
+    public JsonResult<PageInfo<DeviceInfoVo>> getlist(DeviceParam param) {
         PageInfo<DeviceInfoVo> deviceInfoVoPageInfo = deviceBiz.getDeviceList(param);
         return new JsonResult<PageInfo<DeviceInfoVo>>(1, "获取成功",deviceInfoVoPageInfo);
     }
@@ -70,8 +61,8 @@ public class DeviceController {
 
     @ApiOperation(value = "删除设备信息", notes = "删除设备信息", httpMethod = "DELETE", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @DeleteMapping("/delete")
-    public JsonResult<DeviceInfoVo> delete(@RequestParam("id")Integer id) {
-        deviceBiz.deleteDevice(id);
+    public JsonResult<DeviceInfoVo> delete(@RequestBody DeviceInfoParam param) {
+        deviceBiz.deleteDevice(param.getId());
         return new JsonResult<DeviceInfoVo>(1, "删除成功");
     }
 }

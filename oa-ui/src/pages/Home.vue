@@ -8,7 +8,7 @@
             <!--<Icon type="paper-airplane" :size="logoSize" v-show="logoIsDisplay"></Icon>-->
             <h3>总装车间TPM管理系统</h3>
           </div>
-          <template v-for="(item,index) in menuMain">
+          <template v-for="(item,index) in menuMain" v-if="item.deleteStatus===1">
             <Submenu :name="item.id" v-if="item.orderTop==1">
               <template slot="title">
                 <Icon :type="item.icon" :size="iconSize"></Icon>

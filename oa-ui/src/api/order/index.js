@@ -1,9 +1,9 @@
 import {fetch,qs} from '../../lib/utils/fetch'
-
+const baseUrl='/v1/tpm/'
 //获取列表
 export function getOrderList(param) {
   return fetch({
-    url: `/v1/order/list`,
+    url: `${baseUrl}getlist`,
     method: 'get',
     params: param
   })
@@ -11,7 +11,7 @@ export function getOrderList(param) {
 //获取工单详情
 export function getOrderInfo(id) {
   return fetch({
-    url: `/v1/order/info`,
+    url: `${baseUrl}info`,
     method: 'get',
     params: {id}
   })
@@ -19,7 +19,7 @@ export function getOrderInfo(id) {
 //处理工单
 export function checkUser(orderParam) {
   return fetch({
-    url: `/v1/order/checkUser`,
+    url: `${baseUrl}checkUser`,
     method: 'get',
     params:  orderParam,
   })
@@ -27,7 +27,7 @@ export function checkUser(orderParam) {
 //处理工单
 export function doOrder(orderParam) {
   return fetch({
-    url: `/v1/order/doOrder`,
+    url: `${baseUrl}doOrder`,
     method: 'post',
     data: orderParam,
     headers: {'Content-Type': 'multipart/form-data'}
