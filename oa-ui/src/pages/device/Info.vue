@@ -19,7 +19,9 @@
           deviceName: '',
           routingDays:1,
           area:'',
-          location:''
+          location:'',
+          fromDate :new Date(),
+          toDate:new Date()
         };DeviceModal.isShow=true;DeviceModal.title='新建设备';DeviceModal.disabled=false">
           新建设备
         </Button>
@@ -48,6 +50,18 @@
         </Form-item>
         <Form-item label="位置">
           <Input v-model="Device.location" :disabled="DeviceModal.disabled" placeholder="请输入"/>
+        </Form-item>
+        <Form-item label="开始时间">
+          <DatePicker type="date" :value="Device.fromDate" @on-change='Device.fromDate=arguments[0]'
+                      placeholder="选择日期和时间（不含秒）"
+                      style="width: 300px" :disabled="DeviceModal.disabled"
+                      :clearable="false"></DatePicker>
+        </Form-item>
+        <Form-item label="结束时间">
+          <DatePicker type="date" :value="Device.toDate" @on-change='Device.toDate=arguments[0]'
+                      placeholder="选择日期和时间（不含秒）"
+                      style="width: 300px" :disabled="DeviceModal.disabled"
+                      :clearable="false"></DatePicker>
         </Form-item>
       </Form>
       <div slot="footer">
@@ -99,6 +113,14 @@
             key: 'location'
           },
           {
+            title: '开始时间',
+            key: 'fromDate'
+          },
+          {
+            title: '结束时间',
+            key: 'toDate'
+          },
+          {
             title: '操作',
             width: 320,
             render: (h, params) => h('div', [
@@ -111,15 +133,7 @@
                 },
                 on: {
                   click: () => {
-                    this.Device.id = params.row.id
-                    this.Device.deviceName = params.row.deviceName
-                    this.Device.routingDays = params.row.routingDays
-                    this.Device.area = params.row.area
-                    this.Device.location = params.row.location
-                    this.DeviceModal.isShow = true
-                    this.DeviceModal.title = '修改设备'
-                    this.DeviceModal.disabled = false
-                    this.$refs['device'].validate()
+                    this.showDevice('修改设备',params)
                   }
                 }
               }, '修改'),
@@ -132,15 +146,7 @@
                 },
                 on: {
                   click: () => {
-                    this.Device.id = params.row.id
-                    this.Device.deviceName = params.row.deviceName
-                    this.Device.routingDays = params.row.routingDays
-                    this.Device.area = params.row.area
-                    this.Device.location = params.row.location
-                    this.DeviceModal.isShow = true
-                    this.DeviceModal.title = '修改设备'
-                    this.DeviceModal.disabled = true
-                    this.$refs['device'].validate()
+                    this.showDevice('设备详情',params)
 
                   }
                 }
@@ -216,6 +222,19 @@
         }).catch(err => {
 
         });
+      },
+      showDevice(title,params){
+        this.Device.id = params.row.id
+        this.Device.deviceName = params.row.deviceName
+        this.Device.routingDays = params.row.routingDays
+        this.Device.area = params.row.area
+        this.Device.location = params.row.location
+        this.Device.fromDate = params.row.fromDate
+        this.Device.toDate = params.row.toDate
+        this.DeviceModal.isShow = true
+        this.DeviceModal.title =title
+        this.DeviceModal.disabled =title==='设备详情'
+        this.$refs['device'].validate()
       },
       doDevice() {
         this.$refs['device'].validate((valid) => {
