@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -86,6 +88,7 @@ public class DeviceBizImpl implements DeviceBiz {
      * @param deviceInfoParam
      * @return
      */
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
     public DeviceInfoVo addDevice(DeviceInfoParam deviceInfoParam) {
         deviceService.saveDevice(deviceInfoParam);
@@ -96,6 +99,7 @@ public class DeviceBizImpl implements DeviceBiz {
      * 删除设备信息
      * @param deviceId
      */
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
     public void deleteDevice(Integer deviceId) {
         deviceService.deleteDevice(deviceId);
@@ -105,6 +109,7 @@ public class DeviceBizImpl implements DeviceBiz {
      * 更新设备信息
      * @param deviceInfoParam
      */
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
     public void updateDevice(DeviceInfoParam deviceInfoParam) {
         deviceService.updateDevice(deviceInfoParam);

@@ -9,6 +9,8 @@ import com.xiaofan.car.util.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Calendar;
@@ -27,6 +29,7 @@ public class DeviceServiceImpl implements DeviceService {
      * 保存对应的设备信息
      * @param deviceParam
      */
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
     public void saveDevice(DeviceInfoParam deviceParam) {
         // 1.转换设备信息
@@ -43,6 +46,7 @@ public class DeviceServiceImpl implements DeviceService {
      * 更新对应的设备信息
      * @param deviceParam
      */
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
     public void updateDevice(DeviceInfoParam deviceParam) {
         // 1.转换设备信息
@@ -57,6 +61,7 @@ public class DeviceServiceImpl implements DeviceService {
      * 删除对应的设备信息
      * @param deviceId
      */
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     @Override
     public void deleteDevice(Integer deviceId) {
         // 1.设备id教研不能为空

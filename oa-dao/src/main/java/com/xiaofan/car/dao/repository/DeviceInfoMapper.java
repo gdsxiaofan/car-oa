@@ -4,6 +4,7 @@ import com.xiaofan.car.persistence.model.DeviceInfo;
 import com.xiaofan.car.persistence.param.DeviceParam;
 import com.xiaofan.car.persistence.vo.DeviceInfoVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * DeviceInfoMapper数据库操作接口类
  * 
  **/
-
+@Repository
 public interface DeviceInfoMapper{
 
     public List<DeviceInfoVo> selectDeviceList(

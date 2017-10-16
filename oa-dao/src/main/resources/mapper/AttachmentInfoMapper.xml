@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaofan.car.dao.repository.AttachmentInfoMapper">
+
+	<!--实体映射-->
+	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.AttachmentInfo">
+		<!---->
+		<id property="id" column="id" />
+		<!--业务id-->
+		<result property="bizId" column="biz_id" />
+		<!--业务类型：1：工单，2：工单明细，3：设备，4：检查项-->
+		<result property="bizType" column="biz_type" />
+		<!--附件名称-->
+		<result property="attachmentName" column="attachment_name" />
+		<!--附件url-->
+		<result property="attachmentUrl" column="attachment_url" />
+		<!--附件key-->
+		<result property="attachmentKey" column="attachment_key" />
+		<!--附件后缀-->
+		<result property="attachmentExt" column="attachment_ext" />
+		<!--有效状态：1，有效；0无效-->
+		<result property="deleteStatus" column="delete_status" />
+		<!--创建时间-->
+		<result property="createTime" column="create_time" />
+		<!--更新时间-->
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+	id,	biz_id,	biz_type,	attachment_name,	attachment_url,	attachment_key,	attachment_ext,	delete_status,	create_time,	update_time
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.AttachmentInfo" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_attachment_info
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		 DELETE FROM t_attachment_info
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo">
+		 INSERT INTO t_attachment_info
+ 		(id,biz_id,biz_type,attachment_name,attachment_url,attachment_key,attachment_ext,delete_status,create_time,update_time) 
+		 VALUES 
+ 		(#{id},#{bizId},#{bizType},#{attachmentName},#{attachmentUrl},#{attachmentKey},#{attachmentExt},#{deleteStatus},#{createTime},#{updateTime}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo">
+		 INSERT INTO t_attachment_info
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="bizId != null">
+				 biz_id,
+			</if>
+			<if test="bizType != null">
+				 biz_type,
+			</if>
+			<if test="attachmentName != null">
+				 attachment_name,
+			</if>
+			<if test="attachmentUrl != null">
+				 attachment_url,
+			</if>
+			<if test="attachmentKey != null">
+				 attachment_key,
+			</if>
+			<if test="attachmentExt != null">
+				 attachment_ext,
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+			<if test="updateTime != null">
+				 update_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="bizId!=null">
+				 #{bizId},
+			</if>
+			<if test="bizType!=null">
+				 #{bizType},
+			</if>
+			<if test="attachmentName!=null">
+				 #{attachmentName},
+			</if>
+			<if test="attachmentUrl!=null">
+				 #{attachmentUrl},
+			</if>
+			<if test="attachmentKey!=null">
+				 #{attachmentKey},
+			</if>
+			<if test="attachmentExt!=null">
+				 #{attachmentExt},
+			</if>
+			<if test="deleteStatus!=null">
+				 #{deleteStatus},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo">
+		 UPDATE t_attachment_info
+ 		 <set> 
+			<if test="bizId != null">
+				 biz_id = #{bizId},
+			</if>
+			<if test="bizType != null">
+				 biz_type = #{bizType},
+			</if>
+			<if test="attachmentName != null">
+				 attachment_name = #{attachmentName},
+			</if>
+			<if test="attachmentUrl != null">
+				 attachment_url = #{attachmentUrl},
+			</if>
+			<if test="attachmentKey != null">
+				 attachment_key = #{attachmentKey},
+			</if>
+			<if test="attachmentExt != null">
+				 attachment_ext = #{attachmentExt},
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status = #{deleteStatus},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				 update_time = #{updateTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo">
+		 UPDATE t_attachment_info
+		 SET 
+			 biz_id = #{bizId},
+			 biz_type = #{bizType},
+			 attachment_name = #{attachmentName},
+			 attachment_url = #{attachmentUrl},
+			 attachment_key = #{attachmentKey},
+			 attachment_ext = #{attachmentExt},
+			 delete_status = #{deleteStatus},
+			 create_time = #{createTime},
+			 update_time = #{updateTime}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

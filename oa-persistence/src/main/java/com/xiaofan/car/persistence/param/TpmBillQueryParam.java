@@ -1,5 +1,7 @@
 package com.xiaofan.car.persistence.param;
 
+import lombok.Data;
+
 /**
  * 工单查询参数
  *
@@ -7,6 +9,7 @@ package com.xiaofan.car.persistence.param;
  * @date 2017/10/13
  * @since 1.0.0
  */
+@Data
 public class TpmBillQueryParam {
     int pageSize;
     int pageNum;
@@ -19,4 +22,18 @@ public class TpmBillQueryParam {
 
     /**班次：1，早班；2，中班**/
     int shiftsNo;
+
+    public void setPageSize(Integer pageSize){
+        if(pageSize==null){
+            pageSize=10;
+        }
+        this.pageSize=pageSize;
+    }
+
+    public void setPageNum(Integer pageNum){
+        if(pageNum==null){
+            pageNum=10;
+        }
+        this.pageNum=pageNum;
+    }
 }
