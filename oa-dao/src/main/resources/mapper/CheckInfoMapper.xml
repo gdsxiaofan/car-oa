@@ -221,6 +221,6 @@
 		FROM
 			t_check_info
 		WHERE
-			device_id = #{deviceId}
+			device_id = #{deviceId} and delete_status=1
 	</select>
 </mapper>

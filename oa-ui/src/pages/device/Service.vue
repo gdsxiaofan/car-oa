@@ -201,9 +201,7 @@
       },
       getlist() {
         getServiceList(this.$route.query.deviceId).then(res => {
-          this.queryCondition.pageNum = res.data.data.pageNum
-          this.list = res.data.data.list
-          this.queryCondition.total = res.data.data.total
+          this.list = res.data.data
         }).catch(err => {
 
         });
@@ -223,6 +221,7 @@
         this.$refs['user'].validate((valid) => {
           if (valid) {
             this.userModal.isLoading = true
+            this.service.deviceId=this.$route.query.deviceId
             if (this.userModal.title === '修改服务') {
               updateService(this.service).then(res => {
                 this.userModal.isLoading = false

@@ -212,6 +212,9 @@
         },
       }
     },
+    created(){
+      this.getlist()
+    },
     methods: {
       getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
