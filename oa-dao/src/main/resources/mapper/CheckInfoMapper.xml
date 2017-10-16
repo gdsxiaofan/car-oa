@@ -51,6 +51,12 @@
 		 DELETE FROM t_check_info
 		 WHERE id = #{id}
 	</delete>
+	<delete id="deleteCheckInfoForDelete">
+		UPDATE t_check_info
+		SET delete_status = 0
+		WHERE
+			id =#{id}
+	</delete>
 
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
