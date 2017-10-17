@@ -23,8 +23,14 @@
         </Col>
       </Row>
     </Card>
-
     <Table border :columns="columns" :data="list"></Table>
+    <Row>
+      <Col :offset="11">
+      <Button type="primary" v-on:click.native="$router.go(-1)">
+        上一页
+      </Button>
+      </Col>
+    </Row>
     <!--<div style="margin: 10px;overflow: hidden">-->
     <!--<div style="float: right;">-->
     <!--<Page :total="queryCondition.total" :current.sync="queryCondition.pageNum" @on-change="getlist" show-total-->
@@ -221,7 +227,7 @@
         this.$refs['user'].validate((valid) => {
           if (valid) {
             this.userModal.isLoading = true
-            this.service.deviceId=this.$route.query.deviceId
+            this.service.deviceId = this.$route.query.deviceId
             if (this.userModal.title === '修改服务') {
               updateService(this.service).then(res => {
                 this.userModal.isLoading = false
