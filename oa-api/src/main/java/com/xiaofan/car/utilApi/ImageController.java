@@ -2,6 +2,7 @@ package com.xiaofan.car.utilApi;
 
 import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.util.file.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,13 +67,12 @@ public class ImageController {
         resp.setDateHeader("Expires", 0);
         resp.setContentType("image/*");
 
-        ServletOutputStream sos = resp.getOutputStream();
-        try {
+//        ServletOutputStream sos = resp.getOutputStream();
+        try(ServletOutputStream sos = resp.getOutputStream()) {
             if (!file.exists() || file.isDirectory()) {
                 throw new FileNotFoundException();
             }
-            org.apache.commons.io.FileUtils.copyFile(file, sos);
-            sos.close();
+            FileUtils.copyFile(file, sos);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             resp.sendError(404, "找不到对应文件");

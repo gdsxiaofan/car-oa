@@ -41,3 +41,19 @@ export function updateRole(role) {
     data: role
   });
 }
+
+/**得到排班 */
+export function getPlan() {
+  return fetch({
+    url: 'v1/plan/get',
+    method: 'get',
+  });
+}
+/**修改排班 */
+export function updatePlan(plan) {
+  return fetch({
+    url: 'v1/plan/update',
+    method: 'put',
+    data:plan
+  });
+}
