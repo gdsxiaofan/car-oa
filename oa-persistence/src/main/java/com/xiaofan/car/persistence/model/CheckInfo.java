@@ -19,14 +19,23 @@ public class CheckInfo{
 	/****/
 	private Integer id;
 
+	/**服务名称**/
+	private String serviceName;
+
 	/**设备id**/
 	private Integer deviceId;
+
+	/**设备名称**/
+	private String deviceName;
 
 	/**系统id**/
 	private Integer systemId;
 
 	/**系统名称**/
 	private String systemName;
+
+	/**检查时间，格式为：hh:ss**/
+	private String checkTime;
 
 	/**检查点**/
 	private String checkPoint;
@@ -42,6 +51,18 @@ public class CheckInfo{
 
 	/**创建人id**/
 	private Integer createUserId;
+
+	/**巡检周期**/
+	private Integer checkCycle;
+
+	/**任务描述**/
+	private String serviceDescribe;
+
+	/**首次巡检日期**/
+	private java.util.Date firstCheckTime;
+
+	/**最后一次巡检的日期**/
+	private java.util.Date lastCheckTime;
 
 	/**有效状态：0：无效，1：有效**/
 	private Integer deleteStatus;

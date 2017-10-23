@@ -2,6 +2,7 @@ package com.xiaofan.car.api;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.xiaofan.car.biz.TpmBillBiz;
 import com.xiaofan.car.persistence.param.DeviceParam;
 import com.xiaofan.car.persistence.param.TpmBillParam;
 import com.xiaofan.car.persistence.param.TpmBillQueryParam;
@@ -10,6 +11,7 @@ import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.persistence.vo.TpmBillVo;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -26,11 +28,15 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Slf4j
 public class TpmBillController {
 
+    @Autowired
+    private TpmBillBiz tpmBillBiz;
+
     @ApiOperation(value = "获取工单信息列表", notes = "获取工单信息列表", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getlist")
     public JsonResult<PageInfo<TpmBillVo>> getlist(TpmBillQueryParam param) {
 
-        return new JsonResult<PageInfo<TpmBillVo>>(1, "获取成功");
+        PageInfo<TpmBillVo> pageInfo = tpmBillBiz.getTpmBillList(param);
+        return new JsonResult<PageInfo<TpmBillVo>>(1, "获取成功",pageInfo);
     }
 
     @ApiOperation(value = "员工完成工单接口", notes = "员工完成工单接口", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

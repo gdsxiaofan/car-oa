@@ -25,8 +25,8 @@ public class AppStartConfiguration{
         try {
             log.info("\n----------------------------------------------------------\n\t" +
                             "Application '{}' is running! Access URLs:\n\t" +
-                            "Local: \t\thttp://localhost:{}\n\t" +
-                            "External: \thttp://{}:{}\n----------------------------------------------------------",
+                            "Local: \t\thttp://localhost:{}/index.html\n\t" +
+                            "External: \thttp://{}:{}/index.html\n----------------------------------------------------------",
                     env.getProperty("spring.application.name"),
                     env.getProperty("server.port"),
                     InetAddress.getLocalHost().getHostAddress(),

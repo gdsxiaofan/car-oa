@@ -44,6 +44,25 @@ public class CheckInfoVo {
 
     private String shiftsNoName;
 
+    //################################################### 原型改版后新增字段 ############################
+    /**巡检周期**/
+    private Integer checkCycle;
+
+    /**检查时间，格式为：hh:ss**/
+    private String checkTime;
+
+    /**设备名称**/
+    private String deviceName;
+
+    /**任务描述**/
+    private String serviceDescribe;
+
+    /**首次巡检日期**/
+    private java.util.Date firstCheckTime;
+
+    /**最后一次巡检的日期**/
+    private java.util.Date lastCheckTime;
+
     public void setShiftsNo(int shiftsNo){
         this.shiftsNo = shiftsNo;
         this.shiftsNoName = ShiftsNoEnum.valuesOf(shiftsNo)==null?"":ShiftsNoEnum.valuesOf(shiftsNo).getName();

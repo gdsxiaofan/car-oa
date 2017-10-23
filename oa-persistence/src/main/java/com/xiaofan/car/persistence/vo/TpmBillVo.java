@@ -67,6 +67,14 @@ public class TpmBillVo {
 
     private String shiftsNoName;
 
+
+
+
+
+
+
+
+
     private List<TpmBillDetailVo> tpmBillDetailVoList;
 
     public void setTpmStatus(int tpmStatus){

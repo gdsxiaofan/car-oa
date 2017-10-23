@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaofan.car.dao.repository.ArrangeInfoMapper">
+
+	<!--实体映射-->
+	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.ArrangeInfo">
+		<!--主键id-->
+		<id property="id" column="id" />
+		<!--早班开始时间：时分-->
+		<result property="morningStart" column="morning_start" />
+		<!--早班结束时间：时分-->
+		<result property="morningEnd" column="morning_end" />
+		<!--晚班开始时间：时分-->
+		<result property="noonStart" column="noon_start" />
+		<!--晚班结束时间：时分-->
+		<result property="noonEnd" column="noon_end" />
+		<!--是否启用：1,启用 2：停用-->
+		<result property="isEffective" column="is_effective" />
+		<!--是否有效：1，删除状态-->
+		<result property="deleteStatus" column="delete_status" />
+		<!--创建时间-->
+		<result property="createTime" column="create_time" />
+		<!--更新时间-->
+		<result property="updateTime" column="update_time" />
+		<!--创建人时间-->
+		<result property="createUserId" column="create_user_id" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+	id,	morning_start,	morning_end,	noon_start,	noon_end,	is_effective,	delete_status,	create_time,	update_time,	create_user_id
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.ArrangeInfo" parameterType="java.lang.Integer">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM t_arrange_info
+		 WHERE id = #{id}
+	</select>
+	<select id="selectArrangeInfoList" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_arrange_info where delete_status =1
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		 DELETE FROM t_arrange_info
+		 WHERE id = #{id}
+	</delete>
+	<delete id="deleteArrangeInfo">
+		 UPDATE t_arrange_info
+		 SET
+			 delete_status = 0
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.ArrangeInfo">
+		 INSERT INTO t_arrange_info
+ 		(id,morning_start,morning_end,noon_start,noon_end,is_effective,delete_status,create_time,update_time,create_user_id) 
+		 VALUES 
+ 		(#{id},#{morningStart},#{morningEnd},#{noonStart},#{noonEnd},#{isEffective},#{deleteStatus},#{createTime},#{updateTime},#{createUserId}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.ArrangeInfo">
+		 INSERT INTO t_arrange_info
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="morningStart != null">
+				 morning_start,
+			</if>
+			<if test="morningEnd != null">
+				 morning_end,
+			</if>
+			<if test="noonStart != null">
+				 noon_start,
+			</if>
+			<if test="noonEnd != null">
+				 noon_end,
+			</if>
+			<if test="isEffective != null">
+				 is_effective,
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+			<if test="updateTime != null">
+				 update_time,
+			</if>
+			<if test="createUserId != null">
+				 create_user_id,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="morningStart!=null">
+				 #{morningStart},
+			</if>
+			<if test="morningEnd!=null">
+				 #{morningEnd},
+			</if>
+			<if test="noonStart!=null">
+				 #{noonStart},
+			</if>
+			<if test="noonEnd!=null">
+				 #{noonEnd},
+			</if>
+			<if test="isEffective!=null">
+				 #{isEffective},
+			</if>
+			<if test="deleteStatus!=null">
+				 #{deleteStatus},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="updateTime!=null">
+				 #{updateTime},
+			</if>
+			<if test="createUserId!=null">
+				 #{createUserId},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.ArrangeInfo">
+		 UPDATE t_arrange_info
+ 		 <set> 
+			<if test="morningStart != null">
+				 morning_start = #{morningStart},
+			</if>
+			<if test="morningEnd != null">
+				 morning_end = #{morningEnd},
+			</if>
+			<if test="noonStart != null">
+				 noon_start = #{noonStart},
+			</if>
+			<if test="noonEnd != null">
+				 noon_end = #{noonEnd},
+			</if>
+			<if test="isEffective != null">
+				 is_effective = #{isEffective},
+			</if>
+			<if test="deleteStatus != null">
+				 delete_status = #{deleteStatus},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				 update_time = #{updateTime},
+			</if>
+			<if test="createUserId != null">
+				 create_user_id = #{createUserId},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.ArrangeInfo">
+		 UPDATE t_arrange_info
+		 SET 
+			 morning_start = #{morningStart},
+			 morning_end = #{morningEnd},
+			 noon_start = #{noonStart},
+			 noon_end = #{noonEnd},
+			 is_effective = #{isEffective},
+			 delete_status = #{deleteStatus},
+			 create_time = #{createTime},
+			 update_time = #{updateTime},
+			 create_user_id = #{createUserId}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

@@ -1,6 +1,8 @@
 package com.xiaofan.car.service;
 
 import com.xiaofan.car.persistence.enumType.TmpStatusEnum;
+import com.xiaofan.car.persistence.model.TpmBill;
+import com.xiaofan.car.persistence.param.TpmBillParam;
 
 /**
  * 工单的service处理
@@ -24,4 +26,6 @@ public interface TpmBillService {
      * @param tpmStatusEnum
      */
     public void updateTpmBillForAudit(Integer id,TmpStatusEnum tpmStatusEnum);
+
+    public void addTpmBill(TpmBillParam tpmBillParam);
 }

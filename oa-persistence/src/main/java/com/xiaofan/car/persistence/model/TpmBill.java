@@ -16,11 +16,14 @@ public class TpmBill{
 	/**工单名称**/
 	private String tpmName;
 
-	/****/
+	/**工单号**/
 	private String tpmNo;
 
 	/**设备id**/
 	private Integer deviceId;
+
+	/**巡检时间**/
+	private java.util.Date checkTime;
 
 	/**设备名称**/
 	private String deviceName;
@@ -48,6 +51,12 @@ public class TpmBill{
 
 	/**班次：1，早班；2，中班**/
 	private Integer shiftsNo;
+
+	/**发起维修的巡检工单id**/
+	private Integer lastTpmId;
+
+	/**服务描述**/
+	private String serviceDescribe;
 
 	/**有效状态：0，无效；1：有效**/
 	private Integer deleteStatus;

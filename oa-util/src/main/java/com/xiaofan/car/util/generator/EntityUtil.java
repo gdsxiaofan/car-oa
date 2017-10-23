@@ -683,7 +683,8 @@ public class EntityUtil {
 //            tables.add("t_device_info");
 //            tables.add("t_service_info");
 //            tables.add("t_memu");
-            tables.add("t_attachment_info");
+//            tables.add("t_attachment_info");
+            tables.add("t_arrange_info");
             new EntityUtil().generate(tables);
             // 自动打开生成文件的目录
             Runtime.getRuntime().exec("cmd /c start explorer D:\\");

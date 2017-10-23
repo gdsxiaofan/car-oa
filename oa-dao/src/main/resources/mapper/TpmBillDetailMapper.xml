@@ -25,12 +25,13 @@
 		<result property="createTime" column="create_time" />
 		<!--更新时间-->
 		<result property="updateTime" column="update_time" />
+		<result property="tpmId" column="tpm_id" />
 	</resultMap>
 
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-	id,	check_id,	system_name,	check_point,	check_comment,	set_value,	check_status,	delete_status,	create_time,	update_time
+	id,	check_id,	system_name,	check_point,	check_comment,	set_value,	check_status,	delete_status,	create_time,	update_time,tpm_id
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -50,9 +51,9 @@
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.TpmBillDetail">
 		 INSERT INTO t_tpm_bill_detail
- 		(id,check_id,system_name,check_point,check_comment,set_value,check_status,delete_status,create_time,update_time) 
+ 		(id,check_id,system_name,check_point,check_comment,set_value,check_status,delete_status,create_time,update_time,tpm_id)
 		 VALUES 
- 		(#{id},#{checkId},#{systemName},#{checkPoint},#{checkComment},#{setValue},#{checkStatus},#{deleteStatus},#{createTime},#{updateTime}) 
+ 		(#{id},#{checkId},#{systemName},#{checkPoint},#{checkComment},#{setValue},#{checkStatus},#{deleteStatus},#{createTime},#{updateTime},#{tpmId})
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
@@ -89,7 +90,9 @@
 			<if test="updateTime != null">
 				 update_time,
 			</if>
-
+			 <if test="tpmId != null">
+				 tpm_id,
+			 </if>
 		 </trim>
 		 <trim prefix="values (" suffix=")" suffixOverrides="," >
 			<if test="id!=null">
@@ -122,6 +125,9 @@
 			<if test="updateTime!=null">
 				 #{updateTime},
 			</if>
+			 <if test="tpmId!=null">
+				 #{tpmId},
+			 </if>
 		 </trim>
 	</insert>
 
@@ -156,7 +162,9 @@
 			<if test="updateTime != null">
 				 update_time = #{updateTime},
 			</if>
-
+			 <if test="tpmId != null">
+				 tpm_id = #{tpmId},
+			 </if>
  		 </set>
 		 WHERE id = #{id}
 	</update>
@@ -173,7 +181,8 @@
 			 check_status = #{checkStatus},
 			 delete_status = #{deleteStatus},
 			 create_time = #{createTime},
-			 update_time = #{updateTime}
+			 update_time = #{updateTime},
+			 tpm_id = #{tpmId}
 		 WHERE id = #{id}
 	</update>
 

@@ -64,7 +64,6 @@ public class TpmBillBizImpl implements TpmBillBiz{
         Assert.notNull(tpmBillParam.getId(),"当前工单id不能为空");
         // 2.根据不同操作更新工单对应的状态,巡检工单
         if(TmpTypeEnum.ROUTING_INSPECTION.getCode()==tpmBillParam.getTmpType()){
-
         }
 
         return null;

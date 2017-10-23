@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class TpmBillParam {
     Integer id;//工单id
-    Integer tmpType;//工单类型
+    Integer tmpType;//工单类型1:巡检工单 2：维修工单
     Integer dealType;//操作类型：1：确认完成/修复,2:发起维修申请，3：审核驳回，4：审核完成
 
 }
