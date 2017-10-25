@@ -67,15 +67,21 @@ public class TpmBillVo {
 
     private String shiftsNoName;
 
-
-
-
-
-
-
-
-
     private List<TpmBillDetailVo> tpmBillDetailVoList;
+
+    private List<String> pendAttachements;//巡检的附件路径
+    private List<String> repairAttachements;//维修上传的工单附件路径
+
+
+    //########################  修改原型后添加字段 ###########################
+    /**巡检时间**/
+    private String checkTime;
+
+    /**服务描述**/
+    private String serviceDescribe;
+
+    /**检查项id**/
+    private Integer checkId;
 
     public void setTpmStatus(int tpmStatus){
         this.tpmStatus=tpmStatus;

@@ -58,6 +58,9 @@ public class TpmBill{
 	/**服务描述**/
 	private String serviceDescribe;
 
+	/**检查项id**/
+	private Integer checkId;
+
 	/**有效状态：0，无效；1：有效**/
 	private Integer deleteStatus;
 

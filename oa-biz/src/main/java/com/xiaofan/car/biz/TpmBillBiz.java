@@ -28,14 +28,14 @@ public interface TpmBillBiz {
      * @param tpmBillParam
      * @return
      */
-    public Integer updateTpmBillForFinished(TpmBillParam tpmBillParam);
+    public boolean updateTpmBillForFinished(TpmBillParam tpmBillParam);
 
     /**
      * 组长审核对应的工单等信息
      * @param tpmBillParam
      * @return
      */
-    public Integer updateTpmBillForAudit(TpmBillParam tpmBillParam);
+//    public Integer updateTpmBillForAudit(TpmBillParam tpmBillParam);
 
     /**
      * 保存对应的附件信息

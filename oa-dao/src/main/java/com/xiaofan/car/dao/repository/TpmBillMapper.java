@@ -28,4 +28,17 @@ public interface TpmBillMapper{
     public List<TpmBillVo> getTpmBillVoList(@Param("tpmType")Integer tpmType,
                                             @Param("tpmStatus")Integer tpmStatus,
                                             @Param("tpmName")String tpmName);
+
+    /**
+     *
+     * @param tpmBill
+     * @return
+     */
+    public boolean insertSelective(TpmBill tpmBill);
+
+    public boolean updateByIdAndStatus(
+            @Param("id")Integer id,
+            @Param("toStatus")Integer toStatus,
+            @Param("fromStatus")List<Integer> fromStatus
+    );
 }

@@ -13,7 +13,9 @@ public enum AttachmentBizTypeEnum {
     TPM_TYPE(1,"工单"),
     TPM_DETAIL_TYPE(2,"工单详情"),
     DEVICE_TYPE(3,"设备类型"),
-    CHECK_TYPE(4,"检查项类型");
+    CHECK_TYPE(4,"检查项类型"),
+    PEND_TYPE(5,"巡检附件"),
+    REPAIR_TYPE(6,"维修附件");
 
     @Getter
     int code;

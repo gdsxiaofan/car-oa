@@ -10,11 +10,11 @@ import lombok.Getter;
  * @since 1.0.0
  */
 public enum TmpStatusEnum {
-    PENDING(1,"待修复"),
-    AUDITING(2,"待审核"),
-    BREAKDOWN(3,"故障维修"),
-    REPAIRED(4,"修复完成"),
-    FINISHED(5,"处理完成");
+    PENDING(1,"未巡检"),
+    PENDED(2,"巡检通过"),
+    REPAIRING(3,"待维修"),
+    REPAIRED(4,"维修完成"),
+    FINISHED(5,"复审完成");
 
     @Getter
     private int code;

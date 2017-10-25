@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.TpmBillBiz;
 import com.xiaofan.car.dao.repository.TpmBillMapper;
+import com.xiaofan.car.persistence.enumType.TmpStatusEnum;
 import com.xiaofan.car.persistence.enumType.TmpTypeEnum;
 import com.xiaofan.car.persistence.model.TpmBill;
 import com.xiaofan.car.persistence.param.TpmBillParam;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,25 +61,39 @@ public class TpmBillBizImpl implements TpmBillBiz{
      * @return
      */
     @Override
-    public Integer updateTpmBillForFinished(TpmBillParam tpmBillParam) {
+    public boolean updateTpmBillForFinished(TpmBillParam tpmBillParam) {
         // 1.校验参数
         Assert.notNull(tpmBillParam.getId(),"当前工单id不能为空");
         // 2.根据不同操作更新工单对应的状态,巡检工单
-        if(TmpTypeEnum.ROUTING_INSPECTION.getCode()==tpmBillParam.getTmpType()){
-        }
+        boolean flag = false;
+        Integer toStatus =0;
+        List<Integer> fromStatus =new ArrayList<>();
+        toStatus=transformStatus(toStatus,fromStatus,tpmBillParam);
 
-        return null;
+        flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(),toStatus,fromStatus);
+
+        // TODO 处理对应附件信息
+        return flag;
     }
 
-    /**
-     * 组长审核工单调用的接口
-     * @param tpmBillParam
-     * @return
-     */
-    @Override
-    public Integer updateTpmBillForAudit(TpmBillParam tpmBillParam) {
-        return null;
-    }
+//    /**
+//     * 组长审核工单调用的接口
+//     * @param tpmBillParam
+//     * @return
+//     */
+//    @Override
+//    public Integer updateTpmBillForAudit(TpmBillParam tpmBillParam) {
+//        // 1.校验参数
+//        Assert.notNull(tpmBillParam.getId(),"当前工单id不能为空");
+//        // 2.根据不同操作更新工单对应的状态,巡检工单
+//        boolean flag = false;
+//        Integer toStatus =0;
+//        List<Integer> fromStatus =new ArrayList<>();
+//        toStatus=transformStatus(toStatus,fromStatus,tpmBillParam);
+//
+//        flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(),toStatus,fromStatus);
+//        return flag;
+//    }
 
     /**
      * 上传附件信息
@@ -100,5 +116,29 @@ public class TpmBillBizImpl implements TpmBillBiz{
     @Override
     public TpmBillVo getTpmBillDetail(Integer tpmBillId) {
         return null;
+    }
+
+
+    private Integer transformStatus(Integer toStatus,List<Integer> fromStatus,TpmBillParam tpmBillParam){
+        switch (tpmBillParam.getDealType()){
+            case 1://巡检完成
+                toStatus=TmpStatusEnum.PENDED.getCode();
+                fromStatus.add(TmpStatusEnum.PENDING.getCode());
+                break;
+            case 2:
+                toStatus=TmpStatusEnum.REPAIRING.getCode();
+                fromStatus.add(TmpStatusEnum.REPAIRED.getCode());
+                break;
+            case 3:
+                toStatus=TmpStatusEnum.FINISHED.getCode();
+                fromStatus.add(TmpStatusEnum.PENDED.getCode());
+                fromStatus.add(TmpStatusEnum.REPAIRED.getCode());
+                break;
+            case 4:
+                toStatus=TmpStatusEnum.PENDING.getCode();
+                fromStatus.add(TmpStatusEnum.REPAIRING.getCode());
+                break;
+        }
+        return toStatus;
     }
 }

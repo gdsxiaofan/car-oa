@@ -37,12 +37,14 @@
 		<result property="createTime" column="create_time" />
 		<!--更新时间-->
 		<result property="updateTime" column="update_time" />
+		<!--检查项id-->
+		<result property="checkId" column="check_id" />
 	</resultMap>
 
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-	id,	tpm_name,	tpm_no,	device_id,	device_name,	device_location,	device_area,	finish_time,	audit_time,	reject_reason,	tpm_status,	tpm_type,	shifts_no,	delete_status,	create_time,	update_time
+	id,	tpm_name,	tpm_no,	device_id,	device_name,	device_location,	device_area,	finish_time,	audit_time,	reject_reason,	tpm_status,	tpm_type,	shifts_no,	delete_status,	create_time,	update_time,check_id
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -66,7 +68,8 @@
 			reject_reason as reject_reason,
 			tpm_status as tpmStatus,
 			tpm_type as tpmType,
-			shifts_no as shiftsNo
+			shifts_no as shiftsNo,
+			check_id as checkId
 		FROM
 			t_tpm_bill
 		WHERE
@@ -99,107 +102,125 @@
 	<!-- 添加 （匹配有值的字段）-->
 	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.TpmBill">
 		 INSERT INTO t_tpm_bill
-		 <trim prefix="(" suffix=")" suffixOverrides="," >
+		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null">
-				 id,
+				id,
 			</if>
 			<if test="tpmName != null">
-				 tpm_name,
+				tpm_name,
 			</if>
 			<if test="tpmNo != null">
-				 tpm_no,
+				tpm_no,
 			</if>
 			<if test="deviceId != null">
-				 device_id,
+				device_id,
+			</if>
+			<if test="checkTime != null">
+				check_time,
 			</if>
 			<if test="deviceName != null">
-				 device_name,
+				device_name,
 			</if>
 			<if test="deviceLocation != null">
-				 device_location,
+				device_location,
 			</if>
 			<if test="deviceArea != null">
-				 device_area,
+				device_area,
 			</if>
 			<if test="finishTime != null">
-				 finish_time,
+				finish_time,
 			</if>
 			<if test="auditTime != null">
-				 audit_time,
+				audit_time,
 			</if>
 			<if test="rejectReason != null">
-				 reject_reason,
+				reject_reason,
 			</if>
 			<if test="tpmStatus != null">
-				 tpm_status,
+				tpm_status,
 			</if>
 			<if test="tpmType != null">
-				 tpm_type,
+				tpm_type,
 			</if>
 			<if test="shiftsNo != null">
-				 shifts_no,
+				shifts_no,
+			</if>
+			<if test="lastTpmId != null">
+				last_tpm_id,
+			</if>
+			<if test="serviceDescribe != null">
+				service_describe,
 			</if>
 			<if test="deleteStatus != null">
-				 delete_status,
+				delete_status,
 			</if>
 			<if test="createTime != null">
-				 create_time,
+				create_time,
 			</if>
 			<if test="updateTime != null">
-				 update_time,
+				update_time,
 			</if>
 
-		 </trim>
-		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
 			<if test="id!=null">
-				 #{id},
+				#{id},
 			</if>
 			<if test="tpmName!=null">
-				 #{tpmName},
+				#{tpmName},
 			</if>
 			<if test="tpmNo!=null">
-				 #{tpmNo},
+				#{tpmNo},
 			</if>
 			<if test="deviceId!=null">
-				 #{deviceId},
+				#{deviceId},
+			</if>
+			<if test="checkTime!=null">
+				#{checkTime},
 			</if>
 			<if test="deviceName!=null">
-				 #{deviceName},
+				#{deviceName},
 			</if>
 			<if test="deviceLocation!=null">
-				 #{deviceLocation},
+				#{deviceLocation},
 			</if>
 			<if test="deviceArea!=null">
-				 #{deviceArea},
+				#{deviceArea},
 			</if>
 			<if test="finishTime!=null">
-				 #{finishTime},
+				#{finishTime},
 			</if>
 			<if test="auditTime!=null">
-				 #{auditTime},
+				#{auditTime},
 			</if>
 			<if test="rejectReason!=null">
-				 #{rejectReason},
+				#{rejectReason},
 			</if>
 			<if test="tpmStatus!=null">
-				 #{tpmStatus},
+				#{tpmStatus},
 			</if>
 			<if test="tpmType!=null">
-				 #{tpmType},
+				#{tpmType},
 			</if>
 			<if test="shiftsNo!=null">
-				 #{shiftsNo},
+				#{shiftsNo},
+			</if>
+			<if test="lastTpmId!=null">
+				#{lastTpmId},
+			</if>
+			<if test="serviceDescribe!=null">
+				#{serviceDescribe},
 			</if>
 			<if test="deleteStatus!=null">
-				 #{deleteStatus},
+				#{deleteStatus},
 			</if>
 			<if test="createTime!=null">
-				 #{createTime},
+				#{createTime},
 			</if>
 			<if test="updateTime!=null">
-				 #{updateTime},
+				#{updateTime},
 			</if>
-		 </trim>
+		</trim>
 	</insert>
 
 	<!-- 修 改-->
@@ -276,6 +297,16 @@
 			 create_time = #{createTime},
 			 update_time = #{updateTime}
 		 WHERE id = #{id}
+	</update>
+	<update id="updateByIdAndStatus">
+		update t_tpm_bill
+		set
+			tpm_status = #{toStatus}
+		where id = #{id}
+		and tpm_status in
+		<foreach collection="fromStatus" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
 	</update>
 
 </mapper>
