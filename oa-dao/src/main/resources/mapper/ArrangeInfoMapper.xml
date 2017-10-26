@@ -187,5 +187,11 @@
 			 create_user_id = #{createUserId}
 		 WHERE id = #{id}
 	</update>
+    <update id="updateForPause">
+		 UPDATE t_arrange_info
+		 SET
+			 is_effective = 2
+		 WHERE id = #{id}
+	</update>
 
 </mapper>

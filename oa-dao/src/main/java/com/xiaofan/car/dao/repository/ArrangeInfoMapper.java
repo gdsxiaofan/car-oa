@@ -24,4 +24,11 @@ public interface ArrangeInfoMapper{
     public Integer deleteArrangeInfo(
             @Param("id")Integer id
     );
+
+    /**
+     * 关闭当前id的其他所有启动的早晚班设置
+     * @param id
+     * @return
+     */
+    public boolean updateForPause(@Param("id")Integer id);
 }
