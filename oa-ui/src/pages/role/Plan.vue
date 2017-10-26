@@ -1,25 +1,19 @@
 <template>
   <div>
-    <Form :label-width="80" label-position="right" ref="">
-      <Form-item label="早班：">
-        <TimePicker transfer v-model="plan.day" type="timerange" placement="bottom-end" placeholder="选择时间"
-                    style="width: 168px"></TimePicker>
-      </Form-item>
-      <Form-item label="晚班:">
-        <TimePicker transfer v-model="plan.night" type="timerange" placement="bottom-end" placeholder="选择时间"
-                    @on-change="plan.night[1]="
-                    style="width: 168px"></TimePicker>
-      </Form-item>
-      <FormItem>
-        <Button type="primary" @click="plan={
+    <Card>
+      <p slot="title">操作</p>
+      <Row>
+        <Col :span="3" :offset="18" style="margin-top:0.2%">
+        <Button type="primary" shape="circle" icon="ios-personadd" @click="plan={
           id: '',
           name: '',
           day: ['06:00:00', '11:00:00'],
           night: ['13:00:00', '17:00:00']
         };Modal.isShow=true;Modal.title='新增排班';">新增
         </Button>
-      </FormItem>
-    </Form>
+        </Col>
+      </Row>
+    </Card>
     <Table border :columns="columns" :data="list">
     </Table>
     <Modal v-model="Modal.isShow"
@@ -30,11 +24,13 @@
           <Input v-model="plan.name"/>
         </Form-item>
         <Form-item label="早班：">
-          <TimePicker transfer :value="plan.day" type="timerange" placement="bottom-end" placeholder="选择时间"
+          <TimePicker :value="plan.day" type="timerange" placement="bottom-end" placeholder="选择时间"
+                      @on-change="plan.day=arguments[0]" :clearable="false"
                       style="width: 168px"></TimePicker>
         </Form-item>
         <Form-item label="晚班:">
-          <TimePicker transfer :value="plan.night" type="timerange" placement="bottom-end" placeholder="选择时间"
+          <TimePicker :value="plan.night" type="timerange" placement="bottom-end" placeholder="选择时间"
+                      @on-change="plan.night=arguments[0]" :clearable="false"
                       style="width: 168px"></TimePicker>
         </Form-item>
       </Form>
@@ -54,6 +50,7 @@
     deletePlan
   } from '../../api/role/role'
   import _ from 'lodash'
+
   export default {
     data() {
       return {
@@ -102,7 +99,7 @@
                   }
                 }, '修改')
               ]
-              if (params.row.isEffective === 2 ) {
+              if (params.row.isEffective === 2) {
                 button.push(h('Button', {
                   props: {
                     type: params.row.isEffective === 2 ? 'primary' : 'warning'
@@ -131,7 +128,7 @@
                       });
                     }
                   }
-                },  '启用' ))
+                }, '启用'))
                 button.push(h('Button', {
                   props: {
                     type: 'error'
@@ -182,16 +179,19 @@
       }
     },
     methods: {
+      test(e) {
+        console.log(e)
+      },
       doPlan() {
         this.$refs['plan'].validate((valid) => {
           if (valid) {
             this.Modal.isLoading = true
-            let plan =_.cloneDeep(this.plan)
-            plan.morningStart=plan.day[0]
-            plan.morningEnd=plan.day[1]
-            plan.noonStart=plan.night[0]
-            plan.noonEnd=plan.night[1]
-            if (this.Modal.title === '新建排班'  ) {
+            let plan = _.cloneDeep(this.plan)
+            plan.morningStart = plan.day[0]
+            plan.morningEnd = plan.day[1]
+            plan.noonStart = plan.night[0]
+            plan.noonEnd = plan.night[1]
+            if (this.Modal.title === '新增排班') {
               addPlan(plan).then(res => {
                 this.$Message.success(res.data.message)
                 this.Modal.isLoading = false
