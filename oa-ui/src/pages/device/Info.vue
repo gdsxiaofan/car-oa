@@ -238,6 +238,7 @@
         this.DeviceModal.title =title
         this.DeviceModal.disabled =title==='设备详情'
         this.$refs['device'].validate()
+        this.$refs['device'].validate()
       },
       doDevice() {
         this.$refs['device'].validate((valid) => {

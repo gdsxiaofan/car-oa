@@ -45,15 +45,30 @@ export function updateRole(role) {
 /**得到排班 */
 export function getPlan() {
   return fetch({
-    url: 'v1/plan/get',
+    url: 'v1/arrange/getlist',
     method: 'get',
   });
 }
 /**修改排班 */
 export function updatePlan(plan) {
   return fetch({
-    url: 'v1/plan/update',
+    url: 'v1/arrange/update',
     method: 'put',
     data:plan
+  });
+}
+/**添加排班 */
+export function addPlan(plan) {
+  return fetch({
+    url: 'v1/arrange/add',
+    method: 'post',
+    data:plan
+  });
+}
+/**删除排班 */
+export function deletePlan(id) {
+  return fetch({
+    url: 'v1/arrange/delete/'+id,
+    method: 'delete',
   });
 }
