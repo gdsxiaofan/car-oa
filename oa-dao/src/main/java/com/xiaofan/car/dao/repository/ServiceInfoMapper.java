@@ -3,7 +3,6 @@ package com.xiaofan.car.dao.repository;
 import com.xiaofan.car.persistence.model.ServiceInfo;
 import com.xiaofan.car.persistence.vo.ServiceInfoVo;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  * ServiceInfoMapper数据库操作接口类
  * 
  **/
-@Repository
+@Deprecated
 public interface ServiceInfoMapper{
 
     public List<ServiceInfoVo> getServiceInfoList(
