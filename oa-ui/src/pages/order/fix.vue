@@ -158,7 +158,7 @@
         </Col>
         <Col span="14">
         <div class="demo-upload-list" v-for="(item,index) in fixImgList">
-          <img @click="handleView(base+item)"  :src="base+item">
+          <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
         </div>
         </Col>
       </Row>
@@ -168,17 +168,18 @@
         </Col>
         <Col span="14">
         <div class="demo-upload-list" v-for="(item,index) in uploadList">
-          <img :src="imgList[index]">
+          <img :src="env+'/v1/image/sosOutImg/'+item">
           <div class="demo-upload-list-cover">
-            <Icon type="ios-eye-outline" @click.native="handleView(imgList[index])"></Icon>
+            <Icon type="ios-eye-outline" @click.native="handleView(item)"></Icon>
             <Icon type="ios-trash-outline" @click.native="handleRemove(index)"></Icon>
           </div>
         </div>
         <upload
           ref="uploads"
-          action=""
+          :action="env+'/v1/image/upPic'"
           :show-upload-list="false"
           :before-upload="handleBeforeUpload"
+          :on-success="handleSuccess"
           multiple
           type="drag"
           style="display: inline-block;width:58px;">
@@ -220,6 +221,7 @@
     data() {
       return {
         base:(process.env.NODE_ENV === 'production' ? '' : "car") +"v1/image/sosOutImg/",
+        env:process.env.NODE_ENV === 'production' ? '' : "car",
         img: '',
         fixImgList:['\\4643e8dd-e76d-4805-ac90-3a95a2fe98ed\\229\\14\\4643e8dd-e76d-4805-ac90-3a95a2fe98ed20171003230233023509.jpg'],
         visible: false,
@@ -390,13 +392,19 @@
 //          this.$Message.error(e)
         })
       },
-      handleView(img) {
-        this.img = img;
+      handleView(id) {
+        this.img = this.env+'/v1/image/sosOutImg/'+id;
         this.visible = true;
       },
       handleRemove(index) {
         this.uploadList.splice(index, 1);
-        this.imgList.splice(index, 1);
+//        this.imgList.splice(index, 1);
+      },
+      handleSuccess (res, file) {
+        this.uploadList.push(res.message)
+        // 因为上传过程为实例，这里模拟添加 url
+//        file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
+//        file.name = '7eb99afb9d5f317c912f08b5212fd69a';
       },
       handleBeforeUpload(file) {
 
@@ -407,15 +415,15 @@
           this.$Notice.warning({
             title: '最多只能上传 5 张图片。'
           });
-        } else if (this.checkImg(file, format, maxsize)) {
-          let reader = new FileReader();
-          reader.onload = (e) => {
-            this.imgList.push(e.target.result)
-          };
-          reader.readAsDataURL(file);
-          this.uploadList.push(file)
+//        } else if (this.checkImg(file, format, maxsize)) {
+//          let reader = new FileReader();
+//          reader.onload = (e) => {
+//            this.imgList.push(e.target.result)
+//          };
+//          reader.readAsDataURL(file);
+//          this.uploadList.push(file)
         }
-        return false
+        return check
       },
       checkImg(file, format, maxSize) {
         // check format

@@ -1,5 +1,6 @@
 package com.xiaofan.car.service.impl;
 
+import com.sun.xml.internal.ws.api.message.Attachment;
 import com.xiaofan.car.dao.repository.AttachmentInfoMapper;
 import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.model.AttachmentInfo;
@@ -57,5 +58,16 @@ public class AttachmentServiceImpl implements AttachmentService{
         }
 
         return true;
+    }
+
+    /**
+     * 根据id获取
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public AttachmentInfo getAttachmentById(Integer id) {
+        return attachmentInfoMapper.selectByPrimaryKey( id);
     }
 }

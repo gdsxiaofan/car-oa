@@ -1,5 +1,6 @@
 package com.xiaofan.car.service;
 
+import com.sun.xml.internal.ws.api.message.Attachment;
 import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.model.AttachmentInfo;
 import com.xiaofan.car.persistence.vo.AttachmentVo;
@@ -32,5 +33,12 @@ public interface AttachmentService {
      * @return
      */
     public boolean updateAttachment(List<Integer> attachmentIds,AttachmentBizTypeEnum attachmentBizTypeEnum,Integer bizId);
+
+    /**
+     * 根据id获取
+     * @param id
+     * @return
+     */
+    AttachmentInfo getAttachmentById(Integer id);
 }
 

@@ -34,13 +34,13 @@
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.AttachmentInfo" parameterType="java.lang.Integer">
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		 SELECT
 		 <include refid="Base_Column_List" />
 		 FROM t_attachment_info
 		 WHERE id = #{id}
 	</select>
-	<select id="selectAttachmentByBizId" resultType="com.xiaofan.car.persistence.model.AttachmentInfo">
+	<select id="selectAttachmentByBizId" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM t_attachment_info
@@ -63,7 +63,7 @@
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo" keyColumn="id" useGeneratedKeys="true">
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo" keyProperty="id" useGeneratedKeys="true">
 		 INSERT INTO t_attachment_info
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null">

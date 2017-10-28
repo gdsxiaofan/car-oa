@@ -1,5 +1,6 @@
 package com.xiaofan.car.dao.repository;
 
+import com.sun.xml.internal.ws.api.message.Attachment;
 import com.xiaofan.car.persistence.model.AttachmentInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
@@ -33,4 +34,6 @@ public interface AttachmentInfoMapper{
             @Param("bizId")Integer bizId,
             @Param("id")Integer id
     );
+
+    AttachmentInfo selectByPrimaryKey(@Param("id")Integer id);
 }

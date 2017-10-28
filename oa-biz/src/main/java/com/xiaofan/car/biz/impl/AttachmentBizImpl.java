@@ -36,12 +36,12 @@ public class AttachmentBizImpl implements AttachmentBiz{
         String fileName = multipartFile.getName();
         String ext = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
 
-        AttachmentInfo attachmentInfo = new AttachmentInfo().builder()
+        AttachmentInfo attachmentInfo = AttachmentInfo.builder()
                 .attachmentExt(ext)
                 .attachmentName(fileName)
                 .attachmentUrl(filePath)
                 .build();
-
-        return attachmentService.saveAttachment(attachmentInfo);
+        attachmentService.saveAttachment(attachmentInfo);
+        return attachmentInfo.getId();
     }
 }
