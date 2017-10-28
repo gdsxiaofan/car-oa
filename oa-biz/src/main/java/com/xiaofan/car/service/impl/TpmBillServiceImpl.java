@@ -1,5 +1,6 @@
 package com.xiaofan.car.service.impl;
 
+import com.xiaofan.car.dao.repository.CheckInfoMapper;
 import com.xiaofan.car.dao.repository.TpmBillMapper;
 import com.xiaofan.car.persistence.enumType.TmpStatusEnum;
 import com.xiaofan.car.persistence.enumType.TmpTypeEnum;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +29,9 @@ public class TpmBillServiceImpl implements TpmBillService {
 
     @Autowired
     private TpmBillMapper tpmBillMapper;
+
+    @Autowired
+    private CheckInfoMapper checkInfoMapper;
 
     @Override
     public void updateTpmBillForDeal(Integer id, TmpStatusEnum tmpStatusEnum) {
@@ -51,10 +56,20 @@ public class TpmBillServiceImpl implements TpmBillService {
             for(CheckInfo checkInfo:checkInfoList){
                 TpmBill tpmBill = transformTpmBill(checkInfo);
                 tpmBills.add(tpmBill);
+                //计算检查项的下一次巡检日期，并且更新到对应的检查项上
+                Date nextCheckDate = checkInfo.getNextCheckTime();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(nextCheckDate);
+                calendar.add(Calendar.DATE,checkInfo.getCheckCycle());
+                nextCheckDate = calendar.getTime();
+                checkInfo.setNextCheckTime(nextCheckDate);
             }
         }
         if(tpmBills!=null){
                 tpmBillMapper.insertTpmBillForList(tpmBills);
+
+
+
         }
 
     }

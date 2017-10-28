@@ -290,6 +290,14 @@
             update_time    = #{updateTime}
         WHERE id = #{id}
     </update>
+    <update id="updateCheckInfo">
+        <foreach collection="checkInfos" index="index" item="item" separator=";">
+            UPDATE t_check_info
+            SET
+                next_check_time = #{item.nextCheckTime}
+            WHERE id = #{item.id}
+        </foreach>
+    </update>
 
     <select id="getCheckInfoByDeviceId" resultType="com.xiaofan.car.persistence.vo.CheckInfoVo">
         SELECT

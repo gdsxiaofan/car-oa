@@ -37,4 +37,8 @@ public interface CheckInfoMapper{
             @Param("startTime")String startTime,
             @Param("endTime")String endTime
     );
+
+    public void updateCheckInfo(
+            @Param("checkInfos")List<CheckInfo> checkInfos
+    );
 }
