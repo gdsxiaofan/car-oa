@@ -41,4 +41,8 @@ public interface TpmBillMapper{
             @Param("toStatus")Integer toStatus,
             @Param("fromStatus")List<Integer> fromStatus
     );
+
+    public TpmBillVo getTpmBillDetail(
+            @Param("id") Integer id
+    );
 }

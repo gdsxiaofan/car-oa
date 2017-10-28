@@ -23,5 +23,14 @@ public interface AttachmentService {
     public Integer saveAttachment(AttachmentInfo attachmentInfo);
 
     public List<AttachmentVo> getAttachmentVoList(Integer bizId, AttachmentBizTypeEnum attachmentBizType);
+
+    /**
+     * 新增业务关联对应的附件信息
+     * @param attachmentIds
+     * @param attachmentBizTypeEnum
+     * @param bizId
+     * @return
+     */
+    public boolean updateAttachment(List<Integer> attachmentIds,AttachmentBizTypeEnum attachmentBizTypeEnum,Integer bizId);
 }
 

@@ -42,12 +42,15 @@ public class TpmBillController {
     @ApiOperation(value = "员工完成工单接口", notes = "员工完成工单接口", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/update")
     public JsonResult updateTpmBill(TpmBillParam tpmBillParam){
+
+        tpmBillBiz.updateTpmBillForFinished(tpmBillParam);
         return new JsonResult(1, "操作成功");
     }
 
     @ApiOperation(value = "组长审核工单接口", notes = "组长审核工单接口", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/audit")
     public JsonResult auditTpmBill(TpmBillParam tpmBillParam){
+        tpmBillBiz.updateTpmBillForFinished(tpmBillParam);
         return new JsonResult(1, "操作成功");
     }
 
@@ -57,7 +60,7 @@ public class TpmBillController {
             @RequestParam("tpmId")Integer tpmId
     ) {
 
-        return new JsonResult<TpmBillVo>(1, "获取成功");
+        return new JsonResult<TpmBillVo>(1, "获取成功",tpmBillBiz.getTpmBillDetail(tpmId));
     }
 
     /**

@@ -4,20 +4,24 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.TpmBillBiz;
 import com.xiaofan.car.dao.repository.TpmBillMapper;
+import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.enumType.TmpStatusEnum;
 import com.xiaofan.car.persistence.enumType.TmpTypeEnum;
 import com.xiaofan.car.persistence.model.TpmBill;
 import com.xiaofan.car.persistence.param.TpmBillParam;
 import com.xiaofan.car.persistence.param.TpmBillQueryParam;
 import com.xiaofan.car.persistence.vo.TpmBillVo;
+import com.xiaofan.car.service.AttachmentService;
 import io.jsonwebtoken.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,6 +37,9 @@ public class TpmBillBizImpl implements TpmBillBiz{
 
     @Autowired
     TpmBillMapper tpmBillMapper;
+
+    @Autowired
+    AttachmentService attachmentService;
 
     /**
      * 获取当前工单列表
@@ -72,7 +79,22 @@ public class TpmBillBizImpl implements TpmBillBiz{
 
         flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(),toStatus,fromStatus);
 
-        // TODO 处理对应附件信息
+        // `````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````处理对应附件信息
+        if(StringUtils.isNotBlank(tpmBillParam.getAttachmentIds())){
+            AttachmentBizTypeEnum attachmentBizTypeEnum = AttachmentBizTypeEnum.PEND_TYPE;
+            String[] attachmentIdArray = tpmBillParam.getAttachmentIds().split(",");
+            if(tpmBillParam.getDealType()==2){
+                attachmentBizTypeEnum = AttachmentBizTypeEnum.REPAIR_TYPE;
+            }
+            List<Integer> attachmentIdList = new ArrayList<>();
+            for(String aId:attachmentIdArray){
+                Integer id = Integer.valueOf(aId);
+                attachmentIdList.add(id);
+            }
+
+            attachmentService.updateAttachment(attachmentIdList,attachmentBizTypeEnum,tpmBillParam.getId());
+
+        }
         return flag;
     }
 
@@ -115,7 +137,7 @@ public class TpmBillBizImpl implements TpmBillBiz{
      */
     @Override
     public TpmBillVo getTpmBillDetail(Integer tpmBillId) {
-        return null;
+        return tpmBillMapper.getTpmBillDetail(tpmBillId);
     }
 
 

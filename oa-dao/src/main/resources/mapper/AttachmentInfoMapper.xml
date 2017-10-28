@@ -40,6 +40,13 @@
 		 FROM t_attachment_info
 		 WHERE id = #{id}
 	</select>
+	<select id="selectAttachmentByBizId" resultType="com.xiaofan.car.persistence.model.AttachmentInfo">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_attachment_info
+		WHERE biz_id = #{bizId}
+		and bizType = #{bizType}
+	</select>
 
 	<!--删除：根据主键ID删除-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -175,6 +182,13 @@
 			 create_time = #{createTime},
 			 update_time = #{updateTime}
 		 WHERE id = #{id}
+	</update>
+	<update id="updateAttachment">
+		update t_attachment_info
+		set
+			biz_id = #{bizId},
+			biz_type =#{bizType}
+		where id = #{id}
 	</update>
 
 </mapper>
