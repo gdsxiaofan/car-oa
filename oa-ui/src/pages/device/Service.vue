@@ -41,21 +41,31 @@
            :title="userModal.title"
     >
       <Form ref="user" :model="service" :rules="serviceRules" :label-width="80">
-        <Form-item label="检查点：" prop="checkPoint">
-          <Input type="text" v-model="service.checkPoint" :disabled="userModal.disabled" placeholder="服务名称"/>
+        <Form-item label="服务名称：" prop="checkPoint">
+          <Input type="text" v-model="service.serviceName" :disabled="userModal.disabled" placeholder="服务名称"/>
         </Form-item>
-        <Form-item label="检查/维护内容：">
-          <Input type="textarea" autosize v-model="service.checkComment" :disabled="userModal.disabled"
-                 placeholder="属性一"/>
+        <Form-item label="巡检周期：">
+          <InputNumber :max="99999" v-model="service.checkCycle" :disabled="userModal.disabled" ></InputNumber>
         </Form-item>
-        <Form-item label="设定值：">
-          <Input type="text" v-model="service.setValue" :disabled="userModal.disabled" placeholder="属性二"/>
+        <Form-item label="任务描述：">
+          <Input type="textarea" autosize v-model="service.serviceDescribe" :disabled="userModal.disabled" placeholder="属性二"/>
         </Form-item>
-        <Form-item label="班次：">
-          <Select type="text" v-model="service.shiftsNo" :disabled="userModal.disabled" placeholder="属性三">
-            <Option :value="1">早班</Option>
-            <Option :value="2">中班</Option>
-          </Select>
+        <Form-item label="检查时间">
+          <TimePicker format="HH:mm" :value="service.checkTime" @on-change='service.checkTime=arguments[0]'
+                      style="width: 300px" :disabled="userModal.disabled"
+                      :clearable="false"></TimePicker>
+        </Form-item>
+        <Form-item label="开始时间">
+          <DatePicker type="date" :value="service.firstCheckTime" @on-change='service.fromDate=arguments[0]'
+                      placeholder="选择日期和时间（不含秒）"
+                      style="width: 300px" :disabled="userModal.disabled"
+                      :clearable="false"></DatePicker>
+        </Form-item>
+        <Form-item label="结束时间">
+          <DatePicker type="date" :value="service.lastCheckTime" @on-change='service.toDate=arguments[0]'
+                      placeholder="选择日期和时间（不含秒）"
+                      style="width: 300px" :disabled="userModal.disabled"
+                      :clearable="false"></DatePicker>
         </Form-item>
       </Form>
       <div slot="footer">
@@ -93,6 +103,10 @@
           checkComment: '',
           setValue: '',
           shiftsNo: '',
+          checkTime:'',
+          serviceDescribe:'',
+          firstCheckTime:'',
+          lastCheckTime:'',
         },
         serviceRules: {
           serviceName: [
@@ -111,20 +125,24 @@
             key: 'id'
           },
           {
-            title: '检查点',
+            title: '服务名称',
             key: 'checkPoint'
           },
           {
-            title: '检查/维护内容',
-            key: 'checkComment'
+            title: '设备名称',
+            key: 'deviceName'
           },
           {
-            title: '设定值',
-            key: 'setValue'
+            title: '巡检周期（天）',
+            key: 'checkCycle'
           },
           {
-            title: '班次',
-            key: 'shiftsNoName'
+            title: '巡检日期',
+            key: 'firstCheckTime'
+          },
+          {
+            title: '检查时间',
+            key: 'checkTime'
           },
           {
             title: '操作',
@@ -199,7 +217,12 @@
           checkPoint: '',
           checkComment: '',
           setValue: '',
-          shiftsNo: '',
+          checkCycle:30,
+          shiftsNo: 1,
+          checkTime:'08:00',
+          serviceDescribe:'',
+          firstCheckTime:new Date(),
+          lastCheckTime:new Date(),
         }
         this.userModal.title = '新增服务'
         this.userModal.isShow = true
@@ -228,6 +251,7 @@
           if (valid) {
             this.userModal.isLoading = true
             this.service.deviceId = this.$route.query.deviceId
+            this.service.deviceName = this.device.deviceName
             if (this.userModal.title === '修改服务') {
               updateService(this.service).then(res => {
                 this.userModal.isLoading = false

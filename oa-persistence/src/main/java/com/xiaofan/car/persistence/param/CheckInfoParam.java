@@ -44,6 +44,9 @@ public class CheckInfoParam {
     /**设备名称**/
     private String deviceName;
 
+    /**服务名称**/
+    private String serviceName;
+
     /**任务描述**/
     private String serviceDescribe;
 

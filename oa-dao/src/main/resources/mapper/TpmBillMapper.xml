@@ -77,11 +77,11 @@
 		<if test="tpmType!=null">
 			AND	tpm_type = #{tpmType}
 		</if>
-		<if test="tpmType!=null">
+		<if test="tpmStatus!=null">
 			AND	tpm_status = #{tpmStatus}
 		</if>
-		<if test="tpmType!=null">
-			AND	tpm_name = #{tpmName}
+		<if test="tpmName!=null">
+			AND	tpm_name like CONCAT('%',#{tpmName},'%')
 		</if>
 	</select>
     <select id="getTpmBillDetail" resultType="com.xiaofan.car.persistence.vo.TpmBillVo">

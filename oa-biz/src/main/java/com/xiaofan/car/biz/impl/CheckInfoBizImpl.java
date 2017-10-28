@@ -73,7 +73,7 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
     }
 
     private CheckInfo transformCheckInfo(CheckInfoParam checkInfoParam){
-        CheckInfo checkInfo = new CheckInfo().builder()
+        CheckInfo checkInfo = CheckInfo.builder()
                 .id(checkInfoParam.getId())
                 .checkComment(checkInfoParam.getCheckComment())
                 .deviceId(checkInfoParam.getDeviceId())
@@ -81,6 +81,8 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
                 .setValue(checkInfoParam.getSetValue())
                 .shiftsNo(checkInfoParam.getShiftsNo())
                 .systemName(checkInfoParam.getSystemName())
+                .deviceName(checkInfoParam.getDeviceName())
+                .serviceName(checkInfoParam.getServiceName())
                 .checkCycle(checkInfoParam.getCheckCycle())
                 .checkComment(checkInfoParam.getCheckComment())
                 .serviceDescribe(checkInfoParam.getServiceDescribe())

@@ -1,10 +1,13 @@
 package com.xiaofan.car.persistence.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.xiaofan.car.persistence.enumType.ShiftsNoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * 设备检查项的信息Vo
@@ -54,14 +57,19 @@ public class CheckInfoVo {
     /**设备名称**/
     private String deviceName;
 
+    /**服务名称**/
+    private String serviceName;
+
     /**任务描述**/
     private String serviceDescribe;
 
     /**首次巡检日期**/
-    private java.util.Date firstCheckTime;
+    @JSONField(format="yyyy-MM-dd")
+    private Date firstCheckTime;
 
     /**最后一次巡检的日期**/
-    private java.util.Date lastCheckTime;
+    @JSONField(format="yyyy-MM-dd")
+    private Date lastCheckTime;
 
     public void setShiftsNo(int shiftsNo){
         this.shiftsNo = shiftsNo;

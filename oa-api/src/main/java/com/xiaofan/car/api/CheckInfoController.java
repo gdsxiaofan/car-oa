@@ -38,15 +38,6 @@ public class CheckInfoController {
     @GetMapping("/getlist")
     public JsonResult<List<CheckInfoVo>> getlist(int deviceId) {
         List pageInfo= checkInfoBiz.getCheckInfoList(deviceId);
-//        CheckInfoVo checkInfoVo = CheckInfoVo.builder()
-//                .id(1)
-//                .checkPoint("checkpoint")
-//                .checkComment("comment")
-//                .setValue("value")
-//                .systemId(3)
-//                .build();
-//        checkInfoVo.setShiftsNo(2);
-//        pageInfo.add(checkInfoVo);
         return new JsonResult<List<CheckInfoVo>>(1, "获取成功",pageInfo);
     }
     @ApiOperation(value = "新增检查信息", notes = "新增检查信息", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -9,9 +9,7 @@
         <Col :span="7">
         <Input type="text" v-model="queryCondition.tpmBillName" placeholder="请输入..."></Input>
         </Col>
-      </Row>
-      <Row style="margin-top:2%">
-        <Col :span="3" offset="18" style="margin-top:2%">
+        <Col :span="3" offset="7" >
         <Button type="primary" shape="circle" icon="ios-search"
                 @click="getlist">
           查询
@@ -215,7 +213,7 @@
       </div>
     </Modal>
     <Modal title="查看图片" v-model="visible">
-      <img :src=" img" v-if="visible" style="width: 100%">
+      <img :src="img" v-if="visible" style="width: 100%">
     </Modal>
   </div>
 </template>
@@ -277,7 +275,7 @@
           },
           {
             title: '工单名称',
-            key: 'serviceName'
+            key: 'tpmName'
           },
           {
             title: '设备名称',
@@ -453,7 +451,8 @@
         return true
       }
     },
-    mounted() {
+    created() {
+      this.getlist()
     }
   }
 </script>

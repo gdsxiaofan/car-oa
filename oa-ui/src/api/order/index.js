@@ -9,11 +9,11 @@ export function getOrderList(param) {
   })
 }
 //获取工单详情
-export function getOrderInfo(id) {
+export function getOrderInfo(tpmId) {
   return fetch({
-    url: `${baseUrl}info`,
+    url: `${baseUrl}detail`,
     method: 'get',
-    params: {id}
+    params: {tpmId}
   })
 }
 //处理工单

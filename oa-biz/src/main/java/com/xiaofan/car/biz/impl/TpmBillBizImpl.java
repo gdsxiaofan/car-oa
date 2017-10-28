@@ -54,9 +54,6 @@ public class TpmBillBizImpl implements TpmBillBiz{
         // 2.调用查询接口
         List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoList(tpmBillQueryParam.getTpmType(),tpmBillQueryParam.getTpmStatus(),tpmBillQueryParam.getTpmBillName());
 
-        if(CollectionUtils.isEmpty(tpmBillVoList)){
-            return null;
-        }
         // 3.组装数据
        PageInfo<TpmBillVo> tpmBillVoPageInfo = new PageInfo<>(tpmBillVoList);
         return tpmBillVoPageInfo;

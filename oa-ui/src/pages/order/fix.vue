@@ -7,21 +7,10 @@
         工单号：
         </Col>
         <Col :span="7">
-        <Input type="text" v-model="queryCondition.orderNo" placeholder="请输入..."></Input>
+        <Input type="text" v-model="queryCondition.tpmBillName" placeholder="请输入..."></Input>
         </Col>
-        <Col :span="4" :offset="2">
-        工单状态：
-        </Col>
-        <Col :span="7">
-        <Select v-model="queryCondition.orderStatus">
-          <Option value="all">全部</Option>
-          <Option value="doing">未完成</Option>
-          <Option value="done">已完成</Option>
-        </Select>
-        </Col>
-      </Row>
-      <Row style="margin-top:2%">
-        <Col :span="3" offset="18" style="margin-top:2%">
+
+        <Col :span="3" offset="7" >
         <Button type="primary" shape="circle" icon="ios-search"
                 @click="getlist">
           查询
@@ -265,11 +254,10 @@
           isLoading: false,
         },
         queryCondition: {
-          orderType: "look",
-          orderStatus: "all",
+          tpmStatus: 3,
           pageSize: 10,
           pageNum: 1,
-          orderNo: '',
+          tpmBillName: '',
           total: 0
         },
         columns: [
@@ -455,7 +443,8 @@
         return true
       }
     },
-    mounted() {
+    created() {
+      this.getlist()
     }
   }
 </script>

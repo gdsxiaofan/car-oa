@@ -2,7 +2,9 @@ package com.xiaofan.car.api;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.xiaofan.car.biz.LoginBiz;
 import com.xiaofan.car.biz.TpmBillBiz;
+import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.param.DeviceParam;
 import com.xiaofan.car.persistence.param.TpmBillParam;
 import com.xiaofan.car.persistence.param.TpmBillQueryParam;
@@ -27,7 +29,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @RequestMapping("/v1/tpm")
 @Slf4j
 public class TpmBillController {
-
+    @Autowired
+    private LoginBiz loginBiz;
     @Autowired
     private TpmBillBiz tpmBillBiz;
 
@@ -82,5 +85,15 @@ public class TpmBillController {
     @PostMapping("/deleteAttachment")
     public JsonResult deleteAttachmentt(@RequestParam("attachmentId")Integer attachmentId){
         return new JsonResult(1, "附件上传成功","删除附件成功");
+    }
+
+    @ApiOperation(value = "根据工号密码修改工单状态", notes = "根据工号密码修改工单状态", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping("/checkUser")
+    public JsonResult<Integer> updateOrderStatus(Employee employee) {
+        Employee user = loginBiz.verificationForLogin(employee.getEmployeeNo(), employee.getEmployeePassword());
+        if (user == null) {
+            return new JsonResult<>(0, "工号或密码不正确");
+        }
+        return new JsonResult<>(1, "", user.getId());
     }
 }

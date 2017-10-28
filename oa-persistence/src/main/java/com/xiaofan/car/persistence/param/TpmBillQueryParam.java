@@ -11,14 +11,14 @@ import lombok.Data;
  */
 @Data
 public class TpmBillQueryParam {
-    int pageSize;
-    int pageNum;
+    Integer pageSize;
+    Integer pageNum;
     String tpmBillName;
     /**工单状态：1，待处理，2：待审核，3：故障维修，4：修复完成，5处理完成**/
-    int tpmStatus;
+    Integer tpmStatus;
 
     /**工单类型：1：巡检工单，2：维修工单**/
-    int tpmType;
+    Integer tpmType;
 
     /**班次：1，早班；2，中班**/
     int shiftsNo;

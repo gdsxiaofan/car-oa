@@ -1,316 +1,323 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiaofan.car.dao.repository.CheckInfoMapper">
 
-	<!--实体映射-->
-	<resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.CheckInfo">
-		<!---->
-		<id property="id" column="id" />
-		<!--服务名称-->
-		<result property="serviceName" column="service_name" />
-		<!--设备id-->
-		<result property="deviceId" column="device_id" />
-		<!--设备名称-->
-		<result property="deviceName" column="device_name" />
-		<!--系统id-->
-		<result property="systemId" column="system_id" />
-		<!--系统名称-->
-		<result property="systemName" column="system_name" />
-		<!--检查时间，格式为：hh:ss-->
-		<result property="checkTime" column="check_time" />
-		<!--检查点-->
-		<result property="checkPoint" column="check_point" />
-		<!--检查/维护内容-->
-		<result property="checkComment" column="check_comment" />
-		<!--设定值-->
-		<result property="setValue" column="set_value" />
-		<!--班次：1，早班；2：中班-->
-		<result property="shiftsNo" column="shifts_no" />
-		<!--创建人id-->
-		<result property="createUserId" column="create_user_id" />
-		<!--任务描述-->
-		<result property="serviceDescribe" column="service_describe" />
-		<!--首次巡检日期-->
-		<result property="firstCheckTime" column="first_check_time" />
-		<!--最后一次巡检的日期-->
-		<result property="lastCheckTime" column="last_check_time" />
-		<!--有效状态：0：无效，1：有效-->
-		<result property="deleteStatus" column="delete_status" />
-		<!--创建时间-->
-		<result property="createTime" column="create_time" />
-		<!--更新时间-->
-		<result property="updateTime" column="update_time" />
-		<!--巡检周期-->
-		<result property="checkCycle" column="check_cycle"/>
-	</resultMap>
+    <!--实体映射-->
+    <resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.CheckInfo">
+        <!---->
+        <id property="id" column="id"/>
+        <!--服务名称-->
+        <result property="serviceName" column="service_name"/>
+        <!--设备id-->
+        <result property="deviceId" column="device_id"/>
+        <!--设备名称-->
+        <result property="deviceName" column="device_name"/>
+        <!--系统id-->
+        <result property="systemId" column="system_id"/>
+        <!--系统名称-->
+        <result property="systemName" column="system_name"/>
+        <!--检查时间，格式为：hh:ss-->
+        <result property="checkTime" column="check_time"/>
+        <!--检查点-->
+        <result property="checkPoint" column="check_point"/>
+        <!--检查/维护内容-->
+        <result property="checkComment" column="check_comment"/>
+        <!--设定值-->
+        <result property="setValue" column="set_value"/>
+        <!--班次：1，早班；2：中班-->
+        <result property="shiftsNo" column="shifts_no"/>
+        <!--创建人id-->
+        <result property="createUserId" column="create_user_id"/>
+        <!--任务描述-->
+        <result property="serviceDescribe" column="service_describe"/>
+        <!--首次巡检日期-->
+        <result property="firstCheckTime" column="first_check_time"/>
+        <!--最后一次巡检的日期-->
+        <result property="lastCheckTime" column="last_check_time"/>
+        <!--有效状态：0：无效，1：有效-->
+        <result property="deleteStatus" column="delete_status"/>
+        <!--创建时间-->
+        <result property="createTime" column="create_time"/>
+        <!--更新时间-->
+        <result property="updateTime" column="update_time"/>
+        <!--巡检周期-->
+        <result property="checkCycle" column="check_cycle"/>
+    </resultMap>
 
 
-	<!-- 通用查询结果列-->
-	<sql id="Base_Column_List">
-	id,	service_name,	device_id,	device_name,	system_id,	system_name,	check_time,	check_point,	check_comment,	set_value,	shifts_no,	create_user_id,	service_describe,	first_check_time,	last_check_time,	delete_status,	create_time,	update_time,check_cycle
-	</sql>
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        id, service_name, device_id, device_name, system_id, system_name, check_time, check_point, check_comment, set_value, shifts_no, create_user_id, service_describe, first_check_time, last_check_time, delete_status, create_time, update_time, check_cycle
+    </sql>
 
-	<!-- 查询（根据主键ID查询） -->
-	<select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.CheckInfo" parameterType="java.lang.Integer">
-		 SELECT
-		 <include refid="Base_Column_List" />
-		 FROM t_check_info
-		 WHERE id = #{id}
-	</select>
+    <!-- 查询（根据主键ID查询） -->
+    <select id="selectByPrimaryKey" resultType="com.xiaofan.car.persistence.model.CheckInfo"
+            parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_check_info
+        WHERE id = #{id}
+    </select>
 
 
     <!--删除：根据主键ID删除-->
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		 DELETE FROM t_check_info
-		 WHERE id = #{id}
-	</delete>
-	<delete id="deleteCheckInfoForDelete">
-		UPDATE t_check_info
-		SET delete_status = 0
-		WHERE
-			id =#{id}
-	</delete>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM t_check_info
+        WHERE id = #{id}
+    </delete>
+    <delete id="deleteCheckInfoForDelete">
+        UPDATE t_check_info
+        SET delete_status = 0
+        WHERE
+            id = #{id}
+    </delete>
 
-	<!-- 添加 -->
-	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
-		 INSERT INTO t_check_info
- 		(id,device_id,system_id,system_name,check_point,check_comment,set_value,shifts_no,create_user_id,delete_status,create_time,update_time) 
-		 VALUES 
- 		(#{id},#{deviceId},#{systemId},#{systemName},#{checkPoint},#{checkComment},#{setValue},#{shiftsNo},#{createUserId},#{deleteStatus},#{createTime},#{updateTime}) 
-	</insert>
+    <!-- 添加 -->
+    <insert id="insert" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
+        INSERT INTO t_check_info
+        (id, device_id, system_id, system_name, check_point, check_comment, set_value, shifts_no, create_user_id, delete_status, create_time, update_time)
+        VALUES
+            (#{id}, #{deviceId}, #{systemId}, #{systemName}, #{checkPoint}, #{checkComment}, #{setValue}, #{shiftsNo},
+                    #{createUserId}, #{deleteStatus}, #{createTime}, #{updateTime})
+    </insert>
 
-	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
-		INSERT INTO t_check_info
-		<trim prefix="(" suffix=")" suffixOverrides="," >
-			<if test="id != null">
-				id,
-			</if>
-			<if test="serviceName != null">
-				service_name,
-			</if>
-			<if test="deviceId != null">
-				device_id,
-			</if>
-			<if test="deviceName != null">
-				device_name,
-			</if>
-			<if test="systemId != null">
-				system_id,
-			</if>
-			<if test="systemName != null">
-				system_name,
-			</if>
-			<if test="checkTime != null">
-				check_time,
-			</if>
-			<if test="checkPoint != null">
-				check_point,
-			</if>
-			<if test="checkComment != null">
-				check_comment,
-			</if>
-			<if test="setValue != null">
-				set_value,
-			</if>
-			<if test="shiftsNo != null">
-				shifts_no,
-			</if>
-			<if test="createUserId != null">
-				create_user_id,
-			</if>
-			<if test="serviceDescribe != null">
-				service_describe,
-			</if>
-			<if test="firstCheckTime != null">
-				first_check_time,
-			</if>
-			<if test="lastCheckTime != null">
-				last_check_time,
-			</if>
-			<if test="deleteStatus != null">
-				delete_status,
-			</if>
-			<if test="createTime != null">
-				create_time,
-			</if>
-			<if test="updateTime != null">
-				update_time,
-			</if>
-			<if test="checkCycle !=null">
-				check_cycle,
-			</if>
-			<if test="nextCheckTime !=null">
-				next_check_time,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides="," >
-			<if test="id!=null">
-				#{id},
-			</if>
-			<if test="serviceName!=null">
-				#{serviceName},
-			</if>
-			<if test="deviceId!=null">
-				#{deviceId},
-			</if>
-			<if test="deviceName!=null">
-				#{deviceName},
-			</if>
-			<if test="systemId!=null">
-				#{systemId},
-			</if>
-			<if test="systemName!=null">
-				#{systemName},
-			</if>
-			<if test="checkTime!=null">
-				#{checkTime},
-			</if>
-			<if test="checkPoint!=null">
-				#{checkPoint},
-			</if>
-			<if test="checkComment!=null">
-				#{checkComment},
-			</if>
-			<if test="setValue!=null">
-				#{setValue},
-			</if>
-			<if test="shiftsNo!=null">
-				#{shiftsNo},
-			</if>
-			<if test="createUserId!=null">
-				#{createUserId},
-			</if>
-			<if test="serviceDescribe!=null">
-				#{serviceDescribe},
-			</if>
-			<if test="firstCheckTime!=null">
-				#{firstCheckTime},
-			</if>
-			<if test="lastCheckTime!=null">
-				#{lastCheckTime},
-			</if>
-			<if test="deleteStatus!=null">
-				#{deleteStatus},
-			</if>
-			<if test="createTime!=null">
-				#{createTime},
-			</if>
-			<if test="updateTime!=null">
-				#{updateTime},
-			</if>
-			<if test="checkCycle !=null">
-				#{checkCycle},
-			</if>
-			<if test="nextCheckTime !=null">
-				#{nextCheckTime},
-			</if>
-		</trim>
-	</insert>
+    <!-- 添加 （匹配有值的字段）-->
+    <insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
+        INSERT INTO t_check_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="serviceName != null">
+                service_name,
+            </if>
+            <if test="deviceId != null">
+                device_id,
+            </if>
+            <if test="deviceName != null">
+                device_name,
+            </if>
+            <if test="systemId != null">
+                system_id,
+            </if>
+            <if test="systemName != null">
+                system_name,
+            </if>
+            <if test="checkTime != null">
+                check_time,
+            </if>
+            <if test="checkPoint != null">
+                check_point,
+            </if>
+            <if test="checkComment != null">
+                check_comment,
+            </if>
+            <if test="setValue != null">
+                set_value,
+            </if>
+            <if test="shiftsNo != null">
+                shifts_no,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="serviceDescribe != null">
+                service_describe,
+            </if>
+            <if test="firstCheckTime != null">
+                first_check_time,
+            </if>
+            <if test="lastCheckTime != null">
+                last_check_time,
+            </if>
+            <if test="deleteStatus != null">
+                delete_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="checkCycle !=null">
+                check_cycle,
+            </if>
+            <if test="nextCheckTime !=null">
+                next_check_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="serviceName!=null">
+                #{serviceName},
+            </if>
+            <if test="deviceId!=null">
+                #{deviceId},
+            </if>
+            <if test="deviceName!=null">
+                #{deviceName},
+            </if>
+            <if test="systemId!=null">
+                #{systemId},
+            </if>
+            <if test="systemName!=null">
+                #{systemName},
+            </if>
+            <if test="checkTime!=null">
+                #{checkTime},
+            </if>
+            <if test="checkPoint!=null">
+                #{checkPoint},
+            </if>
+            <if test="checkComment!=null">
+                #{checkComment},
+            </if>
+            <if test="setValue!=null">
+                #{setValue},
+            </if>
+            <if test="shiftsNo!=null">
+                #{shiftsNo},
+            </if>
+            <if test="createUserId!=null">
+                #{createUserId},
+            </if>
+            <if test="serviceDescribe!=null">
+                #{serviceDescribe},
+            </if>
+            <if test="firstCheckTime!=null">
+                #{firstCheckTime},
+            </if>
+            <if test="lastCheckTime!=null">
+                #{lastCheckTime},
+            </if>
+            <if test="deleteStatus!=null">
+                #{deleteStatus},
+            </if>
+            <if test="createTime!=null">
+                #{createTime},
+            </if>
+            <if test="updateTime!=null">
+                #{updateTime},
+            </if>
+            <if test="checkCycle !=null">
+                #{checkCycle},
+            </if>
+            <if test="nextCheckTime !=null">
+                #{nextCheckTime},
+            </if>
+        </trim>
+    </insert>
 
-	<!-- 修 改-->
-	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
-		UPDATE t_check_info
-		<set>
-			<if test="serviceName != null">
-				service_name = #{serviceName},
-			</if>
-			<if test="deviceId != null">
-				device_id = #{deviceId},
-			</if>
-			<if test="deviceName != null">
-				device_name = #{deviceName},
-			</if>
-			<if test="systemId != null">
-				system_id = #{systemId},
-			</if>
-			<if test="systemName != null">
-				system_name = #{systemName},
-			</if>
-			<if test="checkTime != null">
-				check_time = #{checkTime},
-			</if>
-			<if test="checkPoint != null">
-				check_point = #{checkPoint},
-			</if>
-			<if test="checkComment != null">
-				check_comment = #{checkComment},
-			</if>
-			<if test="setValue != null">
-				set_value = #{setValue},
-			</if>
-			<if test="shiftsNo != null">
-				shifts_no = #{shiftsNo},
-			</if>
-			<if test="createUserId != null">
-				create_user_id = #{createUserId},
-			</if>
-			<if test="serviceDescribe != null">
-				service_describe = #{serviceDescribe},
-			</if>
-			<if test="firstCheckTime != null">
-				first_check_time = #{firstCheckTime},
-			</if>
-			<if test="lastCheckTime != null">
-				last_check_time = #{lastCheckTime},
-			</if>
-			<if test="deleteStatus != null">
-				delete_status = #{deleteStatus},
-			</if>
-			<if test="createTime != null">
-				create_time = #{createTime},
-			</if>
-			<if test="updateTime != null">
-				update_time = #{updateTime},
-			</if>
-			<if test="checkCycle !=null">
-				check_cycle=#{checkCycle},
-			</if>
-		</set>
-		WHERE id = #{id}
-	</update>
+    <!-- 修 改-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
+        UPDATE t_check_info
+        <set>
+            <if test="serviceName != null">
+                service_name = #{serviceName},
+            </if>
+            <if test="deviceId != null">
+                device_id = #{deviceId},
+            </if>
+            <if test="deviceName != null">
+                device_name = #{deviceName},
+            </if>
+            <if test="systemId != null">
+                system_id = #{systemId},
+            </if>
+            <if test="systemName != null">
+                system_name = #{systemName},
+            </if>
+            <if test="checkTime != null">
+                check_time = #{checkTime},
+            </if>
+            <if test="checkPoint != null">
+                check_point = #{checkPoint},
+            </if>
+            <if test="checkComment != null">
+                check_comment = #{checkComment},
+            </if>
+            <if test="setValue != null">
+                set_value = #{setValue},
+            </if>
+            <if test="shiftsNo != null">
+                shifts_no = #{shiftsNo},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId},
+            </if>
+            <if test="serviceDescribe != null">
+                service_describe = #{serviceDescribe},
+            </if>
+            <if test="firstCheckTime != null">
+                first_check_time = #{firstCheckTime},
+            </if>
+            <if test="lastCheckTime != null">
+                last_check_time = #{lastCheckTime},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="checkCycle !=null">
+                check_cycle=#{checkCycle},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
 
-	<!-- 修 改-->
-	<update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
-		 UPDATE t_check_info
-		 SET 
-			 device_id = #{deviceId},
-			 system_id = #{systemId},
-			 system_name = #{systemName},
-			 check_point = #{checkPoint},
-			 check_comment = #{checkComment},
-			 set_value = #{setValue},
-			 shifts_no = #{shiftsNo},
-			 create_user_id = #{createUserId},
-			 delete_status = #{deleteStatus},
-			 create_time = #{createTime},
-			 update_time = #{updateTime}
-		 WHERE id = #{id}
-	</update>
+    <!-- 修 改-->
+    <update id="updateByPrimaryKey" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
+        UPDATE t_check_info
+        SET
+            device_id      = #{deviceId},
+            system_id      = #{systemId},
+            system_name    = #{systemName},
+            check_point    = #{checkPoint},
+            check_comment  = #{checkComment},
+            set_value      = #{setValue},
+            shifts_no      = #{shiftsNo},
+            create_user_id = #{createUserId},
+            delete_status  = #{deleteStatus},
+            create_time    = #{createTime},
+            update_time    = #{updateTime}
+        WHERE id = #{id}
+    </update>
 
-	<select id="getCheckInfoByDeviceId" resultType="com.xiaofan.car.persistence.vo.CheckInfoVo">
-		SELECT
-			id AS id,
-			device_id AS deviceId,
-			system_id AS systemId,
-			system_name AS systemName,
-			check_point AS checkPoint,
-			check_comment AS checkComment,
-			set_value AS setValue,
-			shifts_no AS shiftsNo
-		FROM
-			t_check_info
-		WHERE
-			device_id = #{deviceId} and delete_status=1
-	</select>
+    <select id="getCheckInfoByDeviceId" resultType="com.xiaofan.car.persistence.vo.CheckInfoVo">
+        SELECT
+            id            AS id,
+            device_id     AS deviceId,
+            system_id     AS systemId,
+            system_name   AS systemName,
+            check_point   AS checkPoint,
+            check_comment AS checkComment,
+            set_value     AS setValue,
+            shifts_no     AS shiftsNo,
+            check_time       checkTime,
+            device_name      deviceName,
+            service_describe serviceDescribe,
+            first_check_time firstCheckTime,
+            last_check_time  lastCheckTime,
+            check_cycle checkCycle
+        FROM
+            t_check_info
+        WHERE
+            device_id = #{deviceId} AND delete_status = 1
+    </select>
     <select id="selectTodayCheckInfo" resultType="com.xiaofan.car.persistence.model.CheckInfo">
-		SELECT
-			*
-		FROM
-			t_check_info
-		WHERE
-			next_check_time BETWEEN #{startTime}
-		AND #{endTime}
-	</select>
+        SELECT *
+        FROM
+            t_check_info
+        WHERE
+            next_check_time BETWEEN #{startTime}
+            AND #{endTime}
+    </select>
 </mapper>

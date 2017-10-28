@@ -214,8 +214,6 @@
           isLoading: false,
         },
         queryCondition: {
-          orderType: "look",
-          orderStatus: "all",
           pageSize: 10,
           pageNum: 1,
           orderNo: '',
@@ -240,11 +238,7 @@
           },
           {
             title: '状态',
-            key: 'serviceName'
-          },
-          {
-            title: '是否异常',
-            key: 'serviceName'
+            key: 'tpmStatusName'
           },
           {
             title: '操作',
@@ -268,7 +262,7 @@
                 },
                 '详情'
               )]
-              if (true)
+              if (params.row.tpmStatus===2&&params.row.tpmStatus===4 )
                 button.push(h('Button', {
                     props: {
                       type: 'info'
@@ -289,7 +283,7 @@
             }
           }
         ],
-        list: [{id: 1, serviceName: 'aaa'}],
+        list: [],
         RoleList: []
       };
     },
@@ -379,7 +373,8 @@
         return true
       }
     },
-    mounted() {
+    created() {
+      this.getlist()
     }
   }
 </script>
