@@ -191,7 +191,7 @@
 		 UPDATE t_arrange_info
 		 SET
 			 is_effective = 2
-		 WHERE id = #{id}
+		 WHERE id != #{id}
 	</update>
 
 </mapper>

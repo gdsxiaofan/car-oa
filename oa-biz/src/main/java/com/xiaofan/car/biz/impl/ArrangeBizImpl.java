@@ -64,7 +64,10 @@ public class ArrangeBizImpl implements ArrangeBiz {
     @Transactional(propagation= Propagation.REQUIRED)
     public boolean updateArrange(ArrangeParam arrangeParam) {
         ArrangeInfo arrangeInfo = dozerBeanMapper.map(arrangeParam,ArrangeInfo.class);
-        arrangeInfoMapper.updateForPause(arrangeParam.getId());//停用其他的开启的排班
+        if(arrangeParam.getIsEffective()==1){
+            arrangeInfoMapper.updateForPause(arrangeParam.getId());//停用其他的开启的排班
+        }
+
         Integer num = arrangeInfoMapper.updateByPrimaryKeySelective(arrangeInfo);
         return num==1?true:false;
     }
