@@ -306,7 +306,8 @@
             service_describe serviceDescribe,
             first_check_time firstCheckTime,
             last_check_time  lastCheckTime,
-            check_cycle checkCycle
+            check_cycle checkCycle,
+            service_name serviceName
         FROM
             t_check_info
         WHERE

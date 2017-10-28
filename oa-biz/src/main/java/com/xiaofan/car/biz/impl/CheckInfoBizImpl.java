@@ -1,12 +1,10 @@
 package com.xiaofan.car.biz.impl;
 
-import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.CheckInfoBiz;
 import com.xiaofan.car.dao.repository.CheckInfoMapper;
 import com.xiaofan.car.persistence.model.CheckInfo;
 import com.xiaofan.car.persistence.param.CheckInfoParam;
 import com.xiaofan.car.persistence.vo.CheckInfoVo;
-import com.xiaofan.car.util.date.DateUtil;
 import io.jsonwebtoken.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

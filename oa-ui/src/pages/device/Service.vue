@@ -6,16 +6,16 @@
         <Col :span="9" :offset="2" style="margin-top:0.2%">
         设备名：{{device.deviceName}}
         </Col>
+        <!--<Col :span="9" :offset="2" style="margin-top:0.2%">-->
+        <!--巡检天数:{{device.routingDays}}-->
+        <!--</Col>-->
         <Col :span="9" :offset="2" style="margin-top:0.2%">
-        巡检天数:{{device.routingDays}}
-        </Col>
-        <Col :span="9" :offset="2" style="margin-top:2%">
         区域:{{device.area}}
         </Col>
         <Col :span="9" :offset="2" style="margin-top:2%">
         位置:{{device.location}}
         </Col>
-        <Col :span="3" :offset="18" style="margin-top:2%">
+        <Col :span="3" :offset="7" style="margin-top:2%">
         <Button type="success" shape="circle" icon="ios-personadd"
                 @click="add">
           新建服务
@@ -126,7 +126,7 @@
           },
           {
             title: '服务名称',
-            key: 'checkPoint'
+            key: 'serviceName'
           },
           {
             title: '设备名称',
@@ -238,10 +238,12 @@
       showServiceInfo(type, params) {
         this.$refs['user'].resetFields()
         this.service.id = params.row.id
-        this.service.checkPoint = params.row.checkPoint
-        this.service.checkComment = params.row.checkComment
-        this.service.setValue = params.row.setValue
-        this.service.shiftsNo = params.row.shiftsNo
+        this.service.serviceName = params.row.serviceName
+        this.service.checkCycle = params.row.checkCycle
+        this.service.serviceDescribe = params.row.serviceDescribe
+        this.service.firstCheckTime = params.row.firstCheckTime
+        this.service.lastCheckTime = params.row.lastCheckTime
+        this.service.checkTime = params.row.checkTime
         this.userModal.isShow = true
         this.userModal.title = type
         this.userModal.disabled = type === '服务详情'

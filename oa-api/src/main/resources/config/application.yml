@@ -7,6 +7,12 @@ spring:
     multipart:
       max-file-size: 5Mb
       max-request-size: 5Mb
+    encoding:
+      enabled: true
+      charset: UTF-8
+  jackson:
+      time-zone: GMT+8
+      date-format: yyyy-MM-dd HH:mm:ss
 server:
   port: 8011
 

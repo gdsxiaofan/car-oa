@@ -42,27 +42,27 @@
         <Form-item prop="deviceName" label="设备名：">
           <Input v-model="Device.deviceName" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
-        <Form-item label="巡检天数">
-          <InputNumber :min="1" v-model="Device.routingDays" :disabled="DeviceModal.disabled" placeholder="请输入"/>
-        </Form-item>
+        <!--<Form-item label="巡检天数">-->
+          <!--<InputNumber :min="1" v-model="Device.routingDays" :disabled="DeviceModal.disabled" placeholder="请输入"/>-->
+        <!--</Form-item>-->
         <Form-item label="区域">
           <Input v-model="Device.area" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
         <Form-item label="位置">
           <Input v-model="Device.location" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
-        <Form-item label="开始时间">
-          <DatePicker type="date" :value="Device.fromDate" @on-change='Device.fromDate=arguments[0]'
-                      placeholder="选择日期和时间（不含秒）"
-                      style="width: 300px" :disabled="DeviceModal.disabled"
-                      :clearable="false"></DatePicker>
-        </Form-item>
-        <Form-item label="结束时间">
-          <DatePicker type="date" :value="Device.toDate" @on-change='Device.toDate=arguments[0]'
-                      placeholder="选择日期和时间（不含秒）"
-                      style="width: 300px" :disabled="DeviceModal.disabled"
-                      :clearable="false"></DatePicker>
-        </Form-item>
+        <!--<Form-item label="开始时间">-->
+          <!--<DatePicker type="date" :value="Device.fromDate" @on-change='Device.fromDate=arguments[0]'-->
+                      <!--placeholder="选择日期和时间（不含秒）"-->
+                      <!--style="width: 300px" :disabled="DeviceModal.disabled"-->
+                      <!--:clearable="false"></DatePicker>-->
+        <!--</Form-item>-->
+        <!--<Form-item label="结束时间">-->
+          <!--<DatePicker type="date" :value="Device.toDate" @on-change='Device.toDate=arguments[0]'-->
+                      <!--placeholder="选择日期和时间（不含秒）"-->
+                      <!--style="width: 300px" :disabled="DeviceModal.disabled"-->
+                      <!--:clearable="false"></DatePicker>-->
+        <!--</Form-item>-->
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="DeviceModal.isShow=false" style="margin-left: 8px">取消</Button>
@@ -96,10 +96,10 @@
             title: '编号',
             key: 'id'
           },
-          {
-            title: '巡检天数',
-            key: 'routingDays'
-          },
+//          {
+//            title: '巡检天数',
+//            key: 'routingDays'
+//          },
           {
             title: '设备名称',
             key: 'deviceName'
@@ -112,14 +112,14 @@
             title: '位置',
             key: 'location'
           },
-          {
-            title: '开始时间',
-            key: 'fromDate'
-          },
-          {
-            title: '结束时间',
-            key: 'toDate'
-          },
+//          {
+//            title: '开始时间',
+//            key: 'fromDate'
+//          },
+//          {
+//            title: '结束时间',
+//            key: 'toDate'
+//          },
           {
             title: '操作',
             width: 320,

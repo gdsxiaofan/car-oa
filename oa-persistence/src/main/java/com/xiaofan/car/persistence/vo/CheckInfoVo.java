@@ -1,6 +1,7 @@
 package com.xiaofan.car.persistence.vo;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.xiaofan.car.persistence.enumType.ShiftsNoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -64,11 +65,11 @@ public class CheckInfoVo {
     private String serviceDescribe;
 
     /**首次巡检日期**/
-    @JSONField(format="yyyy-MM-dd")
+    @JsonFormat( pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date firstCheckTime;
 
     /**最后一次巡检的日期**/
-    @JSONField(format="yyyy-MM-dd")
+    @JsonFormat( pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date lastCheckTime;
 
     public void setShiftsNo(int shiftsNo){
