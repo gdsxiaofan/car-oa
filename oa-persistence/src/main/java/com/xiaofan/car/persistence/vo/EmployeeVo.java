@@ -1,6 +1,7 @@
 package com.xiaofan.car.persistence.vo;
 
 import com.xiaofan.car.persistence.dingding.enums.EmployeeStatusEnum;
+import com.xiaofan.car.persistence.enumType.ShiftsNoEnum;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
@@ -39,6 +40,15 @@ public class EmployeeVo {
 
     private String employeeStatusName;
 
+    /** 排班设置 1：早班 2：晚班 0：无排班设置**/
+    private Integer shiftsNo;
+
+    private String shiftsNoName;
+
+    public void setShiftsNo(Integer shiftsNo){
+        this.shiftsNo = shiftsNo;
+        this.shiftsNoName = ShiftsNoEnum.valuesOf(shiftsNo).getName();
+    }
     public void setEmployeeStatus(Integer employeeStatus){
             this.employeeStatus = employeeStatus;
             this.employeeStatusName = EmployeeStatusEnum.valuesOf(employeeStatus).getName();

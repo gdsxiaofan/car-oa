@@ -203,7 +203,8 @@
         DATE_FORMAT(induction_time,'%Y-%m-%d %T') as inductionTime,
         employee_status as employStatus,
         role_name as roleName,
-        is_active as isActive
+        is_active as isActive,
+        t_employee.shifts_no shiftsNo
         FROM
         t_employee
         LEFT JOIN

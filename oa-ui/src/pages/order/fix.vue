@@ -223,7 +223,7 @@
         base:(process.env.NODE_ENV === 'production' ? '' : "car") +"v1/image/sosOutImg/",
         env:process.env.NODE_ENV === 'production' ? '' : "car",
         img: '',
-        fixImgList:['\\4643e8dd-e76d-4805-ac90-3a95a2fe98ed\\229\\14\\4643e8dd-e76d-4805-ac90-3a95a2fe98ed20171003230233023509.jpg'],
+        fixImgList:[],
         visible: false,
         uploadList: [],
         imgList: [],
@@ -269,11 +269,11 @@
           },
           {
             title: '工单名称',
-            key: 'serviceName'
+            key: 'tpmName'
           },
           {
             title: '设备名称',
-            key: "serviceName"
+            key: "deviceName"
           },
           {
             title: '负责人',
@@ -334,8 +334,7 @@
             }
           }
         ],
-        list: [{id: 1, serviceName: 'aaa'}],
-        RoleList: []
+        list: [],
       };
     },
     methods: {

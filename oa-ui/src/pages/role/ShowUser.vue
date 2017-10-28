@@ -52,12 +52,20 @@
           </Input>
         </Form-item>
         <FormItem label="密码：" :prop="userModal.title==='修改用户'?'':'employeePassword'">
-          <Input type="password" v-model="userInfo.employeePassword" :placeholder="userModal.title==='修改用户'?'不填则不修改':'密码'">
+          <Input type="password" v-model="userInfo.employeePassword"
+                 :placeholder="userModal.title==='修改用户'?'不填则不修改':'密码'">
           <Icon type="ios-locked-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
         <Form-item label="姓名：" prop="employeeName">
           <Input type="text" v-model="userInfo.employeeName" placeholder=""/>
+        </Form-item>
+        <Form-item label="排班：" >
+          <Select v-model="userInfo.shiftsNo" style="width:200px">
+            <Option :value="0">无排班</Option>
+            <Option :value="1">早班</Option>
+            <Option :value="2">午班</Option>
+          </Select>
         </Form-item>
         <Form-item label="手机号码：" prop="employeeMobile">
           <Input type="text" v-model="userInfo.employeeMobile" placeholder=""/>
@@ -95,6 +103,7 @@
           roleName: '',
           employeeMobile: '',
           employeeNo: '',
+          shiftsNo:0,
           employeeName: '',
           employeePassword: ''
         },
@@ -112,7 +121,7 @@
             {required: true, message: '请填写密码', trigger: 'blur'}
           ],
           roleId: [
-            {type:'number',required: true, message: '请选择角色', trigger: 'change'},
+            {type: 'number', required: true, message: '请选择角色', trigger: 'change'},
           ]
         },
         userModal: {
@@ -149,6 +158,10 @@
           {
             title: '角色',
             key: 'roleName'
+          },
+          {
+            title: '排班',
+            key: 'shiftsNoName'
           },
           {
             title: '操作',
@@ -194,6 +207,7 @@
                       this.userInfo.employeeName = params.row.employeeName
                       this.userInfo.employeeNo = params.row.employeeNo
                       this.userInfo.employeeMobile = params.row.employeeMobile
+                      this.userInfo.shiftsNo = params.row.shiftsNo
                       this.userInfo.roleId = params.row.roleId
                       this.userModal.isShow = true
                       this.userModal.title = '修改用户'
