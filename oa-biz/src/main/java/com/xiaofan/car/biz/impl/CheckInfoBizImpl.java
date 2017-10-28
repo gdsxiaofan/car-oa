@@ -5,12 +5,14 @@ import com.xiaofan.car.dao.repository.CheckInfoMapper;
 import com.xiaofan.car.persistence.model.CheckInfo;
 import com.xiaofan.car.persistence.param.CheckInfoParam;
 import com.xiaofan.car.persistence.vo.CheckInfoVo;
+import com.xiaofan.car.service.TpmBillService;
 import io.jsonwebtoken.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +30,9 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
 
     @Autowired
     private CheckInfoMapper checkInfoMapper;
+
+    @Autowired
+    private TpmBillService tpmBillService;
 
     @Override
     public List<CheckInfoVo> getCheckInfoList(Integer deviceId) {
@@ -49,6 +54,17 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
         checkInfo.setCreateTime(Calendar.getInstance().getTime());
         // 3.保存对应的检查项信息
         checkInfoMapper.insertSelective(checkInfo);
+
+        // 4.当前检查项如果首个检查时间如果是当日，需要生成对应的工单
+        Date firstDate = checkInfo.getFirstCheckTime();
+
+        Date today = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+        if(sdf.format(firstDate)==sdf.format(today)){
+            List<CheckInfo> checkInfos = new ArrayList<>();
+            checkInfos.add(checkInfo);
+            tpmBillService.addTpmBill(checkInfos);
+        }
 
     }
 
@@ -128,5 +144,21 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
         if(Integer.valueOf(checkData[0])>59||Integer.valueOf(checkData[0])<0){
             throw new RuntimeException("检查时间分钟范围为：0-59");
         }
+
+        // 1.首次巡检时间不得比当前日期小
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            Date firstDate = sdf.parse(checkInfoParam.getFirstCheckTime());
+            Date today = Calendar.getInstance().getTime();
+            today = sdf.parse(sdf.format(today));
+            if(firstDate.getTime()<today.getTime()){
+                throw new RuntimeException("首次巡检时间不得早于当前日期");
+            }
+        }
+        catch (Exception e){
+            log.error("转换时间错误：",e);
+        }
+
+
     }
 }

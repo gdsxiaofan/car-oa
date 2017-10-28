@@ -83,7 +83,7 @@
     </insert>
 
     <!-- 添加 （匹配有值的字段）-->
-    <insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.CheckInfo">
+    <insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.CheckInfo" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO t_check_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
