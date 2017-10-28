@@ -1,8 +1,11 @@
 package com.xiaofan.car.service;
 
 import com.xiaofan.car.persistence.enumType.TmpStatusEnum;
+import com.xiaofan.car.persistence.model.CheckInfo;
 import com.xiaofan.car.persistence.model.TpmBill;
 import com.xiaofan.car.persistence.param.TpmBillParam;
+
+import java.util.List;
 
 /**
  * 工单的service处理
@@ -28,4 +31,10 @@ public interface TpmBillService {
     public void updateTpmBillForAudit(Integer id,TmpStatusEnum tpmStatusEnum);
 
     public void addTpmBill(TpmBillParam tpmBillParam);
+
+    /**
+     * 新增工单
+     * @param checkInfoList
+     */
+    public void addTpmBill(List<CheckInfo> checkInfoList);
 }

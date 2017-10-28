@@ -244,6 +244,7 @@
 		</trim>
 	</insert>
 
+
 	<!-- 修 改-->
 	<update id="updateByPrimaryKeySelective" parameterType="com.xiaofan.car.persistence.model.TpmBill">
 		 UPDATE t_tpm_bill
@@ -329,5 +330,132 @@
 			#{item}
 		</foreach>
 	</update>
+
+	<insert id="insertTpmBillForList">
+		<if test="tpmBillList!=null">
+			<foreach collection="tpmBillList" item="itme" index="index" separator=";">
+				INSERT INTO t_tpm_bill
+				<trim prefix="(" suffix=")" suffixOverrides="," >
+					<if test="item.id != null">
+						id,
+					</if>
+					<if test="item.tpmName != null">
+						tpm_name,
+					</if>
+					<if test="item.tpmNo != null">
+						tpm_no,
+					</if>
+					<if test="item.deviceId != null">
+						device_id,
+					</if>
+					<if test="item.checkTime != null">
+						check_time,
+					</if>
+					<if test="item.deviceName != null">
+						device_name,
+					</if>
+					<if test="item.deviceLocation != null">
+						device_location,
+					</if>
+					<if test="item.deviceArea != null">
+						device_area,
+					</if>
+					<if test="item.finishTime != null">
+						finish_time,
+					</if>
+					<if test="item.auditTime != null">
+						audit_time,
+					</if>
+					<if test="item.rejectReason != null">
+						reject_reason,
+					</if>
+					<if test="item.tpmStatus != null">
+						tpm_status,
+					</if>
+					<if test="item.tpmType != null">
+						tpm_type,
+					</if>
+					<if test="item.shiftsNo != null">
+						shifts_no,
+					</if>
+					<if test="item.lastTpmId != null">
+						last_tpm_id,
+					</if>
+					<if test="item.serviceDescribe != null">
+						service_describe,
+					</if>
+					<if test="item.deleteStatus != null">
+						delete_status,
+					</if>
+					<if test="item.createTime != null">
+						create_time,
+					</if>
+					<if test="item.updateTime != null">
+						update_time,
+					</if>
+
+				</trim>
+				<trim prefix="values (" suffix=")" suffixOverrides="," >
+					<if test="item.id!=null">
+						#{item.id},
+					</if>
+					<if test="item.tpmName!=null">
+						#{item.tpmName},
+					</if>
+					<if test="item.tpmNo!=null">
+						#{item.tpmNo},
+					</if>
+					<if test="item.deviceId!=null">
+						#{item.deviceId},
+					</if>
+					<if test="item.checkTime!=null">
+						#{item.checkTime},
+					</if>
+					<if test="item.deviceName!=null">
+						#{item.deviceName},
+					</if>
+					<if test="item.deviceLocation!=null">
+						#{item.deviceLocation},
+					</if>
+					<if test="item.deviceArea!=null">
+						#{item.deviceArea},
+					</if>
+					<if test="item.finishTime!=null">
+						#{item.finishTime},
+					</if>
+					<if test="item.auditTime!=null">
+						#{item.auditTime},
+					</if>
+					<if test="item.rejectReason!=null">
+						#{item.rejectReason},
+					</if>
+					<if test="item.tpmStatus!=null">
+						#{item.tpmStatus},
+					</if>
+					<if test="item.tpmType!=null">
+						#{item.tpmType},
+					</if>
+					<if test="item.shiftsNo!=null">
+						#{item.shiftsNo},
+					</if>
+					<if test="item.lastTpmId!=null">
+						#{item.lastTpmId},
+					</if>
+					<if test="item.serviceDescribe!=null">
+						#{item.serviceDescribe},
+					</if>
+					<if test="item.deleteStatus!=null">
+						#{item.deleteStatus},
+					</if>
+					<if test="item.createTime!=null">
+						#{item.createTime},
+					</if>
+					<if test="item.updateTime!=null">
+						#{item.updateTime},
+					</if>
+				</trim>
+			</foreach>
+		</if>
+	</insert>
 
 </mapper>

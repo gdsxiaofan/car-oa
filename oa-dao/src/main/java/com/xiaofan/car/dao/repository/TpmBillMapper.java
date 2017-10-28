@@ -45,4 +45,8 @@ public interface TpmBillMapper{
     public TpmBillVo getTpmBillDetail(
             @Param("id") Integer id
     );
+
+    public void insertTpmBillForList(
+            @Param("tpmBillList")List<TpmBill> tpmBillList
+    );
 }
