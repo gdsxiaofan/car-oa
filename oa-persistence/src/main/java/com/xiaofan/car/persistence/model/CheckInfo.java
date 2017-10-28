@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 
 /**
  * 
@@ -63,6 +65,8 @@ public class CheckInfo{
 
 	/**最后一次巡检的日期**/
 	private java.util.Date lastCheckTime;
+
+	private Date nextCheckTime;
 
 	/**有效状态：0：无效，1：有效**/
 	private Integer deleteStatus;

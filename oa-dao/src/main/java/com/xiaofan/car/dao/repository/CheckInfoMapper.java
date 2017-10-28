@@ -32,4 +32,9 @@ public interface CheckInfoMapper{
     public Integer deleteCheckInfoForDelete(
             @Param("id")Integer id
     );
+
+    public List<CheckInfo> selectTodayCheckInfo(
+            @Param("startTime")String startTime,
+            @Param("endTime")String endTime
+    );
 }

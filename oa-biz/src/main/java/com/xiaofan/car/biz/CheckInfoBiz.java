@@ -40,4 +40,5 @@ public interface CheckInfoBiz {
      * @param checkId
      */
     public void deleteCheckInfo(Integer checkId);
+
 }

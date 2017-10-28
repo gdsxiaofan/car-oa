@@ -141,6 +141,9 @@
 			<if test="checkCycle !=null">
 				check_cycle,
 			</if>
+			<if test="nextCheckTime !=null">
+				next_check_time,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides="," >
 			<if test="id!=null">
@@ -199,6 +202,9 @@
 			</if>
 			<if test="checkCycle !=null">
 				#{checkCycle},
+			</if>
+			<if test="nextCheckTime !=null">
+				#{nextCheckTime},
 			</if>
 		</trim>
 	</insert>
@@ -297,5 +303,14 @@
 			t_check_info
 		WHERE
 			device_id = #{deviceId} and delete_status=1
+	</select>
+    <select id="selectTodayCheckInfo" resultType="com.xiaofan.car.persistence.model.CheckInfo">
+		SELECT
+			*
+		FROM
+			t_check_info
+		WHERE
+			next_check_time BETWEEN #{startTime}
+		AND #{endTime}
 	</select>
 </mapper>

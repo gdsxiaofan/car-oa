@@ -34,4 +34,22 @@ public class CheckInfoParam {
 
     /**班次：1，早班；2：中班**/
     private Integer shiftsNo;
+
+    /**巡检周期**/
+    private Integer checkCycle;
+
+    /**检查时间，格式为：hh:ss**/
+    private String checkTime;
+
+    /**设备名称**/
+    private String deviceName;
+
+    /**任务描述**/
+    private String serviceDescribe;
+
+    /**首次巡检日期**/
+    private String firstCheckTime;//前端传值只需精确到年月日即可
+
+    /**最后一次巡检的日期**/
+    private String lastCheckTime;//前端传值只需精确到年月日即可
 }
