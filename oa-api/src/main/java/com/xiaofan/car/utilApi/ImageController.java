@@ -1,11 +1,13 @@
 package com.xiaofan.car.utilApi;
 
+import com.xiaofan.car.biz.AttachmentBiz;
 import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.util.file.FileUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,9 @@ public class ImageController {
     @Value(value = "${root-path}")
     private String ROOTPATH;
 
+    @Autowired
+    private AttachmentBiz attachmentBiz;
+
     /**
      * 上传图片
      *
@@ -47,8 +52,9 @@ public class ImageController {
 
     ) {
         try {
-            String filename= FileUtil.upload(ROOTPATH , file, UUID.randomUUID().toString());
-            return new JsonResult<>(1,filename,file.getOriginalFilename());
+//            String filename= FileUtil.upload(ROOTPATH , file, UUID.randomUUID().toString());
+            Integer id = attachmentBiz.addAttachment(file);
+            return new JsonResult<>(1,id.toString(),file.getOriginalFilename());
         } catch (Exception e) {
             log.error("上传图片失败 :{}",e.getMessage());
             return new JsonResult<>(0,"上传图片失败");

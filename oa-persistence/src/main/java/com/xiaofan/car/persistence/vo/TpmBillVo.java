@@ -69,8 +69,8 @@ public class TpmBillVo {
 
     private List<TpmBillDetailVo> tpmBillDetailVoList;
 
-    private List<String> pendAttachements;//巡检的附件路径
-    private List<String> repairAttachements;//维修上传的工单附件路径
+    private List<AttachmentVo> pendAttachements;//巡检附件
+    private List<AttachmentVo> repairAttachements;//维修附件
 
 
     //########################  修改原型后添加字段 ###########################

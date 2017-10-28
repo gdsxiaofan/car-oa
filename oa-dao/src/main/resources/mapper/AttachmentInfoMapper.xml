@@ -63,7 +63,7 @@
 	</insert>
 
 	<!-- 添加 （匹配有值的字段）-->
-	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo">
+	<insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo" keyColumn="id" useGeneratedKeys="true">
 		 INSERT INTO t_attachment_info
 		 <trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="id != null">
