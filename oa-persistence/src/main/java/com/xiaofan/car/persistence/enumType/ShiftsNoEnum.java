@@ -10,8 +10,9 @@ import lombok.Getter;
  * @since 1.0.0
  */
 public enum ShiftsNoEnum {
-    morning(1,"早班"),
-    nooning(2,"午班");
+    NO_SHIFTSNO(0,"无排班"),
+    MORNING(1,"早班"),
+    NOONING(2,"午班");
 
     @Getter
     private int code;

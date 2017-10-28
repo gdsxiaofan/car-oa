@@ -1,4 +1,5 @@
 package com.xiaofan.car.persistence.model;
+import com.xiaofan.car.persistence.enumType.ShiftsNoEnum;
 import lombok.Data;
 
 
@@ -45,94 +46,15 @@ public class Employee{
 	/**删除状态：1：正常状态，0：删除**/
 	private Integer deleteStatus;
 
+	/** 排班设置 1：早班 2：晚班 0：无排班设置**/
+	private Integer shiftsNo;
 
+	private String shiftsNoName;
 
-	public void setId(Integer id){
-		this.id=id;
+	public void setShiftsNo(Integer shiftsNo){
+		this.shiftsNo = shiftsNo;
+		this.shiftsNoName = ShiftsNoEnum.valuesOf(shiftsNo).getName();
 	}
 
-	public Integer getId(){
-		return this.id;
-	}
-
-	public void setEmployeeName(String employeeName){
-		this.employeeName=employeeName;
-	}
-
-	public String getEmployeeName(){
-		return this.employeeName;
-	}
-
-	public void setEmployeePassword(String employeePassword){
-		this.employeePassword=employeePassword;
-	}
-
-	public String getEmployeePassword(){
-		return this.employeePassword;
-	}
-
-	public void setEmployeeMobile(String employeeMobile){
-		this.employeeMobile=employeeMobile;
-	}
-
-	public String getEmployeeMobile(){
-		return this.employeeMobile;
-	}
-
-	public void setEmployeeNo(String employeeNo){
-		this.employeeNo=employeeNo;
-	}
-
-	public String getEmployeeNo(){
-		return this.employeeNo;
-	}
-
-	public void setRoleId(Integer roleId){
-		this.roleId=roleId;
-	}
-
-	public Integer getRoleId(){
-		return this.roleId;
-	}
-
-	public void setInductionTime(java.util.Date inductionTime){
-		this.inductionTime=inductionTime;
-	}
-
-	public java.util.Date getInductionTime(){
-		return this.inductionTime;
-	}
-
-	public void setEmployeeStatus(Integer employeeStatus){
-		this.employeeStatus=employeeStatus;
-	}
-
-	public Integer getEmployeeStatus(){
-		return this.employeeStatus;
-	}
-
-	public void setCreateTime(java.util.Date createTime){
-		this.createTime=createTime;
-	}
-
-	public java.util.Date getCreateTime(){
-		return this.createTime;
-	}
-
-	public void setUpdateTime(java.util.Date updateTime){
-		this.updateTime=updateTime;
-	}
-
-	public java.util.Date getUpdateTime(){
-		return this.updateTime;
-	}
-
-	public void setDeleteStatus(Integer deleteStatus){
-		this.deleteStatus=deleteStatus;
-	}
-
-	public Integer getDeleteStatus(){
-		return this.deleteStatus;
-	}
 
 }

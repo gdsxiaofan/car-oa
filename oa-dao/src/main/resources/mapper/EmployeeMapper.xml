@@ -29,12 +29,14 @@
         <result property="isActive" column="is_active"/>
         <!--删除状态：1：正常状态，0：删除-->
         <result property="deleteStatus" column="delete_Status"/>
+        <!--排班设置:1早班，2：晚班 0：无排班设置-->
+        <result property="shiftsNo" column="shifts_no"/>
     </resultMap>
 
 
     <!-- 通用查询结果列-->
     <sql id="Base_Column_List">
-        id, employee_name, employee_password, employee_mobile, employee_no, role_id, induction_time, employee_status, create_Time, update_Time, is_active, delete_Status
+        id, employee_name, employee_password, employee_mobile, employee_no, role_id, induction_time, employee_status, create_Time, update_Time, is_active, delete_Status,shifts_no
     </sql>
 
 
@@ -78,7 +80,9 @@
             <if test="deleteStatus != null">
                 delete_Status,
             </if>
-
+            <if test="shiftsNo !=null">
+                shifts_no
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id!=null">
@@ -116,6 +120,9 @@
             </if>
             <if test="deleteStatus!=null">
                 #{deleteStatus},
+            </if>
+            <if test="shiftsNo!=null">
+                #{shiftsNo}
             </if>
         </trim>
     </insert>
@@ -157,7 +164,9 @@
             <if test="deleteStatus != null">
                 delete_Status = #{deleteStatus},
             </if>
-
+            <if test="shiftsNo!=null">
+                shifts_no = #{shiftsNo},
+            </if>
         </set>
         WHERE id = #{id}
     </update>
