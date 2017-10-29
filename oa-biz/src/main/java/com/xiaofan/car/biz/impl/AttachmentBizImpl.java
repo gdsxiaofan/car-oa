@@ -37,6 +37,8 @@ public class AttachmentBizImpl implements AttachmentBiz{
         if(OSInfo.OSType.LINUX.equals(OSInfo.getOSType())){
             path=linuxPATH;
         }
+        log.info("current os is :{}",OSInfo.getOSType());
+        log.info("img  basePath:{}",path);
         // 1.保存附件到本地磁盘
         String filePath= FileUtil.upload(path , multipartFile, UUID.randomUUID().toString());
 
