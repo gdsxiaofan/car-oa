@@ -45,7 +45,7 @@
 		<include refid="Base_Column_List" />
 		FROM t_attachment_info
 		WHERE biz_id = #{bizId}
-		and bizType = #{bizType}
+		and biz_type = #{bizType}
 	</select>
 
 	<!--删除：根据主键ID删除-->

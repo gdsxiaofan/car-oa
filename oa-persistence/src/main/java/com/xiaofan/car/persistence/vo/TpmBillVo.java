@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,7 +76,7 @@ public class TpmBillVo {
 
     //########################  修改原型后添加字段 ###########################
     /**巡检时间**/
-    private String checkTime;
+    private Date checkTime;
 
     /**服务描述**/
     private String serviceDescribe;

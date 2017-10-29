@@ -228,14 +228,14 @@
         uploadList: [],
         imgList: [],
         desc: "",
-        orderType: "verify",
+        orderType: 4,
+        orderId: 0,
         userModal: {
           isShow: false,
           isLoading: false,
         },
         doUserId: '',
         employee: {
-
           employeeNo: "",
           employeePassword: ''
         },
@@ -276,16 +276,8 @@
             key: "deviceName"
           },
           {
-            title: '负责人',
-            key: 'serviceName'
-          },
-          {
-            title: '状态',
-            key: 'serviceName'
-          },
-          {
-            title: '是否异常',
-            key: 'serviceName'
+            title: '巡检时间',
+            key: "checkTime"
           },
           {
             title: '操作',
@@ -320,10 +312,18 @@
                     on: {
                       click: () => {
                         this.orderId = params.row.id
+                        let fixImgList=[]
+                        params.row.pendAttachements.forEach(e=>{
+                          fixImgList.push(e.id)
+                        })
+                        this.fixImgList=fixImgList
                         this.employee = {
                           employeeNo: "",
                           employeePassword: ''
                         }
+
+                        this.uploadList = []
+                        this.desc = ''
                         this.checkModal.isShow = true
                       }
                     }
@@ -371,16 +371,26 @@
       doOrder() {
         this.doModal.isLoading = true
         let orderParam = new FormData();
-        orderParam.append("doUserId", this.doUserId)
-        orderParam.append("orderType", this.orderType)
-        orderParam.append("desc", this.desc)
-        if (this.uploadList) {
-          this.uploadList.forEach(x => {
-            orderParam.append("file", x)
-          })
-        } else {
-          orderParam.append("file", null)
-        }
+        orderParam.append("userId",this.doUserId)
+        orderParam.append("id",this.orderId)
+        orderParam.append("dealType",this.orderType)
+        orderParam.append("desc",this.desc)
+        let attachmentIds=''
+        this.uploadList.forEach((i,n)=>{
+          if(this.uploadList.length===n+1){
+            attachmentIds+=i
+          }else {
+            attachmentIds+=i+','
+          }
+        })
+        orderParam.append("attachmentIds",attachmentIds)
+//        if (this.uploadList) {
+//          this.uploadList.forEach(x => {
+//            orderParam.append("file", x)
+//          })
+//        } else {
+//          orderParam.append("file", null)
+//        }
         doOrder(orderParam).then(res => {
           this.doModal.isLoading = false
           this.doModal.isShow = false

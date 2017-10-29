@@ -39,9 +39,6 @@ public class AttachmentServiceImpl implements AttachmentService{
         List<AttachmentInfo> attachmentInfos = attachmentInfoMapper.selectAttachmentByBizId(attachmentBizType.getCode(),bizId);
         List<AttachmentVo> attachmentVos = new ArrayList<>();
 
-        if(CollectionUtils.isNotEmpty(attachmentInfos)){
-            return null;
-        }
         for(AttachmentInfo attachmentInfo:attachmentInfos){
             AttachmentVo attachmentVo = dozerBeanMapper.map(attachmentInfo,AttachmentVo.class);
             attachmentVos.add(attachmentVo);

@@ -1,5 +1,7 @@
 package com.xiaofan.car.persistence.vo;
 
+import lombok.Data;
+
 /**
  *  附件信息
  *
@@ -7,6 +9,7 @@ package com.xiaofan.car.persistence.vo;
  * @date 2017/10/16
  * @since 1.0.0
  */
+@Data
 public class AttachmentVo {
     /****/
     private Integer id;

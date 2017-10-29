@@ -27,7 +27,7 @@ export function checkUser(orderParam) {
 //处理工单
 export function doOrder(orderParam) {
   return fetch({
-    url: `${baseUrl}doOrder`,
+    url: `${baseUrl}update`,
     method: 'post',
     data: orderParam,
     headers: {'Content-Type': 'multipart/form-data'}

@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class TpmBillBizImpl implements TpmBillBiz{
+public class TpmBillBizImpl implements TpmBillBiz {
 
     @Autowired
     TpmBillMapper tpmBillMapper;
@@ -43,53 +43,58 @@ public class TpmBillBizImpl implements TpmBillBiz{
 
     /**
      * 获取当前工单列表
+     *
      * @param tpmBillQueryParam
      * @return
      */
     @Override
     public PageInfo<TpmBillVo> getTpmBillList(TpmBillQueryParam tpmBillQueryParam) {
         // 1.分页查询处理分页数据
-        PageHelper.startPage(tpmBillQueryParam.getPageNum(),tpmBillQueryParam.getPageSize());
+        PageHelper.startPage(tpmBillQueryParam.getPageNum(), tpmBillQueryParam.getPageSize());
 
         // 2.调用查询接口
-        List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoList(tpmBillQueryParam.getTpmType(),tpmBillQueryParam.getTpmStatus(),tpmBillQueryParam.getTpmBillName());
-
+        List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoList(tpmBillQueryParam.getTpmType(), tpmBillQueryParam.getTpmStatus(), tpmBillQueryParam.getTpmBillName());
+        tpmBillVoList.forEach(e->{
+            e.setPendAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.PEND_TYPE));
+            e.setRepairAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.REPAIR_TYPE));
+        });
         // 3.组装数据
-       PageInfo<TpmBillVo> tpmBillVoPageInfo = new PageInfo<>(tpmBillVoList);
+        PageInfo<TpmBillVo> tpmBillVoPageInfo = new PageInfo<>(tpmBillVoList);
         return tpmBillVoPageInfo;
     }
 
     /**
      * 员工完成工单调用的接口
+     *
      * @param tpmBillParam
      * @return
      */
     @Override
     public boolean updateTpmBillForFinished(TpmBillParam tpmBillParam) {
         // 1.校验参数
-        Assert.notNull(tpmBillParam.getId(),"当前工单id不能为空");
+        Assert.notNull(tpmBillParam.getId(), "当前工单id不能为空");
         // 2.根据不同操作更新工单对应的状态,巡检工单
         boolean flag = false;
-        Integer toStatus =0;
-        List<Integer> fromStatus =new ArrayList<>();
-        toStatus=transformStatus(toStatus,fromStatus,tpmBillParam);
+        Integer toStatus = 0;
+        List<Integer> fromStatus = new ArrayList<>();
+        toStatus = transformStatus(toStatus, fromStatus, tpmBillParam);
 
-        flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(),toStatus,fromStatus);
+        flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(), toStatus, fromStatus);
 
         // `````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````处理对应附件信息
-        if(StringUtils.isNotBlank(tpmBillParam.getAttachmentIds())){
+        if (StringUtils.isNotBlank(tpmBillParam.getAttachmentIds())) {
             AttachmentBizTypeEnum attachmentBizTypeEnum = AttachmentBizTypeEnum.PEND_TYPE;
             String[] attachmentIdArray = tpmBillParam.getAttachmentIds().split(",");
-            if(tpmBillParam.getDealType()==2){
+            if (tpmBillParam.getDealType() == 4) {
                 attachmentBizTypeEnum = AttachmentBizTypeEnum.REPAIR_TYPE;
             }
             List<Integer> attachmentIdList = new ArrayList<>();
-            for(String aId:attachmentIdArray){
+            for (String aId : attachmentIdArray) {
                 Integer id = Integer.valueOf(aId);
                 attachmentIdList.add(id);
             }
 
-            attachmentService.updateAttachment(attachmentIdList,attachmentBizTypeEnum,tpmBillParam.getId());
+            attachmentService.updateAttachment(attachmentIdList, attachmentBizTypeEnum, tpmBillParam.getId());
 
         }
         return flag;
@@ -116,6 +121,7 @@ public class TpmBillBizImpl implements TpmBillBiz{
 
     /**
      * 上传附件信息
+     *
      * @param multiReq
      * @param tpmDetailId
      * @param tpmId
@@ -138,24 +144,24 @@ public class TpmBillBizImpl implements TpmBillBiz{
     }
 
 
-    private Integer transformStatus(Integer toStatus,List<Integer> fromStatus,TpmBillParam tpmBillParam){
-        switch (tpmBillParam.getDealType()){
-            case 1://巡检完成
-                toStatus=TmpStatusEnum.PENDED.getCode();
+    private Integer transformStatus(Integer toStatus, List<Integer> fromStatus, TpmBillParam tpmBillParam) {
+        switch (tpmBillParam.getDealType()) {
+            case 2://巡检完成
+                toStatus = TmpStatusEnum.PENDED.getCode();
                 fromStatus.add(TmpStatusEnum.PENDING.getCode());
                 break;
-            case 2:
-                toStatus=TmpStatusEnum.REPAIRING.getCode();
-                fromStatus.add(TmpStatusEnum.REPAIRED.getCode());
+            case 3://待维修
+                toStatus = TmpStatusEnum.REPAIRING.getCode();
+                fromStatus.add(TmpStatusEnum.PENDING.getCode());
                 break;
-            case 3:
-                toStatus=TmpStatusEnum.FINISHED.getCode();
+            case 4://维修完成
+                toStatus = TmpStatusEnum.REPAIRED.getCode();
+                fromStatus.add(TmpStatusEnum.REPAIRING.getCode());
+                break;
+            case 5://待审核
+                toStatus = TmpStatusEnum.FINISHED.getCode();
                 fromStatus.add(TmpStatusEnum.PENDED.getCode());
                 fromStatus.add(TmpStatusEnum.REPAIRED.getCode());
-                break;
-            case 4:
-                toStatus=TmpStatusEnum.PENDING.getCode();
-                fromStatus.add(TmpStatusEnum.REPAIRING.getCode());
                 break;
         }
         return toStatus;
