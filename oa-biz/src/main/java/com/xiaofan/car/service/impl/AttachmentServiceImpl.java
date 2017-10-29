@@ -1,13 +1,11 @@
 package com.xiaofan.car.service.impl;
 
-import com.sun.xml.internal.ws.api.message.Attachment;
 import com.xiaofan.car.dao.repository.AttachmentInfoMapper;
 import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.model.AttachmentInfo;
 import com.xiaofan.car.persistence.vo.AttachmentVo;
 import com.xiaofan.car.service.AttachmentService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

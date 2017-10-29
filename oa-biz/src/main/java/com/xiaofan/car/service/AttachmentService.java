@@ -1,6 +1,5 @@
 package com.xiaofan.car.service;
 
-import com.sun.xml.internal.ws.api.message.Attachment;
 import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.model.AttachmentInfo;
 import com.xiaofan.car.persistence.vo.AttachmentVo;
