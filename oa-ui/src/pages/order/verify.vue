@@ -4,7 +4,7 @@
       <p slot="title">条件查询</p>
       <Row>
         <Col :span="4">
-        工单号：
+        工单名：
         </Col>
         <Col :span="7">
         <Input type="text" v-model="queryCondition.tpmBillName" placeholder="请输入..."></Input>
@@ -235,7 +235,7 @@
         columns: [
           {
             title: '工单号',
-            key: 'id'
+            key: 'tpmNo'
           },
           {
             title: '工单名称',

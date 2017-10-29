@@ -3,13 +3,22 @@
     <Card>
       <p slot="title">条件查询</p>
       <Row>
-        <Col :span="4">
-        工单号：
+        <Col :span="4" >
+        时间区间：
         </Col>
         <Col :span="7">
+        <DatePicker type="daterange" :value="[queryCondition.begin,queryCondition.end]" @on-change='queryCondition.begin=arguments[0][0];queryCondition.end=arguments[0][1]'
+                    placeholder="选择日期和时间（不含秒）"
+                    style="width: 300px"
+                    :clearable="false"></DatePicker>
+        </Col>
+        <Col :span="4">
+        工单名：
+        </Col>
+        <Col :span="7" :offset="2">
         <Input type="text" v-model="queryCondition.tpmBillName" placeholder="请输入..."></Input>
         </Col>
-        <Col :span="3" offset="7" >
+        <Col :span="3" offset='18' class="ModalRow">
         <Button type="success" shape="circle" icon="ios-personadd"
                 @click="getlist">
           查询
@@ -186,8 +195,7 @@
     checkUser,
     doOrder
   } from '../../api/order'
-  import upload from '../upload.vue'
-
+  import {formatData} from '../../lib/utils/common'
   export default {
     data() {
       return {
@@ -230,12 +238,14 @@
           pageSize: 10,
           pageNum: 1,
           tpmBillName: '',
-          total: 0
+          total: 0,
+          begin:formatData.call(new Date(), "yyyy-MM-dd"),
+          end:formatData.call(new Date(), "yyyy-MM-dd")
         },
         columns: [
           {
             title: '工单号',
-            key: 'id'
+            key: 'tpmNo'
           },
           {
             title: '工单名称',

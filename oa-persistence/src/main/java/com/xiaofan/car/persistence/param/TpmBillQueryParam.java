@@ -2,6 +2,8 @@ package com.xiaofan.car.persistence.param;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * 工单查询参数
  *
@@ -16,6 +18,8 @@ public class TpmBillQueryParam {
     String tpmBillName;
     /**工单状态：1，待处理，2：待审核，3：故障维修，4：修复完成，5处理完成**/
     Integer tpmStatus;
+    String begin;//开始时间
+    String end;//结束时间
 
     /**工单类型：1：巡检工单，2：维修工单**/
     Integer tpmType;
