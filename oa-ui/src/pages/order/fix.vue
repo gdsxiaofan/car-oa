@@ -30,61 +30,65 @@
     >
       <Row>
         <Col span="16">
-        <Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">工单号</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.tpmNo}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">工单名称</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.tpmName}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">设备名称</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.deviceName}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">描述</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          {{detail.serviceDescribe}}
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">报修图片</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
-          </Col>
-          <Col span="10">
-          <strong class="label">label="工单号："</strong>
-          </Col>
-          <Col span="14">
-          label="描述："
+          <div class="demo-upload-list" v-for="(item,index) in fixImgList">
+            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
+          </div>
           </Col>
         </Row>
         </Col >
-        <Col span="8">
-        <Timeline>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-        </Timeline>
-        </Col>
+        <!--<Col span="8">-->
+        <!--<Timeline>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+        <!--</Timeline>-->
+        <!--</Col>-->
       </Row>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
@@ -117,7 +121,7 @@
         <strong class="label">工单号</strong>
         </Col>
         <Col span="14">
-        <p class="label">sadad</p>
+        <p class="label">{{detail.tpmNo}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -125,7 +129,7 @@
         <strong class="label">工单名称</strong>
         </Col>
         <Col span="14">
-        <p class="label">label="工单号："</p>
+        <p class="label">{{detail.tpmName}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -133,15 +137,7 @@
         <strong class="label">设备名称</strong>
         </Col>
         <Col span="14">
-        <p class="label">asdad</p>
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">排班</strong>
-        </Col>
-        <Col span="14">
-        <p class="label">label="工单号："</p>
+        <p class="label">{{detail.deviceName}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -149,7 +145,7 @@
         <strong class="label">描述</strong>
         </Col>
         <Col span="14">
-        <Input v-model="desc" type="textarea" disabled placeholder="请输入..." autosize/>
+        {{detail.serviceDescribe}}
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -220,7 +216,6 @@
   export default {
     data() {
       return {
-        base:(process.env.NODE_ENV === 'production' ? '' : "car") +"v1/image/sosOutImg/",
         env:process.env.NODE_ENV === 'production' ? '' : "car",
         img: '',
         fixImgList:[],
@@ -230,6 +225,11 @@
         desc: "",
         orderType: 4,
         orderId: 0,
+        detail: {
+          tpmNo: '',
+          tpmName: '',
+          deviceName: ''
+        },
         userModal: {
           isShow: false,
           isLoading: false,
@@ -292,10 +292,13 @@
                   },
                   on: {
                     click: () => {
-                      getOrderInfo(params.row.id).then(res => {
-                        //todo
-                        this.userModal.isShow = true
+                      this.userModal.isShow = true
+                      this.detail = params.row
+                      let fixImgList=[]
+                      params.row.pendAttachements.forEach(e=>{
+                        fixImgList.push(e.id)
                       })
+                      this.fixImgList=fixImgList
                     }
                   }
                 },
@@ -321,7 +324,7 @@
                           employeeNo: "",
                           employeePassword: ''
                         }
-
+                        this.detail = params.row
                         this.uploadList = []
                         this.desc = ''
                         this.checkModal.isShow = true

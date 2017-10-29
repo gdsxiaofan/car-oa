@@ -7,7 +7,7 @@
         工单号：
         </Col>
         <Col :span="7">
-        <Input type="text" v-model="queryCondition.orderNo" placeholder="请输入..."></Input>
+        <Input type="text" v-model="queryCondition.tpmBillName" placeholder="请输入..."></Input>
         </Col>
         <Col :span="3" offset="7" >
         <Button type="success" shape="circle" icon="ios-personadd"
@@ -29,61 +29,75 @@
     >
       <Row>
         <Col span="16">
-        <Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">工单号</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.tpmNo}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">工单名称</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.tpmName}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">设备名称</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.deviceName}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">描述</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          {{detail.serviceDescribe}}
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">报修图片</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <div class="demo-upload-list" v-for="(item,index) in lookList">
+            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
+          </div>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">处理图片</strong>
           </Col>
           <Col span="14">
-          label="描述："
+          <div class="demo-upload-list" v-for="(item,index) in fixImgList">
+            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
+          </div>
           </Col>
         </Row>
         </Col >
-        <Col span="8">
-        <Timeline>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-        </Timeline>
-        </Col>
+        <!--<Col span="8">-->
+        <!--<Timeline>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+        <!--</Timeline>-->
+        <!--</Col>-->
       </Row>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
@@ -98,7 +112,7 @@
         <strong class="label">工单号</strong>
         </Col>
         <Col span="14">
-        <p class="label">sadad</p>
+        <p class="label">{{detail.tpmNo}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -106,7 +120,7 @@
         <strong class="label">工单名称</strong>
         </Col>
         <Col span="14">
-        <p class="label">label="工单号："</p>
+        <p class="label">{{detail.tpmName}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -114,15 +128,7 @@
         <strong class="label">设备名称</strong>
         </Col>
         <Col span="14">
-        <p class="label">asdad</p>
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">排班</strong>
-        </Col>
-        <Col span="14">
-        <p class="label">label="工单号："</p>
+        <p class="label">{{detail.deviceName}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -130,7 +136,7 @@
         <strong class="label">描述</strong>
         </Col>
         <Col span="14">
-        <Input v-model="desc" type="textarea" disabled placeholder="请输入..." autosize/>
+        {{detail.serviceDescribe}}
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -138,8 +144,8 @@
         <strong class="label">报修图片</strong>
         </Col>
         <Col span="14">
-        <div class="demo-upload-list" v-for="(item,index) in fixImgList">
-          <img @click="handleView(base+item)"  :src="base+item">
+        <div class="demo-upload-list" v-for="(item,index) in lookList">
+          <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
         </div>
         </Col>
       </Row>
@@ -149,7 +155,7 @@
         </Col>
         <Col span="14">
         <div class="demo-upload-list" v-for="(item,index) in fixImgList">
-          <img @click="handleView(base+item)"  :src="base+item">
+          <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
         </div>
         </Col>
       </Row>
@@ -184,14 +190,20 @@
   export default {
     data() {
       return {
-        base:(process.env.NODE_ENV === 'production' ? '' : "car") +"v1/image/sosOutImg/",
+        env:process.env.NODE_ENV === 'production' ? '' : "car",
         img: '',
-        fixImgList:['\\4643e8dd-e76d-4805-ac90-3a95a2fe98ed\\229\\14\\4643e8dd-e76d-4805-ac90-3a95a2fe98ed20171003230233023509.jpg'],
+        fixImgList:[],
+        lookList: [],
         visible: false,
-        uploadList: [],
         imgList: [],
         desc: "",
-        orderType: "verified",
+        orderType: 5,
+        orderId: 0,
+        detail: {
+          tpmNo: '',
+          tpmName: '',
+          deviceName: ''
+        },
         userModal: {
           isShow: false,
           isLoading: false,
@@ -216,7 +228,7 @@
         queryCondition: {
           pageSize: 10,
           pageNum: 1,
-          orderNo: '',
+          tpmBillName: '',
           total: 0
         },
         columns: [
@@ -226,15 +238,11 @@
           },
           {
             title: '工单名称',
-            key: 'serviceName'
+            key: 'tpmName'
           },
           {
             title: '设备名称',
-            key: "serviceName"
-          },
-          {
-            title: '负责人',
-            key: 'serviceName'
+            key: "deviceName"
           },
           {
             title: '状态',
@@ -253,16 +261,24 @@
                   },
                   on: {
                     click: () => {
-                      getOrderInfo(params.row.id).then(res => {
-                        //todo
-                        this.userModal.isShow = true
+                      this.userModal.isShow = true
+                      this.detail = params.row
+                      let fixImgList=[]
+                      params.row.repairAttachements.forEach(e=>{
+                        fixImgList.push(e.id)
                       })
+                      this.fixImgList=fixImgList
+                      let lookList=[]
+                      params.row.pendAttachements.forEach(e=>{
+                        lookList.push(e.id)
+                      })
+                      this.lookList=lookList
                     }
                   }
                 },
                 '详情'
               )]
-              if (params.row.tpmStatus===2&&params.row.tpmStatus===4 )
+              if (params.row.tpmStatus===2||params.row.tpmStatus===4 )
                 button.push(h('Button', {
                     props: {
                       type: 'info'
@@ -273,18 +289,27 @@
                     on: {
                       click: () => {
                         this.orderId = params.row.id
+                        let fixImgList=[]
+                        params.row.repairAttachements.forEach(e=>{
+                          fixImgList.push(e.id)
+                        })
+                        this.fixImgList=fixImgList
+                        let lookList=[]
+                        params.row.pendAttachements.forEach(e=>{
+                          lookList.push(e.id)
+                        })
+                        this.lookList=lookList
                         this.doModal.isShow = true
                       }
                     }
                   },
-                  '开始处理'
+                  '审核'
                 ))
               return h('div', button)
             }
           }
         ],
         list: [],
-        RoleList: []
       };
     },
     methods: {
@@ -301,15 +326,9 @@
       doOrder() {
         this.doModal.isLoading = true
         let orderParam = new FormData();
-        orderParam.append("orderType", this.orderType)
+        orderParam.append("dealType", this.orderType)
+        orderParam.append("id", this.orderId)
         orderParam.append("desc", this.desc)
-        if (this.uploadList) {
-          this.uploadList.forEach(x => {
-            orderParam.append("file", x)
-          })
-        } else {
-          orderParam.append("file", null)
-        }
         doOrder(orderParam).then(res => {
           this.doModal.isLoading = false
           this.doModal.isShow = false
@@ -317,11 +336,10 @@
           this.getlist()
         }).catch(e => {
           this.doModal.isLoading = false
-//          this.$Message.error(e)
         })
       },
-      handleView(img) {
-        this.img = img;
+      handleView(id) {
+        this.img = this.env+'/v1/image/sosOutImg/'+id;
         this.visible = true;
       },
       handleRemove(index) {

@@ -9,7 +9,7 @@
         <Col :span="7">
         <Input type="text" v-model="queryCondition.tpmBillName" placeholder="请输入..."></Input>
         </Col>
-        <Col :span="3" offset="7" >
+        <Col :span="3" offset="7">
         <Button type="primary" shape="circle" icon="ios-search"
                 @click="getlist">
           查询
@@ -29,61 +29,55 @@
     >
       <Row>
         <Col span="16">
-        <Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">工单号</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.tpmNo}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">工单名称</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.tpmName}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">设备名称</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
+          <p class="label">{{detail.deviceName}}</p>
           </Col>
+        </Row>
+        <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">label="工单号："</strong>
+          <strong class="label">描述</strong>
           </Col>
           <Col span="14">
-          <p class="label">label="工单号："</p>
-          </Col>
-          <Col span="10">
-          <strong class="label">label="工单号："</strong>
-          </Col>
-          <Col span="14">
-          <p class="label">label="工单号："</p>
-          </Col>
-          <Col span="10">
-          <strong class="label">label="工单号："</strong>
-          </Col>
-          <Col span="14">
-          label="描述："
+          {{detail.serviceDescribe}}
           </Col>
         </Row>
         </Col >
-        <Col span="8">
-        <Timeline>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-          <TimelineItem>
-            <p class="time">事件：1976年</p>
-            <p class="content">Apple I 问世</p>
-          </TimelineItem>
-        </Timeline>
-        </Col>
+        <!--<Col span="8">-->
+        <!--<Timeline>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+          <!--<TimelineItem>-->
+            <!--<p class="time">事件：1976年</p>-->
+            <!--<p class="content">Apple I 问世</p>-->
+          <!--</TimelineItem>-->
+        <!--</Timeline>-->
+        <!--</Col>-->
       </Row>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
@@ -116,7 +110,7 @@
         <strong class="label">工单号</strong>
         </Col>
         <Col span="14">
-        <p class="label">sadad</p>
+        <p class="label">{{detail.tpmNo}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -124,7 +118,7 @@
         <strong class="label">工单名称</strong>
         </Col>
         <Col span="14">
-        <p class="label">label="工单号："</p>
+        <p class="label">{{detail.tpmName}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -132,15 +126,7 @@
         <strong class="label">设备名称</strong>
         </Col>
         <Col span="14">
-        <p class="label">asdad</p>
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">排班</strong>
-        </Col>
-        <Col span="14">
-        <p class="label">label="工单号："</p>
+        <p class="label">{{detail.deviceName}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -148,7 +134,7 @@
         <strong class="label">描述</strong>
         </Col>
         <Col span="14">
-        <Input v-model="desc" type="textarea" disabled placeholder="请输入..." autosize/>
+        {{detail.serviceDescribe}}
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -231,7 +217,7 @@
   export default {
     data() {
       return {
-        env:process.env.NODE_ENV === 'production' ? '' : "car",
+        env: process.env.NODE_ENV === 'production' ? '' : "car",
         img: '',
         visible: false,
         uploadList: [],
@@ -239,11 +225,16 @@
         desc: "",
         orderType: 2,
         orderId: 0,
+        detail: {
+          tpmNo: '',
+          tpmName: '',
+          deviceName: ''
+        },
         userModal: {
           isShow: false,
           isLoading: false,
         },
-        tpmBill:{},
+        tpmBill: {},
 
         doUserId: '',
         employee: {
@@ -276,7 +267,7 @@
         columns: [
           {
             title: '工单号',
-            key: 'id'
+            key: 'tpmNo'
           },
           {
             title: '工单名称',
@@ -303,10 +294,8 @@
                   },
                   on: {
                     click: () => {
-                      getOrderInfo(params.row.id).then(res => {
-                        //todo
-                        this.userModal.isShow = true
-                      })
+                      this.userModal.isShow = true
+                      this.detail = params.row
                     }
                   }
                 },
@@ -327,6 +316,7 @@
                           employeeNo: "",
                           employeePassword: ''
                         }
+                        this.detail = params.row
                         this.uploadList = []
                         this.desc = ''
                         this.checkModal.isShow = true
@@ -377,27 +367,19 @@
       doOrder() {
         this.doModal.isLoading = true
         let orderParam = new FormData();
-        orderParam.append("userId",this.doUserId)
-        orderParam.append("id",this.orderId)
-        orderParam.append("dealType",this.orderType)
-        orderParam.append("desc",this.desc)
-        let attachmentIds=''
-        this.uploadList.forEach((i,n)=>{
-          if(this.uploadList.length===n+1){
-            attachmentIds+=i
-          }else {
-            attachmentIds+=i+','
+        orderParam.append("userId", this.doUserId)
+        orderParam.append("id", this.orderId)
+        orderParam.append("dealType", this.orderType)
+        orderParam.append("desc", this.desc)
+        let attachmentIds = ''
+        this.uploadList.forEach((i, n) => {
+          if (this.uploadList.length === n + 1) {
+            attachmentIds += i
+          } else {
+            attachmentIds += i + ','
           }
         })
-        orderParam.append("attachmentIds",attachmentIds)
-
-//        if (this.uploadList) {
-//          this.uploadList.forEach(x => {
-//            orderParam.append("file", x)
-//          })
-//        } else {
-//          orderParam.append("file", null)
-//        }
+        orderParam.append("attachmentIds", attachmentIds)
         doOrder(orderParam).then(res => {
           this.doModal.isLoading = false
           this.doModal.isShow = false
@@ -409,18 +391,15 @@
         })
       },
       handleView(id) {
-        this.img = this.env+'/v1/image/sosOutImg/'+id;
+        this.img = this.env + '/v1/image/sosOutImg/' + id;
         this.visible = true;
       },
       handleRemove(index) {
         this.uploadList.splice(index, 1);
 //        this.imgList.splice(index, 1);
       },
-      handleSuccess (res, file) {
+      handleSuccess(res, file) {
         this.uploadList.push(res.message)
-        // 因为上传过程为实例，这里模拟添加 url
-//        file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-//        file.name = '7eb99afb9d5f317c912f08b5212fd69a';
       },
       handleBeforeUpload(file) {
 
@@ -431,13 +410,6 @@
           this.$Notice.warning({
             title: '最多只能上传 5 张图片。'
           });
-//        } else if (this.checkImg(file, format, maxsize)) {
-//          let reader = new FileReader();
-//          reader.onload = (e) => {
-//            this.imgList.push(e.target.result)
-//          };
-//          reader.readAsDataURL(file);
-//          this.uploadList.push(file)
         }
         return check
       },

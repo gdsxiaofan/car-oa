@@ -71,7 +71,8 @@
         tpm_type as tpmType,
         shifts_no as shiftsNo,
         check_id as checkId,
-        check_time checkTime
+        check_time checkTime,
+        service_describe serviceDescribe
         FROM
         t_tpm_bill
         WHERE
