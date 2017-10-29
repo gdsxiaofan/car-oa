@@ -60,7 +60,10 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
 
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
-        if(sdf.format(firstDate)==sdf.format(today)){
+
+        log.info("firstDate:{}",sdf.format(firstDate));
+        log.info("today:{}",sdf.format(today));
+        if(sdf.format(firstDate).equals(sdf.format(today))){
             List<CheckInfo> checkInfos = new ArrayList<>();
             checkInfos.add(checkInfo);
             tpmBillService.addTpmBill(checkInfos);

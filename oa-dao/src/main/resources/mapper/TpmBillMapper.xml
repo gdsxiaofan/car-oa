@@ -370,7 +370,7 @@
 
     <insert id="insertTpmBillForList">
         <if test="tpmBillList!=null">
-            <foreach collection="tpmBillList" item="itme" index="index" separator=";">
+            <foreach collection="tpmBillList" item="item" index="index" separator=";">
                 INSERT INTO t_tpm_bill
                 <trim prefix="(" suffix=")" suffixOverrides=",">
                     <if test="item.id != null">
