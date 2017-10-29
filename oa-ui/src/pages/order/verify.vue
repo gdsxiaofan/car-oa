@@ -181,6 +181,7 @@
 <script>
   import {
     getOrderList,
+    getAuditlist,
     getOrderInfo,
     checkUser,
     doOrder
@@ -315,7 +316,7 @@
     methods: {
       getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
-        getOrderList(this.queryCondition).then(res => {
+        getAuditlist(this.queryCondition).then(res => {
           this.queryCondition.pageNum = res.data.data.pageNum
           this.list = res.data.data.list
           this.queryCondition.total = res.data.data.total

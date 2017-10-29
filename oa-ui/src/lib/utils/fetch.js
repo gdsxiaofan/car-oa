@@ -9,7 +9,7 @@ import qs from 'qs'
 const fetch = axios.create({
 
   baseURL: process.env.NODE_ENV === 'production' ? '' : "car",  // baseURL: 'http://localhost/', // api的base_url
-  timeout: 5 * 1000                  // 请求超时时间
+  timeout: 60 * 1000                  // 请求超时时间
 });
 
 

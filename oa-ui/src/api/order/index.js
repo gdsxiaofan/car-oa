@@ -8,6 +8,14 @@ export function getOrderList(param) {
     params: param
   })
 }
+//获取列表
+export function getAuditlist(param) {
+  return fetch({
+    url: `${baseUrl}getAuditlist`,
+    method: 'get',
+    params: param
+  })
+}
 //获取工单详情
 export function getOrderInfo(tpmId) {
   return fetch({
