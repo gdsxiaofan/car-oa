@@ -42,13 +42,8 @@ public class RoleBizImpl implements RoleBiz{
         PageHelper.startPage(roleListQueryParam.getPageNum(),roleListQueryParam.getPageSize());
         List<RoleVo> roleVoLit = roleMapper.getRoleVoList(roleListQueryParam.getRoleName());
 
-        if(CollectionUtils.isEmpty(roleVoLit)){
-            return null;
-        }
         // 2.转换数据
-        PageInfo<RoleVo> roleVoPageInfo = new PageInfo<>(roleVoLit);
-
-        return roleVoPageInfo;
+        return new PageInfo<>(roleVoLit);
     }
 
     @Override

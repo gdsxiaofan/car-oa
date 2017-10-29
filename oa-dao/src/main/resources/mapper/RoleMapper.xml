@@ -148,7 +148,7 @@
         <where>
             delete_staus=1
             <if test="roleName!=null and roleName !=''">
-              AND  role_name = #{roleName}
+              AND  role_name like concat('%', #{roleName},'%')
             </if>
         </where>
     </select>

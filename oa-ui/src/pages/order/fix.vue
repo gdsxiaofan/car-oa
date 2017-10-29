@@ -4,7 +4,7 @@
       <p slot="title">条件查询</p>
       <Row>
         <Col :span="4">
-        工单号：
+        工单名：
         </Col>
         <Col :span="7">
         <Input type="text" v-model="queryCondition.tpmBillName" placeholder="请输入..."></Input>
@@ -35,7 +35,7 @@
           <strong class="label">工单号</strong>
           </Col>
           <Col span="14">
-          <p class="label">{{detail.tpmNo}}</p>
+          <p class="label">{{detail.id}}</p>
           </Col>
         </Row>
         <Row class="ModalRow">
@@ -121,7 +121,7 @@
         <strong class="label">工单号</strong>
         </Col>
         <Col span="14">
-        <p class="label">{{detail.tpmNo}}</p>
+        <p class="label">{{detail.id}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -226,7 +226,7 @@
         orderType: 4,
         orderId: 0,
         detail: {
-          tpmNo: '',
+          id: '',
           tpmName: '',
           deviceName: ''
         },

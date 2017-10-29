@@ -31,10 +31,10 @@
         <Col span="16">
         <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">工单号</strong>
+          <strong class="label">工单名</strong>
           </Col>
           <Col span="14">
-          <p class="label">{{detail.tpmNo}}</p>
+          <p class="label">{{detail.id}}</p>
           </Col>
         </Row>
         <Row class="ModalRow">
@@ -110,7 +110,7 @@
         <strong class="label">工单号</strong>
         </Col>
         <Col span="14">
-        <p class="label">{{detail.tpmNo}}</p>
+        <p class="label">{{detail.id}}</p>
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -226,7 +226,7 @@
         orderType: 2,
         orderId: 0,
         detail: {
-          tpmNo: '',
+          id: '',
           tpmName: '',
           deviceName: ''
         },
@@ -267,7 +267,7 @@
         columns: [
           {
             title: '工单号',
-            key: 'tpmNo'
+            key: 'id'
           },
           {
             title: '工单名称',
