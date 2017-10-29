@@ -12,6 +12,7 @@
 	<property name="LOG_INFO_FILE" value="${LOG_FILE:-${LOG_PATH}/info.log}" />
 	<property name="LOG_ERROR_FILE" value="${LOG_PATH}/error.log" />
 
+	<springProperty scope="context" name="logLevel" source="log.level" defaultValue="TRACE" />
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     	<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>DEBUG</level>
@@ -69,7 +70,9 @@
         <appender-ref ref="INFO-FILE-APPENDER" />
         <appender-ref ref="ERROR-FILE-APPENDER" />
     </root>
-	<logger name="com.xiaofan.car.dao.repository" level="TRACE" />
+	<logger name="com.xiaofan.car.dao.repository" level="${logLevel}" />
+
+
     <logger name="com.zaxxer" level="warn"/>
     <logger name="org.mybatis" level="warn"/>
 
