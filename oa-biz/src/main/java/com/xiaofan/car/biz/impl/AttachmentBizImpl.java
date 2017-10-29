@@ -25,7 +25,7 @@ public class AttachmentBizImpl implements AttachmentBiz{
     @Value(value = "${root-path}")
     private String windowsPATH;
 
-    @Value(value = "${root-path}")
+    @Value(value = "${linux-path}")
     private String linuxPATH;
 
     @Autowired
