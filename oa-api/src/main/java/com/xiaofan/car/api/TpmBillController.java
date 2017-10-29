@@ -42,6 +42,13 @@ public class TpmBillController {
         return new JsonResult<PageInfo<TpmBillVo>>(1, "获取成功",pageInfo);
     }
 
+    @ApiOperation(value = "获取待审核工单信息列表", notes = "获取待审核工单信息列表", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping("/getAuditlist")
+    public JsonResult<PageInfo<TpmBillVo>> getAuditList(TpmBillQueryParam param){
+        PageInfo<TpmBillVo> pageInfo = tpmBillBiz.getTpmBillList(param);
+        return new JsonResult<PageInfo<TpmBillVo>>(1, "获取成功",pageInfo);
+    }
+
     @ApiOperation(value = "员工完成工单接口", notes = "员工完成工单接口", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/update")
     public JsonResult updateTpmBill(TpmBillParam tpmBillParam){

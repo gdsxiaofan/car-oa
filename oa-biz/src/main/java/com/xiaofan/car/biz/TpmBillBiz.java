@@ -24,6 +24,13 @@ public interface TpmBillBiz {
     public PageInfo<TpmBillVo> getTpmBillList(TpmBillQueryParam tpmBillQueryParam);
 
     /**
+     * 获取工单的列表信息
+     * @param tpmBillQueryParam
+     * @return
+     */
+    public PageInfo<TpmBillVo> getAuditTpmBillList(TpmBillQueryParam tpmBillQueryParam);
+
+    /**
      * 根据员工巡检、维修等更新对应的工单的信息
      * @param tpmBillParam
      * @return

@@ -23,6 +23,7 @@ public class TpmBillQueryParam {
     /**班次：1，早班；2，中班**/
     int shiftsNo;
 
+
     public void setPageSize(Integer pageSize){
         if(pageSize==null){
             pageSize=10;

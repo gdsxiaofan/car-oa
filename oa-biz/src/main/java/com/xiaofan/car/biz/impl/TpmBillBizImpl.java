@@ -63,6 +63,26 @@ public class TpmBillBizImpl implements TpmBillBiz {
         return tpmBillVoPageInfo;
     }
 
+    @Override
+    public PageInfo<TpmBillVo> getAuditTpmBillList(TpmBillQueryParam tpmBillQueryParam) {
+        // 1.分页查询处理分页数据
+        PageHelper.startPage(tpmBillQueryParam.getPageNum(), tpmBillQueryParam.getPageSize());
+
+        // 2.调用查询接口
+        List<Integer> tpmStatusList = new ArrayList<>();
+        tpmStatusList.add(TmpStatusEnum.PENDED.getCode());
+        tpmStatusList.add(TmpStatusEnum.REPAIRED.getCode());
+        List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoListByStatus(tpmStatusList,tpmBillQueryParam.getTpmBillName());
+
+        tpmBillVoList.forEach(e->{
+            e.setPendAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.PEND_TYPE));
+            e.setRepairAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.REPAIR_TYPE));
+        });
+        // 3.组装数据
+        PageInfo<TpmBillVo> tpmBillVoPageInfo = new PageInfo<>(tpmBillVoList);
+        return tpmBillVoPageInfo;
+    }
+
     /**
      * 员工完成工单调用的接口
      *

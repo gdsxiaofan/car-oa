@@ -49,4 +49,14 @@ public interface TpmBillMapper{
     public void insertTpmBillForList(
             @Param("tpmBillList")List<TpmBill> tpmBillList
     );
+
+    /**
+     *
+     * @param tpmStatusList
+     * @param tpmName
+     * @return
+     */
+    public List<TpmBillVo> getTpmBillVoListByStatus(
+                                            @Param("tpmStatusList")List<Integer> tpmStatusList,
+                                            @Param("tpmName")String tpmName);
 }
