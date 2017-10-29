@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import sun.awt.OSInfo;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +35,10 @@ public class ImageController {
     private static final Logger log = LoggerFactory.getLogger(ImageController.class);
 
     @Value(value = "${root-path}")
-    private String ROOTPATH;
+    private String windowsPATH;
 
+    @Value(value = "${root-path}")
+    private String linuxPATH;
     @Autowired
     private AttachmentBiz attachmentBiz;
     @Autowired
@@ -71,7 +74,11 @@ public class ImageController {
 //        AntPathMatcher antPathMatcher = new AntPathMatcher();
 //        String finlpath = antPathMatcher.extractPathWithinPattern(pattern, path);
         String url= attachmentService.getAttachmentById(id).getAttachmentUrl();
-        File file = new File(FilenameUtils.concat(ROOTPATH, url.substring(1, url.length())));
+        String path=windowsPATH;
+        if(OSInfo.OSType.LINUX.equals(OSInfo.getOSType())){
+            path=linuxPATH;
+        }
+        File file = new File(FilenameUtils.concat(path, url.substring(1, url.length())));
         resp.setHeader("Pragma", "no-cache");
         resp.setHeader("Cache-Control", "no-cache");
         resp.setDateHeader("Expires", 0);

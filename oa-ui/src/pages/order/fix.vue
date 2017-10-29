@@ -109,7 +109,7 @@
         </FormItem>
       </Form>
       <div slot="footer">
-        <Button type="ghost" @click="doModal.isShow=false" style="margin-left: 8px">取消</Button>
+        <Button type="ghost" @click="checkModal.isShow=false" style="margin-left: 8px">取消</Button>
         <Button type="primary" @click="checkUser" :loading="doModal.isLoading">提交</Button>
       </div>
     </Modal>
