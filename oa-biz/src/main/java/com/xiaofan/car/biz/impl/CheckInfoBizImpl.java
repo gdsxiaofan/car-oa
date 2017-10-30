@@ -108,7 +108,7 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
 
         try{
             Date startTime = sdf.parse(checkInfoParam.getFromDate());
-            Date endTime = sdf.parse(checkInfoParam.getToDate());
+//            Date endTime = sdf.parse(checkInfoParam.getToDate());
             checkInfo.setFirstCheckTime(startTime);
             String[] checkTimeArray = checkInfoParam.getCheckTime().split(":");
             Calendar calendar = Calendar.getInstance();
@@ -118,7 +118,7 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
             calendar.set(Calendar.SECOND,0);
             Date nextCheckTime = calendar.getTime();
 
-            checkInfo.setLastCheckTime(endTime);
+//            checkInfo.setLastCheckTime(endTime);
             checkInfo.setNextCheckTime(nextCheckTime);
 
 
