@@ -130,7 +130,7 @@
             t_tpm_bill
         WHERE
             delete_status =1
-        <if test="tpmStatus!=null">
+        <if test="tpmStatusList!=null">
             AND tpm_status IN
             <foreach collection="tpmStatusList" open="(" close=")" index="index" item="item" separator=",">
                 #{item}
