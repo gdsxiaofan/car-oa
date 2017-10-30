@@ -326,7 +326,7 @@
     methods: {
       getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
-        getAuditlist(this.queryCondition).then(res => {
+        getOrderList(this.queryCondition).then(res => {
           this.queryCondition.pageNum = res.data.data.pageNum
           this.list = res.data.data.list
           this.queryCondition.total = res.data.data.total

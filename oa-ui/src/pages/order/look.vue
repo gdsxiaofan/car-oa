@@ -81,7 +81,7 @@
       </Row>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="userModal.isShow=false;checkModal.isShow=true">开始处理</Button>
+        <!--<Button type="primary" @click="userModal.isShow=false;checkModal.isShow=true">开始处理</Button>-->
       </div>
     </Modal>
     <Modal v-model="checkModal.isShow"
