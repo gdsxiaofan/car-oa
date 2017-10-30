@@ -56,7 +56,7 @@
                       :clearable="false"></TimePicker>
         </Form-item>
         <Form-item label="开始时间">
-          <DatePicker type="date" :value="service.firstCheckTime" @on-change='service.firstCheckTime=arguments[0]'
+          <DatePicker type="date" :value="service.fromDate" @on-change='service.fromDate=arguments[0]'
                       placeholder="选择日期和时间（不含秒）"
                       style="width: 300px" :disabled="userModal.disabled"
                       :clearable="false"></DatePicker>
@@ -105,7 +105,7 @@
           shiftsNo: '',
           checkTime:'',
           serviceDescribe:'',
-          firstCheckTime:'',
+          fromDate:'',
           lastCheckTime:'',
         },
         serviceRules: {
@@ -221,7 +221,7 @@
           shiftsNo: 1,
           checkTime:'08:00',
           serviceDescribe:'',
-          firstCheckTime:new Date(),
+          fromDate:new Date(),
           lastCheckTime:new Date(),
         }
         this.userModal.title = '新增服务'
@@ -241,7 +241,7 @@
         this.service.serviceName = params.row.serviceName
         this.service.checkCycle = params.row.checkCycle
         this.service.serviceDescribe = params.row.serviceDescribe
-        this.service.firstCheckTime = params.row.firstCheckTime
+        this.service.fromDate = params.row.firstCheckTime
         this.service.lastCheckTime = params.row.lastCheckTime
         this.service.checkTime = params.row.checkTime
         this.userModal.isShow = true
