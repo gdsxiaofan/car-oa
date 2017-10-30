@@ -471,7 +471,7 @@
     </update>
     <update id="updateForXJ">
         update t_tpm_bill
-        set
+        <set>
         tpm_status = #{toStatus},
         <if test="userName !=null">
             finish_user_name = #{userName},
@@ -485,6 +485,7 @@
         <if test="nowDate !=null">
             finish_time = #{nowDate},
         </if>
+        </set>
         where id = #{id}
         and tpm_status in
         <foreach collection="fromStatus" item="item" index="index" open="(" close=")" separator=",">
@@ -493,7 +494,7 @@
     </update>
     <update id="updateForRepaired">
         update t_tpm_bill
-        set
+        <set>
         tpm_status = #{toStatus},
         <if test="userName !=null">
             repaired_user_name = #{userName},
@@ -507,6 +508,7 @@
         <if test="nowDate !=null">
             repaired_time = #{nowDate},
         </if>
+        </set>
         where id = #{id}
         and tpm_status in
         <foreach collection="fromStatus" item="item" index="index" open="(" close=")" separator=",">
@@ -515,7 +517,7 @@
     </update>
     <update id="updateForAudit">
         update t_tpm_bill
-        set
+        <set>
         tpm_status = #{toStatus},
         <if test="userName !=null">
             audit_user_name = #{userName},
@@ -529,6 +531,7 @@
         <if test="nowDate !=null">
             audit_time = #{nowDate},
         </if>
+        </set>
         where id = #{id}
         and tpm_status in
         <foreach collection="fromStatus" item="item" index="index" open="(" close=")" separator=",">
