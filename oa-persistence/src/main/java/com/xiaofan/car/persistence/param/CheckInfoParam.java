@@ -55,4 +55,8 @@ public class CheckInfoParam {
 
     /**最后一次巡检的日期**/
     private String lastCheckTime;//前端传值只需精确到年月日即可
+
+    private String fromDate;
+
+    private String toDate;
 }
