@@ -72,6 +72,12 @@
         WHERE
             id = #{id}
     </delete>
+    <delete id="deleteForDeleteDevice">
+        UPDATE t_check_info
+        SET delete_status = 0
+        WHERE
+            device_id = #{deviceId}
+    </delete>
 
     <!-- 添加 -->
     <insert id="insert" parameterType="com.xiaofan.car.persistence.model.CheckInfo">

@@ -31,6 +31,7 @@ public class DeviceController {
     @Autowired
     private DeviceBiz deviceBiz;
 
+
     @ApiOperation(value = "获取所有设备", notes = "获取所有设备", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getlist")
     public JsonResult<PageInfo<DeviceInfoVo>> getlist(DeviceParam param) {
@@ -63,6 +64,9 @@ public class DeviceController {
     @DeleteMapping("/delete")
     public JsonResult<DeviceInfoVo> delete(@RequestBody DeviceInfoParam param) {
         deviceBiz.deleteDevice(param.getId());
+
+        //删除对应的服务项
+
         return new JsonResult<DeviceInfoVo>(1, "删除成功");
     }
 }

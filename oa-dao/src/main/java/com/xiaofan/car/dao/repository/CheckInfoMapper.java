@@ -41,4 +41,8 @@ public interface CheckInfoMapper{
     public void updateCheckInfo(
             @Param("checkInfos")List<CheckInfo> checkInfos
     );
+
+    public void deleteForDeleteDevice(
+            @Param("deviceId")Integer deviceId
+    );
 }

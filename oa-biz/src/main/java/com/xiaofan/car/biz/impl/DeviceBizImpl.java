@@ -103,6 +103,8 @@ public class DeviceBizImpl implements DeviceBiz {
     @Override
     public void deleteDevice(Integer deviceId) {
         deviceService.deleteDevice(deviceId);
+        //删除对应的服务项
+        checkInfoMapper.deleteForDeleteDevice(deviceId);
     }
 
     /**
