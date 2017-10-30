@@ -3,10 +3,12 @@ package com.xiaofan.car.biz.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.TpmBillBiz;
+import com.xiaofan.car.dao.repository.EmployeeMapper;
 import com.xiaofan.car.dao.repository.TpmBillMapper;
 import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.enumType.TmpStatusEnum;
 import com.xiaofan.car.persistence.enumType.TmpTypeEnum;
+import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.model.TpmBill;
 import com.xiaofan.car.persistence.param.TpmBillParam;
 import com.xiaofan.car.persistence.param.TpmBillQueryParam;
@@ -40,6 +42,10 @@ public class TpmBillBizImpl implements TpmBillBiz {
 
     @Autowired
     AttachmentService attachmentService;
+
+    @Autowired
+    EmployeeMapper employeeMapper;
+
 
     /**
      * 获取当前工单列表
@@ -98,6 +104,8 @@ public class TpmBillBizImpl implements TpmBillBiz {
         Integer toStatus = 0;
         List<Integer> fromStatus = new ArrayList<>();
         toStatus = transformStatus(toStatus, fromStatus, tpmBillParam);
+        // 查询当前处理的用户人员信息
+        Employee employee = employeeMapper.selectById(tpmBillParam.getUserId());
 
         flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(), toStatus, fromStatus);
 

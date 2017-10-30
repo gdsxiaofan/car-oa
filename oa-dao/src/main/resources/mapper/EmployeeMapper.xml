@@ -230,4 +230,12 @@
         WHERE
         id = #{id} and employee_password=#{oldPwd}
     </select>
+    <select id="selectById" resultType="com.xiaofan.car.persistence.model.Employee">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_employee
+        WHERE
+        id = #{id}
+    </select>
 </mapper>

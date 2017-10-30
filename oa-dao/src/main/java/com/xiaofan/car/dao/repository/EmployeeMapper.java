@@ -49,4 +49,6 @@ public interface EmployeeMapper {
 
 
     void updateByPrimaryKeySelective(Employee employee);
+
+    public Employee selectById(@Param("id")Integer id);
 }

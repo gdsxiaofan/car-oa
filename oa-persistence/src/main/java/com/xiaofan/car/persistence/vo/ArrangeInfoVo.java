@@ -41,6 +41,8 @@ public class ArrangeInfoVo {
 
     private String isEffectiveName;
 
+    private String arrangeName;
+
     public void setIsEffective(Integer isEffective){
         this.isEffective = isEffective;
         this.isEffectiveName= IsEffectiveEnum.valuesOf(isEffective).getName();

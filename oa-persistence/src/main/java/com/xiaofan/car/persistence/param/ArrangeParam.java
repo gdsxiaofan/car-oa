@@ -29,6 +29,7 @@ public class ArrangeParam {
     /**是否启用：1,启用 2：停用**/
     private Integer isEffective;
 
+    private String arrangeName;
 
 
 }

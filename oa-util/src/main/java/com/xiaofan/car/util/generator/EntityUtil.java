@@ -52,11 +52,11 @@ public class EntityUtil {
     // 对应模块名称（根据自己模块做相应调整!!!务必修改^_^）
     // private final String moduleName = "paycenter_db"; //
     // 对应模块名称（根据自己模块做相应调整!!!务必修改^_^）
-    private final String bean_path = "d:/entity_bean";
+    private final String bean_path = "e:/entity_bean";
 
-    private final String mapper_path = "d:/entity_mapper";
+    private final String mapper_path = "e:/entity_mapper";
 
-    private final String xml_path = "d:/entity_mapper/xml";
+    private final String xml_path = "e:/entity_mapper/xml";
 
     private final String bean_package = "com.xiaofan.car.persistence.model";
 
@@ -677,17 +677,17 @@ public class EntityUtil {
 //            tables.add("t_vip_level");
 //            tables.add("t_device_info");
 //            tables.add("t_check_info");
-//            tables.add("t_tpm_bill");
+             tables.add("t_tpm_bill");
 //            tables.add("t_tmp_bill_detail");
 //            tables.add("t_tmp_problem_log");
 //            tables.add("t_device_info");
 //            tables.add("t_service_info");
 //            tables.add("t_memu");
 //            tables.add("t_attachment_info");
-            tables.add("t_arrange_info");
+//            tables.add("t_arrange_info");
             new EntityUtil().generate(tables);
             // 自动打开生成文件的目录
-            Runtime.getRuntime().exec("cmd /c start explorer D:\\");
+            Runtime.getRuntime().exec("cmd /c start explorer E:\\");
         } catch (ClassNotFoundException e) {
             logger.error("EntityUtil异常", e);
         } catch (SQLException e) {

@@ -19,6 +19,8 @@ public class ArrangeInfo{
 	/**主键id**/
 	private Integer id;
 
+	private String arrangeName;
+
 	/**早班开始时间：时分**/
 	private String morningStart;
 

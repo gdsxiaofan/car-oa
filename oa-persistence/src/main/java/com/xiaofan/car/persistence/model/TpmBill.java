@@ -19,6 +19,9 @@ public class TpmBill{
 	/****/
 	private Integer id;
 
+	/**价差项id**/
+	private Integer checkId;
+
 	/**工单名称**/
 	private String tpmName;
 
@@ -43,6 +46,33 @@ public class TpmBill{
 	/**工单完成时间**/
 	private java.util.Date finishTime;
 
+	/**巡检工单的用户名**/
+	private String finishUserName;
+
+	/**巡检工单的用户id**/
+	private Integer finishUserId;
+
+	/**巡检备注**/
+	private String finishComment;
+
+	/**修复完成时间**/
+	private java.util.Date reapiredTime;
+
+	/**维修工单的人**/
+	private Integer repairedUserId;
+
+	/**维修员工名称**/
+	private String repairedUserName;
+
+	/**维修备注**/
+	private String repairedComment;
+
+	/**审核用户id**/
+	private Integer auditUserId;
+
+	/**审核人姓名**/
+	private String auditUserName;
+
 	/**工单审核时间**/
 	private java.util.Date auditTime;
 
@@ -64,9 +94,6 @@ public class TpmBill{
 	/**服务描述**/
 	private String serviceDescribe;
 
-	/**检查项id**/
-	private Integer checkId;
-
 	/**有效状态：0，无效；1：有效**/
 	private Integer deleteStatus;
 
@@ -75,135 +102,5 @@ public class TpmBill{
 
 	/**更新时间**/
 	private java.util.Date updateTime;
-
-
-
-	public void setId(Integer id){
-		this.id=id;
-	}
-
-	public Integer getId(){
-		return this.id;
-	}
-
-	public void setTpmName(String tpmName){
-		this.tpmName=tpmName;
-	}
-
-	public String getTpmName(){
-		return this.tpmName;
-	}
-
-	public void setTpmNo(String tpmNo){
-		this.tpmNo=tpmNo;
-	}
-
-	public String getTpmNo(){
-		return this.tpmNo;
-	}
-
-	public void setDeviceId(Integer deviceId){
-		this.deviceId=deviceId;
-	}
-
-	public Integer getDeviceId(){
-		return this.deviceId;
-	}
-
-	public void setDeviceName(String deviceName){
-		this.deviceName=deviceName;
-	}
-
-	public String getDeviceName(){
-		return this.deviceName;
-	}
-
-	public void setDeviceLocation(String deviceLocation){
-		this.deviceLocation=deviceLocation;
-	}
-
-	public String getDeviceLocation(){
-		return this.deviceLocation;
-	}
-
-	public void setDeviceArea(String deviceArea){
-		this.deviceArea=deviceArea;
-	}
-
-	public String getDeviceArea(){
-		return this.deviceArea;
-	}
-
-	public void setFinishTime(java.util.Date finishTime){
-		this.finishTime=finishTime;
-	}
-
-	public java.util.Date getFinishTime(){
-		return this.finishTime;
-	}
-
-	public void setAuditTime(java.util.Date auditTime){
-		this.auditTime=auditTime;
-	}
-
-	public java.util.Date getAuditTime(){
-		return this.auditTime;
-	}
-
-	public void setRejectReason(String rejectReason){
-		this.rejectReason=rejectReason;
-	}
-
-	public String getRejectReason(){
-		return this.rejectReason;
-	}
-
-	public void setTpmStatus(Integer tpmStatus){
-		this.tpmStatus=tpmStatus;
-	}
-
-	public Integer getTpmStatus(){
-		return this.tpmStatus;
-	}
-
-	public void setTpmType(Integer tpmType){
-		this.tpmType=tpmType;
-	}
-
-	public Integer getTpmType(){
-		return this.tpmType;
-	}
-
-	public void setShiftsNo(Integer shiftsNo){
-		this.shiftsNo=shiftsNo;
-	}
-
-	public Integer getShiftsNo(){
-		return this.shiftsNo;
-	}
-
-	public void setDeleteStatus(Integer deleteStatus){
-		this.deleteStatus=deleteStatus;
-	}
-
-	public Integer getDeleteStatus(){
-		return this.deleteStatus;
-	}
-
-	public void setCreateTime(java.util.Date createTime){
-		this.createTime=createTime;
-	}
-
-	public java.util.Date getCreateTime(){
-		return this.createTime;
-	}
-
-	public void setUpdateTime(java.util.Date updateTime){
-		this.updateTime=updateTime;
-	}
-
-	public java.util.Date getUpdateTime(){
-		return this.updateTime;
-	}
 
 }

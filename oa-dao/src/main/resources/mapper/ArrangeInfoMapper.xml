@@ -25,12 +25,13 @@
 		<result property="updateTime" column="update_time" />
 		<!--创建人时间-->
 		<result property="createUserId" column="create_user_id" />
+		<result property="arrangeName" column="arrange_name"/>
 	</resultMap>
 
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-	id,	morning_start,	morning_end,	noon_start,	noon_end,	is_effective,	delete_status,	create_time,	update_time,	create_user_id
+	id,	morning_start,	morning_end,	noon_start,	noon_end,	is_effective,	delete_status,	create_time,	update_time,	create_user_id,arrange_name
 	</sql>
 
 	<!-- 查询（根据主键ID查询） -->
@@ -100,7 +101,9 @@
 			<if test="createUserId != null">
 				 create_user_id,
 			</if>
-
+			<if test="arrangeName !=null">
+				arrange_name,
+			</if>
 		 </trim>
 		 <trim prefix="values (" suffix=")" suffixOverrides="," >
 			<if test="id!=null">
@@ -133,6 +136,9 @@
 			<if test="createUserId!=null">
 				 #{createUserId},
 			</if>
+			 <if test="arrangeName !=null">
+				 #{arrangeName},
+			 </if>
 		 </trim>
 	</insert>
 
@@ -167,7 +173,9 @@
 			<if test="createUserId != null">
 				 create_user_id = #{createUserId},
 			</if>
-
+			<if test="arrangeName !=null">
+				arrange_name = #{arrangeName}
+			</if>
  		 </set>
 		 WHERE id = #{id}
 	</update>
