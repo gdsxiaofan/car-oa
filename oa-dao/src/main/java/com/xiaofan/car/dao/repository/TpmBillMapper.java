@@ -28,7 +28,9 @@ public interface TpmBillMapper{
      */
     public List<TpmBillVo> getTpmBillVoList(@Param("tpmType")Integer tpmType,
                                             @Param("tpmStatus")Integer tpmStatus,
-                                            @Param("tpmName")String tpmName);
+                                            @Param("tpmName")String tpmName,
+                                            @Param("startTime")Date startTime,
+                                            @Param("endTime")Date endTime);
 
     /**
      *

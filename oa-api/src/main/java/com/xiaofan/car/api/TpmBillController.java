@@ -37,9 +37,16 @@ public class TpmBillController {
     @ApiOperation(value = "获取工单信息列表", notes = "获取工单信息列表", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getlist")
     public JsonResult<PageInfo<TpmBillVo>> getlist(TpmBillQueryParam param) {
+        try{
+            PageInfo<TpmBillVo> pageInfo = tpmBillBiz.getTpmBillList(param);
+            return new JsonResult<PageInfo<TpmBillVo>>(1, "获取成功",pageInfo);
+        }
+        catch(Exception e){
+            log.error("查询工单列表出错：",e);
+            return new JsonResult<PageInfo<TpmBillVo>>(0, "系统异常",null);
+        }
 
-        PageInfo<TpmBillVo> pageInfo = tpmBillBiz.getTpmBillList(param);
-        return new JsonResult<PageInfo<TpmBillVo>>(1, "获取成功",pageInfo);
+
     }
 
     @ApiOperation(value = "获取待审核工单信息列表", notes = "获取待审核工单信息列表", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

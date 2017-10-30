@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -52,12 +54,24 @@ public class TpmBillBizImpl implements TpmBillBiz {
      * @return
      */
     @Override
-    public PageInfo<TpmBillVo> getTpmBillList(TpmBillQueryParam tpmBillQueryParam) {
+    public PageInfo<TpmBillVo> getTpmBillList(TpmBillQueryParam tpmBillQueryParam) throws ParseException {
         // 1.分页查询处理分页数据
         PageHelper.startPage(tpmBillQueryParam.getPageNum(), tpmBillQueryParam.getPageSize());
 
         // 2.调用查询接口
-        List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoList(tpmBillQueryParam.getTpmType(), tpmBillQueryParam.getTpmStatus(), tpmBillQueryParam.getTpmBillName());
+        Date startTime = null;
+        Date endTime = null;
+        if(StringUtils.isNotBlank(tpmBillQueryParam.getBegin())&&StringUtils.isNotBlank(tpmBillQueryParam.getEnd())){
+            SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+            startTime = sdf.parse(tpmBillQueryParam.getBegin());
+            endTime = sdf.parse(tpmBillQueryParam.getEnd());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(endTime);
+            calendar.add(Calendar.DATE,1);
+            endTime = calendar.getTime();
+        }
+
+        List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoList(tpmBillQueryParam.getTpmType(), tpmBillQueryParam.getTpmStatus(), tpmBillQueryParam.getTpmBillName(),startTime,endTime);
         tpmBillVoList.forEach(e->{
             e.setPendAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.PEND_TYPE));
             e.setRepairAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.REPAIR_TYPE));

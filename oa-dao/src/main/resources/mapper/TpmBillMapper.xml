@@ -119,6 +119,12 @@
         <if test="tpmName!=null">
             AND tpm_name like CONCAT('%',#{tpmName},'%')
         </if>
+        <if test="startTime!=null">
+            and create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null">
+            and create_time &lt;= #{endTime}
+        </if>
     </select>
     <select id="getTpmBillDetail" resultType="com.xiaofan.car.persistence.vo.TpmBillVo">
         SELECT

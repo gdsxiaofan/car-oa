@@ -7,6 +7,8 @@ import com.xiaofan.car.persistence.param.TpmBillQueryParam;
 import com.xiaofan.car.persistence.vo.TpmBillVo;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.text.ParseException;
+
 /**
  * 工单的相关biz层
  *
@@ -21,7 +23,7 @@ public interface TpmBillBiz {
      * @param tpmBillQueryParam
      * @return
      */
-    public PageInfo<TpmBillVo> getTpmBillList(TpmBillQueryParam tpmBillQueryParam);
+    public PageInfo<TpmBillVo> getTpmBillList(TpmBillQueryParam tpmBillQueryParam) throws ParseException;
 
     /**
      * 获取工单的列表信息
