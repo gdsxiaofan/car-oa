@@ -129,7 +129,7 @@
       </div>
     </Modal>
     <Modal v-model="doModal.isShow" width="800"
-           title="工单详情"
+           title="工单审核  "
     >
       <Row class="ModalRow">
         <Col span="10">
@@ -165,12 +165,28 @@
       </Row>
       <Row class="ModalRow">
         <Col span="10">
+        <strong class="label">巡检描述</strong>
+        </Col>
+        <Col span="14">
+        {{detail.finishComment}}
+        </Col>
+      </Row>
+      <Row class="ModalRow">
+        <Col span="10">
         <strong class="label">报修图片</strong>
         </Col>
         <Col span="14">
         <div class="demo-upload-list" v-for="(item,index) in lookList">
           <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
         </div>
+        </Col>
+      </Row>
+      <Row class="ModalRow">
+        <Col span="10">
+        <strong class="label">维修描述</strong>
+        </Col>
+        <Col span="14">
+        {{detail.repairedComment}}
         </Col>
       </Row>
       <Row class="ModalRow">
@@ -314,6 +330,7 @@
                     on: {
                       click: () => {
                         this.orderId = params.row.id
+                        this.detail = params.row
                         let fixImgList=[]
                         params.row.repairAttachements.forEach(e=>{
                           fixImgList.push(e.id)

@@ -64,6 +64,14 @@
         </Row>
         <Row class="ModalRow">
           <Col span="10">
+          <strong class="label">巡检描述</strong>
+          </Col>
+          <Col span="14">
+          {{detail.finishComment}}
+          </Col>
+        </Row>
+        <Row class="ModalRow">
+          <Col span="10">
           <strong class="label">报修图片</strong>
           </Col>
           <Col span="14">
@@ -146,6 +154,14 @@
         </Col>
         <Col span="14">
         {{detail.serviceDescribe}}
+        </Col>
+      </Row>
+      <Row class="ModalRow">
+        <Col span="10">
+        <strong class="label">巡检描述</strong>
+        </Col>
+        <Col span="14">
+        {{detail.finishComment}}
         </Col>
       </Row>
       <Row class="ModalRow">
