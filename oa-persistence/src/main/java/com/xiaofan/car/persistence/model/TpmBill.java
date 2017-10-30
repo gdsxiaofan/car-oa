@@ -56,7 +56,7 @@ public class TpmBill{
 	private String finishComment;
 
 	/**修复完成时间**/
-	private java.util.Date reapiredTime;
+	private java.util.Date repairedTime;
 
 	/**维修工单的人**/
 	private Integer repairedUserId;

@@ -105,7 +105,16 @@ public class TpmBillBizImpl implements TpmBillBiz {
         List<Integer> fromStatus = new ArrayList<>();
         toStatus = transformStatus(toStatus, fromStatus, tpmBillParam);
         // 查询当前处理的用户人员信息
-        Employee employee = employeeMapper.selectById(tpmBillParam.getUserId());
+        Integer userId = null;
+        String userName = null;
+        if(tpmBillParam.getUserId()!=null){
+            Employee employee = employeeMapper.selectById(tpmBillParam.getUserId());
+            userId = employee.getId();
+            userName = employee.getEmployeeName();
+        }
+
+
+
 
         flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(), toStatus, fromStatus);
 

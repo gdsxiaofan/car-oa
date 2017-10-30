@@ -32,7 +32,7 @@
         <!--巡检备注-->
         <result property="finishComment" column="finish_comment" />
         <!--修复完成时间-->
-        <result property="reapiredTime" column="reapired_time" />
+        <result property="repairedTime" column="repaired_time" />
         <!--维修工单的人-->
         <result property="repairedUserId" column="repaired_user_id" />
         <!--维修员工名称-->
@@ -68,7 +68,7 @@
 
     <!-- 通用查询结果列-->
     <sql id="Base_Column_List">
-        id,	check_id,	tpm_name,	tpm_no,	device_id,	check_time,	device_name,	device_location,	device_area,	finish_time,	finish_user_name,	finish_user_id,	finish_comment,	reapired_time,	repaired_user_id,	repaired_user_name,	repaired_comment,	audit_user_id,	audit_user_name,	audit_time,	reject_reason,	tpm_status,	tpm_type,	shifts_no,	last_tpm_id,	service_describe,	delete_status,	create_time,	update_time
+        id,	check_id,	tpm_name,	tpm_no,	device_id,	check_time,	device_name,	device_location,	device_area,	finish_time,	finish_user_name,	finish_user_id,	finish_comment,	repaired_time,	repaired_user_id,	repaired_user_name,	repaired_comment,	audit_user_id,	audit_user_name,	audit_time,	reject_reason,	tpm_status,	tpm_type,	shifts_no,	last_tpm_id,	service_describe,	delete_status,	create_time,	update_time
 	</sql>
 
     <!-- 查询（根据主键ID查询） -->
@@ -90,6 +90,7 @@
         device_area as deviceArea,
         DATE_FORMAT(finish_time,'%Y-%m-%d %H:%i:%S') as finishTime,
         DATE_FORMAT(audit_time,'%Y-%m-%d %H:%i:%S') as auditTime,
+        DATE_FORMAT(repaired_time,'%Y-%m-%d %H:%i:%S') as repairedTime,
         reject_reason as reject_reason,
         tpm_status as tpmStatus,
         tpm_type as tpmType,
@@ -184,9 +185,12 @@
     <!-- 添加 （匹配有值的字段）-->
     <insert id="insertSelective" parameterType="com.xiaofan.car.persistence.model.TpmBill">
         INSERT INTO t_tpm_bill
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null">
                 id,
+            </if>
+            <if test="checkId != null">
+                check_id,
             </if>
             <if test="tpmName != null">
                 tpm_name,
@@ -211,6 +215,33 @@
             </if>
             <if test="finishTime != null">
                 finish_time,
+            </if>
+            <if test="finishUserName != null">
+                finish_user_name,
+            </if>
+            <if test="finishUserId != null">
+                finish_user_id,
+            </if>
+            <if test="finishComment != null">
+                finish_comment,
+            </if>
+            <if test="reapiredTime != null">
+                reapired_time,
+            </if>
+            <if test="repairedUserId != null">
+                repaired_user_id,
+            </if>
+            <if test="repairedUserName != null">
+                repaired_user_name,
+            </if>
+            <if test="repairedComment != null">
+                repaired_comment,
+            </if>
+            <if test="auditUserId != null">
+                audit_user_id,
+            </if>
+            <if test="auditUserName != null">
+                audit_user_name,
             </if>
             <if test="auditTime != null">
                 audit_time,
@@ -244,9 +275,12 @@
             </if>
 
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id!=null">
                 #{id},
+            </if>
+            <if test="checkId!=null">
+                #{checkId},
             </if>
             <if test="tpmName!=null">
                 #{tpmName},
@@ -271,6 +305,33 @@
             </if>
             <if test="finishTime!=null">
                 #{finishTime},
+            </if>
+            <if test="finishUserName!=null">
+                #{finishUserName},
+            </if>
+            <if test="finishUserId!=null">
+                #{finishUserId},
+            </if>
+            <if test="finishComment!=null">
+                #{finishComment},
+            </if>
+            <if test="reapiredTime!=null">
+                #{reapiredTime},
+            </if>
+            <if test="repairedUserId!=null">
+                #{repairedUserId},
+            </if>
+            <if test="repairedUserName!=null">
+                #{repairedUserName},
+            </if>
+            <if test="repairedComment!=null">
+                #{repairedComment},
+            </if>
+            <if test="auditUserId!=null">
+                #{auditUserId},
+            </if>
+            <if test="auditUserName!=null">
+                #{auditUserName},
             </if>
             <if test="auditTime!=null">
                 #{auditTime},
@@ -385,6 +446,72 @@
         update t_tpm_bill
         set
         tpm_status = #{toStatus}
+        where id = #{id}
+        and tpm_status in
+        <foreach collection="fromStatus" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <update id="updateForXJ">
+        update t_tpm_bill
+        set
+        tpm_status = #{toStatus},
+        <if test="userName !=null">
+            finish_user_name = #{userName},
+        </if>
+        <if test="comment !=null">
+            finish_comment = #{comment},
+        </if>
+        <if test="userId !=null">
+            finish_user_id = #{userId},
+        </if>
+        <if test="nowDate !=null">
+            finish_time = #{nowDate},
+        </if>
+        where id = #{id}
+        and tpm_status in
+        <foreach collection="fromStatus" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <update id="updateForRepaired">
+        update t_tpm_bill
+        set
+        tpm_status = #{toStatus},
+        <if test="userName !=null">
+            repaired_user_name = #{userName},
+        </if>
+        <if test="comment !=null">
+            repaired_comment = #{comment},
+        </if>
+        <if test="userId !=null">
+            repaired_user_id = #{userId},
+        </if>
+        <if test="nowDate !=null">
+            repaired_time = #{nowDate},
+        </if>
+        where id = #{id}
+        and tpm_status in
+        <foreach collection="fromStatus" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <update id="updateForAudit">
+        update t_tpm_bill
+        set
+        tpm_status = #{toStatus},
+        <if test="userName !=null">
+            audit_user_name = #{userName},
+        </if>
+        <if test="comment !=null">
+            reject_reason = #{comment},
+        </if>
+        <if test="userId !=null">
+            audit_user_id = #{userId},
+        </if>
+        <if test="nowDate !=null">
+            audit_time = #{nowDate},
+        </if>
         where id = #{id}
         and tpm_status in
         <foreach collection="fromStatus" item="item" index="index" open="(" close=")" separator=",">

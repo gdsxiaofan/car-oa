@@ -45,12 +45,12 @@ public class TpmBillVo {
     private String deviceArea;
 
     /**工单完成时间**/
-    private java.util.Date finishTime;
+    private String finishTime;
 
     /**工单审核时间**/
-    private java.util.Date auditTime;
+    private String auditTime;
 
-    /**审核驳回原因**/
+    /**审核驳回原因、审核备注**/
     private String rejectReason;
 
     /**工单状态：1，待处理，2：待审核，3：故障维修，4：修复完成，5处理完成**/
@@ -73,6 +73,33 @@ public class TpmBillVo {
     private List<AttachmentVo> pendAttachements;//巡检附件
     private List<AttachmentVo> repairAttachements;//维修附件
 
+
+    /**巡检工单的用户名**/
+    private String finishUserName;
+
+    /**巡检工单的用户id**/
+    private Integer finishUserId;
+
+    /**巡检备注**/
+    private String finishComment;
+
+    /**修复完成时间**/
+    private String repairedTime;
+
+    /**维修工单的人**/
+    private Integer repairedUserId;
+
+    /**维修员工名称**/
+    private String repairedUserName;
+
+    /**维修备注**/
+    private String repairedComment;
+
+    /**审核用户id**/
+    private Integer auditUserId;
+
+    /**审核人姓名**/
+    private String auditUserName;
 
     //########################  修改原型后添加字段 ###########################
     /**巡检时间**/

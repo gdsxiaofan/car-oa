@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -41,6 +42,63 @@ public interface TpmBillMapper{
             @Param("toStatus")Integer toStatus,
             @Param("fromStatus")List<Integer> fromStatus
     );
+
+    /**
+     * 巡检处理
+     * @param id
+     * @param toStatus
+     * @param fromStatus
+     * @param userId
+     * @param userName
+     * @param nowDate
+     * @param comment
+     * @return
+     */
+    public boolean updateForXJ(@Param("id")Integer id,
+                               @Param("toStatus")Integer toStatus,
+                               @Param("fromStatus")List<Integer> fromStatus,
+                               @Param("userId")Integer userId,
+                               @Param("userName")String userName,
+                               @Param("nowDate")Date nowDate,
+                               @Param("comment")String comment);
+
+    /**
+     * 维修处理
+     * @param id
+     * @param toStatus
+     * @param fromStatus
+     * @param userId
+     * @param userName
+     * @param nowDate
+     * @param comment
+     * @return
+     */
+    public boolean updateForRepaired(@Param("id")Integer id,
+                               @Param("toStatus")Integer toStatus,
+                               @Param("fromStatus")List<Integer> fromStatus,
+                               @Param("userId")Integer userId,
+                               @Param("userName")String userName,
+                               @Param("nowDate")Date nowDate,
+                               @Param("comment")String comment);
+
+    /**
+     * 深痕完成
+     * @param id
+     * @param toStatus
+     * @param fromStatus
+     * @param userId
+     * @param userName
+     * @param nowDate
+     * @param comment
+     * @return
+     */
+    public boolean updateForAudit(@Param("id")Integer id,
+                               @Param("toStatus")Integer toStatus,
+                               @Param("fromStatus")List<Integer> fromStatus,
+                               @Param("userId")Integer userId,
+                               @Param("userName")String userName,
+                               @Param("nowDate")Date nowDate,
+                               @Param("comment")String comment);
 
     public TpmBillVo getTpmBillDetail(
             @Param("id") Integer id
