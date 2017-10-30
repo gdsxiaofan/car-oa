@@ -6,7 +6,7 @@
         <Col :span="3" :offset="18" style="margin-top:0.2%">
         <Button type="primary" shape="circle" icon="ios-personadd" @click="plan={
           id: '',
-          name: '',
+          arrangeName: '',
           day: ['06:00:00', '11:00:00'],
           night: ['13:00:00', '17:00:00']
         };Modal.isShow=true;Modal.title='新增排班';">新增
@@ -20,8 +20,8 @@
            :title="Modal.title"
     >
       <Form :model="plan" :label-width="80" :rules="rule" label-position="right" ref="plan">
-        <Form-item prop="name" label="名字：">
-          <Input v-model="plan.name"/>
+        <Form-item prop="arrangeName" label="名字：">
+          <Input v-model="plan.arrangeName"/>
         </Form-item>
         <Form-item label="早班：">
           <TimePicker :value="plan.day" type="timerange" placement="bottom-end" placeholder="选择时间"
@@ -57,7 +57,7 @@
         columns: [
           {
             title: '名称',
-            key: 'name'
+            key: 'arrangeName'
           },
           {
             title: '早班',
@@ -92,7 +92,7 @@
                       this.Modal.isShow = true
                       this.Modal.title = '修改排班'
                       this.plan.id = params.row.id
-                      this.plan.name = params.row.name
+                      this.plan.arrangeName = params.row.arrangeName
                       this.plan.day = [params.row.morningStart, params.row.morningEnd]
                       this.plan.night = [params.row.noonStart, params.row.noonEnd]
                     }
@@ -111,7 +111,7 @@
                     click: () => {
                       this.$Modal.confirm({
                         title: '是否启用',
-                        content: '<p>将启用' + params.row.name + '，同时将其他停用</p>',
+                        content: '<p>将启用' + params.row.arrangeName + '，同时将其他停用</p>',
                         loading: true,
                         onOk: () => {
                           let plan = {
@@ -140,7 +140,7 @@
                     click: () => {
                       this.$Modal.confirm({
                         title: '是否删除',
-                        content: '<p>' + params.row.name + '</p>',
+                        content: '<p>' + params.row.arrangeName + '</p>',
                         loading: true,
                         onOk: () => {
                           deletePlan(params.row.id).then(res => {
@@ -161,12 +161,12 @@
         list: [],
         plan: {
           id: '',
-          name: '',
+          arrangeName: '',
           day: ['06:00:00', '11:00:00'],
           night: ['13:41:00', '17:00:00']
         },
         rule: {
-          name: [
+          arrangeName: [
             {required: true, message: '不可为空', trigger: 'blur'}
           ],
         },
