@@ -45,7 +45,7 @@ public class TpmBillController {
     @ApiOperation(value = "获取待审核工单信息列表", notes = "获取待审核工单信息列表", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getAuditlist")
     public JsonResult<PageInfo<TpmBillVo>> getAuditList(TpmBillQueryParam param){
-        PageInfo<TpmBillVo> pageInfo = tpmBillBiz.getTpmBillList(param);
+        PageInfo<TpmBillVo> pageInfo = tpmBillBiz.getAuditTpmBillList(param);
         return new JsonResult<PageInfo<TpmBillVo>>(1, "获取成功",pageInfo);
     }
 

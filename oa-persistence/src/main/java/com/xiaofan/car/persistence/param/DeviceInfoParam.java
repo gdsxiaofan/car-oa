@@ -32,4 +32,6 @@ public class DeviceInfoParam {
     /**结束时间**/
     private String toDate;
 
+    private String comment;//巡检、维修备注，驳回原因
+
 }
