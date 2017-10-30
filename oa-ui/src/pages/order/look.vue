@@ -62,6 +62,51 @@
           </Col>
         </Row>
         </Col >
+        <Row class="ModalRow">
+          <Col span="10">
+          <strong class="label">巡检描述</strong>
+          </Col>
+          <Col span="14">
+          {{detail.finishComment}}
+          </Col>
+        </Row>
+        <Row class="ModalRow">
+          <Col span="10">
+          <strong class="label">报修图片</strong>
+          </Col>
+          <Col span="14">
+          <div class="demo-upload-list" v-for="(item,index) in lookList">
+            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
+          </div>
+          </Col>
+        </Row>
+        <Row class="ModalRow">
+          <Col span="10">
+          <strong class="label">维修描述</strong>
+          </Col>
+          <Col span="14">
+          {{detail.repairedComment}}
+          </Col>
+        </Row>
+        <Row class="ModalRow">
+          <Col span="10">
+          <strong class="label">处理图片</strong>
+          </Col>
+          <Col span="14">
+          <div class="demo-upload-list" v-for="(item,index) in fixImgList">
+            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
+          </div>
+          </Col>
+        </Row>
+
+        <Row class="ModalRow">
+          <Col span="10">
+          <strong class="label">审核结果</strong>
+          </Col>
+          <Col span="14">
+          {{detail.rejectReason}}
+          </Col>
+        </Row>
         <!--<Col span="8">-->
         <!--<Timeline>-->
           <!--<TimelineItem>-->

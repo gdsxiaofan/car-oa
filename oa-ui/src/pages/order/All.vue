@@ -72,6 +72,14 @@
         </Row>
         <Row class="ModalRow">
           <Col span="10">
+          <strong class="label">巡检描述</strong>
+          </Col>
+          <Col span="14">
+          {{detail.finishComment}}
+          </Col>
+        </Row>
+        <Row class="ModalRow">
+          <Col span="10">
           <strong class="label">报修图片</strong>
           </Col>
           <Col span="14">
@@ -82,12 +90,29 @@
         </Row>
         <Row class="ModalRow">
           <Col span="10">
+          <strong class="label">维修描述</strong>
+          </Col>
+          <Col span="14">
+          {{detail.repairedComment}}
+          </Col>
+        </Row>
+        <Row class="ModalRow">
+          <Col span="10">
           <strong class="label">处理图片</strong>
           </Col>
           <Col span="14">
           <div class="demo-upload-list" v-for="(item,index) in fixImgList">
             <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
           </div>
+          </Col>
+        </Row>
+
+        <Row class="ModalRow">
+          <Col span="10">
+          <strong class="label">审核结果</strong>
+          </Col>
+          <Col span="14">
+          {{detail.rejectReason}}
           </Col>
         </Row>
         </Col >
@@ -110,75 +135,7 @@
       </Row>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="userModal.isShow=false;doModal.isShow=true">开始处理</Button>
-      </div>
-    </Modal>
-    <Modal v-model="doModal.isShow" width="800"
-           title="工单详情"
-    >
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">工单号</strong>
-        </Col>
-        <Col span="14">
-        <p class="label">{{detail.id}}</p>
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">工单名称</strong>
-        </Col>
-        <Col span="14">
-        <p class="label">{{detail.tpmName}}</p>
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">设备名称</strong>
-        </Col>
-        <Col span="14">
-        <p class="label">{{detail.deviceName}}</p>
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">描述</strong>
-        </Col>
-        <Col span="14">
-        {{detail.serviceDescribe}}
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">报修图片</strong>
-        </Col>
-        <Col span="14">
-        <div class="demo-upload-list" v-for="(item,index) in lookList">
-          <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
-        </div>
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">处理图片</strong>
-        </Col>
-        <Col span="14">
-        <div class="demo-upload-list" v-for="(item,index) in fixImgList">
-          <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
-        </div>
-        </Col>
-      </Row>
-      <Row class="ModalRow">
-        <Col span="10">
-        <strong class="label">处理描述</strong>
-        </Col>
-        <Col span="14">
-        <Input v-model="desc" type="textarea" placeholder="请输入..." autosize/>
-        </Col>
-      </Row>
-      <div slot="footer">
-        <Button type="ghost" @click="doModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="doOrder" :loading="doModal.isLoading">提交</Button>
+        <!--<Button type="primary" @click="userModal.isShow=false;doModal.isShow=true">开始处理</Button>-->
       </div>
     </Modal>
     <Modal title="查看图片" v-model="visible">
