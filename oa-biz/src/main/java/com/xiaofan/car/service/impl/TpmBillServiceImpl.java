@@ -67,10 +67,10 @@ public class TpmBillServiceImpl implements TpmBillService {
         }
         if(tpmBills!=null){
                 tpmBillMapper.insertTpmBillForList(tpmBills);
-
-
-
         }
+
+        //统一更新所有的检查项信息
+        checkInfoMapper.updateCheckInfo(checkInfoList);
 
     }
 
