@@ -56,17 +56,17 @@
                       :clearable="false"></TimePicker>
         </Form-item>
         <Form-item label="开始时间">
-          <DatePicker type="date" :value="service.firstCheckTime" @on-change='service.fromDate=arguments[0]'
+          <DatePicker type="date" :value="service.firstCheckTime" @on-change='service.firstCheckTime=arguments[0]'
                       placeholder="选择日期和时间（不含秒）"
                       style="width: 300px" :disabled="userModal.disabled"
                       :clearable="false"></DatePicker>
         </Form-item>
-        <Form-item label="结束时间">
-          <DatePicker type="date" :value="service.lastCheckTime" @on-change='service.toDate=arguments[0]'
-                      placeholder="选择日期和时间（不含秒）"
-                      style="width: 300px" :disabled="userModal.disabled"
-                      :clearable="false"></DatePicker>
-        </Form-item>
+        <!--<Form-item label="结束时间">-->
+          <!--<DatePicker type="date" :value="service.lastCheckTime" @on-change='service.lastCheckTime=arguments[0]'-->
+                      <!--placeholder="选择日期和时间（不含秒）"-->
+                      <!--style="width: 300px" :disabled="userModal.disabled"-->
+                      <!--:clearable="false"></DatePicker>-->
+        <!--</Form-item>-->
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
