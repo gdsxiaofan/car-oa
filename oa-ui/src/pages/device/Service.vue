@@ -87,7 +87,9 @@
   import {
     devcieInfo
   } from '../../api/device/device'
-
+  import {
+    formatData
+  } from '../../lib/utils/common'
   export default {
     data() {
       return {
@@ -221,7 +223,7 @@
           shiftsNo: 1,
           checkTime:'08:00',
           serviceDescribe:'',
-          fromDate:new Date(),
+          fromDate:formatData.call(new Date(),'yyyy-MM-dd'),
           lastCheckTime:new Date(),
         }
         this.userModal.title = '新增服务'
