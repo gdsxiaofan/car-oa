@@ -174,7 +174,7 @@
 				 create_user_id = #{createUserId},
 			</if>
 			<if test="arrangeName !=null">
-				arrange_name = #{arrangeName}
+				arrange_name = #{arrangeName},
 			</if>
  		 </set>
 		 WHERE id = #{id}

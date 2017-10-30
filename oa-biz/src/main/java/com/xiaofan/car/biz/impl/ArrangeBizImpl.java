@@ -64,7 +64,7 @@ public class ArrangeBizImpl implements ArrangeBiz {
     @Transactional(propagation= Propagation.REQUIRED)
     public boolean updateArrange(ArrangeParam arrangeParam) {
         ArrangeInfo arrangeInfo = dozerBeanMapper.map(arrangeParam,ArrangeInfo.class);
-        if(arrangeParam.getIsEffective()==1){
+        if(arrangeParam.getIsEffective()!=null &&arrangeParam.getIsEffective()==1){
             arrangeInfoMapper.updateForPause(arrangeParam.getId());//停用其他的开启的排班
         }
 
