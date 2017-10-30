@@ -97,7 +97,15 @@
         shifts_no as shiftsNo,
         check_id as checkId,
         check_time checkTime,
-        service_describe serviceDescribe
+        service_describe serviceDescribe,
+        audit_user_id as auditUserId,
+        audit_user_name as auditUserName,
+        finish_comment AS finishComment,
+        finish_user_id AS finishUserId,
+        finish_user_name AS finishUserName,
+        repaired_comment AS repairedComment,
+        repaired_user_id AS repairedUserId,
+        repaired_user_name AS repairedUserName
         FROM
         t_tpm_bill
         WHERE
@@ -135,22 +143,31 @@
     </select>
     <select id="getTpmBillVoListByStatus" resultType="com.xiaofan.car.persistence.vo.TpmBillVo">
         SELECT
-            id as id,
-            tpm_name as tpmName,
-            tpm_no as tpmNo,
-            device_id as deviceId,
-            device_name as deviceName,
-            device_location as deviceLocation,
-            device_area as deviceArea,
-            DATE_FORMAT(finish_time,'%Y-%m-%d %H:%i:%S') as finishTime,
-            DATE_FORMAT(audit_time,'%Y-%m-%d %H:%i:%S') as auditTime,
-            reject_reason as reject_reason,
-            tpm_status as tpmStatus,
-            tpm_type as tpmType,
-            shifts_no as shiftsNo,
-            check_id as checkId,
-            check_time checkTime,
-            service_describe serviceDescribe
+        id as id,
+        tpm_name as tpmName,
+        tpm_no as tpmNo,
+        device_id as deviceId,
+        device_name as deviceName,
+        device_location as deviceLocation,
+        device_area as deviceArea,
+        DATE_FORMAT(finish_time,'%Y-%m-%d %H:%i:%S') as finishTime,
+        DATE_FORMAT(audit_time,'%Y-%m-%d %H:%i:%S') as auditTime,
+        DATE_FORMAT(repaired_time,'%Y-%m-%d %H:%i:%S') as repairedTime,
+        reject_reason as reject_reason,
+        tpm_status as tpmStatus,
+        tpm_type as tpmType,
+        shifts_no as shiftsNo,
+        check_id as checkId,
+        check_time checkTime,
+        service_describe serviceDescribe,
+        audit_user_id as auditUserId,
+        audit_user_name as auditUserName,
+        finish_comment AS finishComment,
+        finish_user_id AS finishUserId,
+        finish_user_name AS finishUserName,
+        repaired_comment AS repairedComment,
+        repaired_user_id AS repairedUserId,
+        repaired_user_name AS repairedUserName
         FROM
             t_tpm_bill
         WHERE

@@ -22,9 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 工单相关的业务处理成
@@ -112,11 +110,23 @@ public class TpmBillBizImpl implements TpmBillBiz {
             userId = employee.getId();
             userName = employee.getEmployeeName();
         }
+        Date dateNow = Calendar.getInstance().getTime();
+        if(toStatus==TmpStatusEnum.PENDED.getCode()||toStatus==TmpStatusEnum.REPAIRING.getCode()){
+            flag = tpmBillMapper.updateForXJ(tpmBillParam.getId(), toStatus, fromStatus
+            ,userId,userName,dateNow,tpmBillParam.getDesc());
+        }
+        if(toStatus==TmpStatusEnum.REPAIRED.getCode()){
+            flag = tpmBillMapper.updateForRepaired(tpmBillParam.getId(), toStatus, fromStatus
+                    ,userId,userName,dateNow,tpmBillParam.getDesc());
+        }
+        if(toStatus==TmpStatusEnum.FINISHED.getCode()){
+            flag = tpmBillMapper.updateForAudit(tpmBillParam.getId(), toStatus, fromStatus
+                    ,userId,userName,dateNow,tpmBillParam.getDesc());
+        }
 
 
 
-
-        flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(), toStatus, fromStatus);
+//        flag = tpmBillMapper.updateByIdAndStatus(tpmBillParam.getId(), toStatus, fromStatus);
 
         // `````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````处理对应附件信息
         if (StringUtils.isNotBlank(tpmBillParam.getAttachmentIds())) {
