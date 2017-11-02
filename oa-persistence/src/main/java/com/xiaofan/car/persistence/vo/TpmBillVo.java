@@ -70,6 +70,7 @@ public class TpmBillVo {
 
     private List<TpmBillDetailVo> tpmBillDetailVoList;
 
+    private List<AttachmentVo> demoAttachements;//参考附件
     private List<AttachmentVo> pendAttachements;//巡检附件
     private List<AttachmentVo> repairAttachements;//维修附件
 

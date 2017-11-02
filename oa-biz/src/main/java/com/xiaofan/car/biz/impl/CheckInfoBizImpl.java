@@ -48,9 +48,7 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
 
         // 2. 查询对应的检查项列表
         List<CheckInfoVo> checkInfoVos = checkInfoMapper.getCheckInfoByDeviceId(deviceId);
-        checkInfoVos.forEach(e->{
-            e.setAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.CHECK_TYPE ));
-        });;
+        checkInfoVos.forEach(e-> e.setAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.CHECK_TYPE )));;
         return checkInfoVos;
     }
 

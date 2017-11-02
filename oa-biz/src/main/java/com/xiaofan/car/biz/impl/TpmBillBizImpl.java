@@ -76,6 +76,7 @@ public class TpmBillBizImpl implements TpmBillBiz {
         tpmBillVoList.forEach(e->{
             e.setPendAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.PEND_TYPE));
             e.setRepairAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.REPAIR_TYPE));
+            e.setDemoAttachements(attachmentService.getAttachmentVoList(e.getCheckId(),AttachmentBizTypeEnum.CHECK_TYPE));
         });
         // 3.组装数据
         PageInfo<TpmBillVo> tpmBillVoPageInfo = new PageInfo<>(tpmBillVoList);
