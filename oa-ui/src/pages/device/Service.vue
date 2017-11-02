@@ -73,14 +73,14 @@
               </div>
             </div>
             <upload v-if="!userModal.disabled"
-              ref="uploads"
-              :action="env+'/v1/image/upPic'"
-              :show-upload-list="false"
-              :before-upload="handleBeforeUpload"
-              :on-success="handleSuccess"
-              multiple
-              type="drag"
-              style="display: inline-block;width:58px;">
+                    ref="uploads"
+                    :action="env+'/v1/image/upPic'"
+                    :show-upload-list="false"
+                    :before-upload="handleBeforeUpload"
+                    :on-success="handleSuccess"
+                    multiple
+                    type="drag"
+                    style="display: inline-block;width:58px;">
               <div style="width: 58px;height:58px;line-height: 58px;">
                 <Icon type="camera" size="20"></Icon>
               </div>
@@ -260,6 +260,7 @@
           fromDate: formatData.call(new Date(), 'yyyy-MM-dd'),
           lastCheckTime: new Date(),
         }
+        this.uploadList = []
         this.userModal.title = '新增服务'
         this.userModal.isShow = true
         this.userModal.disabled = false
@@ -280,7 +281,7 @@
         this.service.fromDate = params.row.firstCheckTime
         this.service.lastCheckTime = params.row.lastCheckTime
         this.service.checkTime = params.row.checkTime
-        this.uploadList= params.row.attachements.map(e=>e.id)
+        this.uploadList = params.row.attachements.map(e => e.id)
         this.userModal.isShow = true
         this.userModal.title = type
         this.userModal.disabled = type === '服务详情'
@@ -299,14 +300,14 @@
                 attachmentIds += i + ','
               }
             })
-            this.service.attachmentIds=attachmentIds
+            this.service.attachmentIds = attachmentIds
             if (this.userModal.title === '修改服务') {
               updateService(this.service).then(res => {
                 this.userModal.isLoading = false
                 this.userModal.isShow = false
                 this.$Message.success(res.data.message)
                 this.getlist()
-              }).catch(e=>{
+              }).catch(e => {
                 this.userModal.isLoading = false
               })
             } else if (this.userModal.title === '新增服务') {
@@ -315,7 +316,7 @@
                 this.userModal.isShow = false
                 this.$Message.success(res.data.message)
                 this.getlist()
-              }).catch(e=>{
+              }).catch(e => {
                 this.userModal.isLoading = false
               })
             }

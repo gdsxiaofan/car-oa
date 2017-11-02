@@ -80,7 +80,7 @@ public class TpmBillServiceImpl implements TpmBillService {
      * @return
      */
     private TpmBill transformTpmBill(CheckInfo checkInfo){
-            TpmBill tpmBill = new TpmBill().builder()
+            TpmBill tpmBill = TpmBill.builder()
                     .tpmName(checkInfo.getServiceName())
                     .tpmType(TmpTypeEnum.ROUTING_INSPECTION.getCode())
                     .checkId(checkInfo.getId())

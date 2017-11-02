@@ -553,6 +553,9 @@
                     <if test="item.id != null">
                         id,
                     </if>
+                    <if test="item.checkId != null">
+                        check_id,
+                    </if>
                     <if test="item.tpmName != null">
                         tpm_name,
                     </if>
@@ -612,6 +615,9 @@
                 <trim prefix="values (" suffix=")" suffixOverrides=",">
                     <if test="item.id!=null">
                         #{item.id},
+                    </if>
+                    <if test="item.checkId!=null">
+                        #{item.checkId},
                     </if>
                     <if test="item.tpmName!=null">
                         #{item.tpmName},
