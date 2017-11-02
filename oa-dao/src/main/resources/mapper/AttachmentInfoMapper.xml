@@ -46,6 +46,7 @@
 		FROM t_attachment_info
 		WHERE biz_id = #{bizId}
 		and biz_type = #{bizType}
+		and delete_status=1
 	</select>
 
 	<!--删除：根据主键ID删除-->
@@ -53,6 +54,12 @@
 		 DELETE FROM t_attachment_info
 		 WHERE id = #{id}
 	</delete>
+	<update id="delAttachment">
+		UPDATE t_attachment_info
+		SET
+			delete_status =0
+		WHERE biz_id = #{bizId} and biz_type =#{bizType}
+	</update>
 
 	<!-- 添加 -->
 	<insert id="insert" parameterType="com.xiaofan.car.persistence.model.AttachmentInfo">

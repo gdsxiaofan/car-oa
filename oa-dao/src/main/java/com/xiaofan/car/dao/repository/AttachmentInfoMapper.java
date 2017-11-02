@@ -1,7 +1,6 @@
 package com.xiaofan.car.dao.repository;
 
 import com.xiaofan.car.persistence.model.AttachmentInfo;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -35,4 +34,7 @@ public interface AttachmentInfoMapper{
     );
 
     AttachmentInfo selectByPrimaryKey(@Param("id")Integer id);
+
+    void delAttachment(@Param("bizType")Integer bizType,
+                       @Param("bizId")Integer bizId);
 }

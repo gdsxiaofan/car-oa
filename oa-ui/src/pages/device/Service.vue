@@ -45,10 +45,11 @@
           <Input type="text" v-model="service.serviceName" :disabled="userModal.disabled" placeholder="服务名称"/>
         </Form-item>
         <Form-item label="巡检周期：">
-          <InputNumber :max="99999" v-model="service.checkCycle" :disabled="userModal.disabled" ></InputNumber>
+          <InputNumber :max="99999" v-model="service.checkCycle" :disabled="userModal.disabled"></InputNumber>
         </Form-item>
         <Form-item label="任务描述：">
-          <Input type="textarea" autosize v-model="service.serviceDescribe" :disabled="userModal.disabled" placeholder="属性二"/>
+          <Input type="textarea" autosize v-model="service.serviceDescribe" :disabled="userModal.disabled"
+                 placeholder="属性二"/>
         </Form-item>
         <Form-item label="检查时间">
           <TimePicker format="HH:mm" :value="service.checkTime" @on-change='service.checkTime=arguments[0]'
@@ -61,11 +62,36 @@
                       style="width: 300px" :disabled="userModal.disabled"
                       :clearable="false"></DatePicker>
         </Form-item>
+        <Form-item label="参考照片">
+          <Row class="ModalRow">
+            <div class="demo-upload-list" v-for="(item,index) in uploadList">
+              <img @click="handleView(item)" :src="env+'/v1/image/sosOutImg/'+item" v-if="userModal.disabled">
+              <img :src="env+'/v1/image/sosOutImg/'+item" v-else>
+              <div class="demo-upload-list-cover" v-if="!userModal.disabled">
+                <Icon type="ios-eye-outline" @click.native="handleView(item)"></Icon>
+                <Icon type="ios-trash-outline" @click.native="handleRemove(index)"></Icon>
+              </div>
+            </div>
+            <upload v-if="!userModal.disabled"
+              ref="uploads"
+              :action="env+'/v1/image/upPic'"
+              :show-upload-list="false"
+              :before-upload="handleBeforeUpload"
+              :on-success="handleSuccess"
+              multiple
+              type="drag"
+              style="display: inline-block;width:58px;">
+              <div style="width: 58px;height:58px;line-height: 58px;">
+                <Icon type="camera" size="20"></Icon>
+              </div>
+            </upload>
+          </Row>
+        </Form-item>
         <!--<Form-item label="结束时间">-->
-          <!--<DatePicker type="date" :value="service.lastCheckTime" @on-change='service.lastCheckTime=arguments[0]'-->
-                      <!--placeholder="选择日期和时间（不含秒）"-->
-                      <!--style="width: 300px" :disabled="userModal.disabled"-->
-                      <!--:clearable="false"></DatePicker>-->
+        <!--<DatePicker type="date" :value="service.lastCheckTime" @on-change='service.lastCheckTime=arguments[0]'-->
+        <!--placeholder="选择日期和时间（不含秒）"-->
+        <!--style="width: 300px" :disabled="userModal.disabled"-->
+        <!--:clearable="false"></DatePicker>-->
         <!--</Form-item>-->
       </Form>
       <div slot="footer">
@@ -73,6 +99,9 @@
         <Button type="primary" @click="doService" :loading="userModal.isLoading" v-if="!userModal.disabled">提交</Button>
         <Button type="primary" @click="userModal.isShow=false" v-else>确认</Button>
       </div>
+    </Modal>
+    <Modal title="查看图片" v-model="visible">
+      <img :src="img" v-if="visible" style="width: 100%">
     </Modal>
   </div>
 </template>
@@ -90,9 +119,13 @@
   import {
     formatData
   } from '../../lib/utils/common'
+
   export default {
     data() {
       return {
+        env: process.env.NODE_ENV === 'production' ? '' : "car",
+        uploadList: [],
+        visible: false,
         device: {
           deviceName: '',
           routingDays: 1,
@@ -105,10 +138,10 @@
           checkComment: '',
           setValue: '',
           shiftsNo: '',
-          checkTime:'',
-          serviceDescribe:'',
-          fromDate:'',
-          lastCheckTime:'',
+          checkTime: '',
+          serviceDescribe: '',
+          fromDate: '',
+          lastCheckTime: '',
         },
         serviceRules: {
           serviceName: [
@@ -121,6 +154,7 @@
           isLoading: false,
           title: ''
         },
+
         columns: [
           {
             title: '序号',
@@ -219,12 +253,12 @@
           checkPoint: '',
           checkComment: '',
           setValue: '',
-          checkCycle:30,
+          checkCycle: 30,
           shiftsNo: 1,
-          checkTime:'08:00',
-          serviceDescribe:'',
-          fromDate:formatData.call(new Date(),'yyyy-MM-dd'),
-          lastCheckTime:new Date(),
+          checkTime: '08:00',
+          serviceDescribe: '',
+          fromDate: formatData.call(new Date(), 'yyyy-MM-dd'),
+          lastCheckTime: new Date(),
         }
         this.userModal.title = '新增服务'
         this.userModal.isShow = true
@@ -246,6 +280,7 @@
         this.service.fromDate = params.row.firstCheckTime
         this.service.lastCheckTime = params.row.lastCheckTime
         this.service.checkTime = params.row.checkTime
+        this.uploadList= params.row.attachements.map(e=>e.id)
         this.userModal.isShow = true
         this.userModal.title = type
         this.userModal.disabled = type === '服务详情'
@@ -256,12 +291,23 @@
             this.userModal.isLoading = true
             this.service.deviceId = this.$route.query.deviceId
             this.service.deviceName = this.device.deviceName
+            let attachmentIds = ''
+            this.uploadList.forEach((i, n) => {
+              if (this.uploadList.length === n + 1) {
+                attachmentIds += i
+              } else {
+                attachmentIds += i + ','
+              }
+            })
+            this.service.attachmentIds=attachmentIds
             if (this.userModal.title === '修改服务') {
               updateService(this.service).then(res => {
                 this.userModal.isLoading = false
                 this.userModal.isShow = false
                 this.$Message.success(res.data.message)
                 this.getlist()
+              }).catch(e=>{
+                this.userModal.isLoading = false
               })
             } else if (this.userModal.title === '新增服务') {
               addService(this.service).then(res => {
@@ -269,10 +315,59 @@
                 this.userModal.isShow = false
                 this.$Message.success(res.data.message)
                 this.getlist()
+              }).catch(e=>{
+                this.userModal.isLoading = false
               })
             }
           }
         })
+      },
+      handleView(id) {
+        this.img = this.env + '/v1/image/sosOutImg/' + id;
+        this.visible = true;
+      },
+      handleRemove(index) {
+        this.uploadList.splice(index, 1);
+      },
+      handleSuccess(res, file) {
+        this.uploadList.push(res.message)
+      },
+      handleBeforeUpload(file) {
+
+        const format = ['jpg', 'jpeg', 'png'];
+        const maxsize = "2048";
+        const check = this.uploadList.length < 5;
+        if (!check) {
+          this.$Notice.warning({
+            title: '最多只能上传 5 张图片。'
+          });
+        }
+        return check
+      },
+      checkImg(file, format, maxSize) {
+        // check format
+        if (format.length) {
+          const _file_format = file.name.split('.').pop().toLocaleLowerCase();
+          const checked = format.some(item => item.toLocaleLowerCase() === _file_format);
+          if (!checked) {
+            this.$Notice.warning({
+              title: '文件格式不正确',
+              desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
+            });
+            return false;
+          }
+        }
+        // check maxSize
+        if (maxSize) {
+          if (file.size > this.maxSize * 1024) {
+            this.$Notice.warning({
+              title: '超出文件大小限制',
+              desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
+            });
+            return false;
+          }
+        }
+        return true
       }
     },
     created() {
@@ -289,6 +384,45 @@
   }
 </script>
 
-<style>
+<style scoped="">
+  .ModalRow {
+    margin-top: 1%;
+  }
 
+  .demo-upload-list {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    margin-right: 4px;
+  }
+
+  .demo-upload-list img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .demo-upload-list-cover {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .6);
+  }
+
+  .demo-upload-list-cover i {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0 2px;
+  }
 </style>

@@ -7,9 +7,7 @@ import com.xiaofan.car.dao.repository.EmployeeMapper;
 import com.xiaofan.car.dao.repository.TpmBillMapper;
 import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.enumType.TmpStatusEnum;
-import com.xiaofan.car.persistence.enumType.TmpTypeEnum;
 import com.xiaofan.car.persistence.model.Employee;
-import com.xiaofan.car.persistence.model.TpmBill;
 import com.xiaofan.car.persistence.param.TpmBillParam;
 import com.xiaofan.car.persistence.param.TpmBillQueryParam;
 import com.xiaofan.car.persistence.vo.TpmBillVo;
@@ -19,12 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 工单相关的业务处理成
@@ -108,6 +109,7 @@ public class TpmBillBizImpl implements TpmBillBiz {
      * @return
      */
     @Override
+    @Transactional
     public boolean updateTpmBillForFinished(TpmBillParam tpmBillParam) {
         // 1.校验参数
         Assert.notNull(tpmBillParam.getId(), "当前工单id不能为空");

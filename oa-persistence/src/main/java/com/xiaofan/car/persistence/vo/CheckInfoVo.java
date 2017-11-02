@@ -1,6 +1,5 @@
 package com.xiaofan.car.persistence.vo;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.xiaofan.car.persistence.enumType.ShiftsNoEnum;
 import lombok.AllArgsConstructor;
@@ -9,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 设备检查项的信息Vo
@@ -64,6 +64,7 @@ public class CheckInfoVo {
     /**任务描述**/
     private String serviceDescribe;
 
+    private List<AttachmentVo> attachements;//参照附件
     /**首次巡检日期**/
     @JsonFormat( pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date firstCheckTime;

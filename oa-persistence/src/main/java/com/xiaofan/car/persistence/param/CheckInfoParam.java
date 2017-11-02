@@ -59,4 +59,7 @@ public class CheckInfoParam {
     private String fromDate;
 
     private String toDate;
+
+    private String attachmentIds;//附件id，用逗号隔开：1，2，3，4
+
 }

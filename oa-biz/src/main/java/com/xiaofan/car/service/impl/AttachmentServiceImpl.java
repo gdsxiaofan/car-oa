@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class AttachmentServiceImpl implements AttachmentService{
+public class AttachmentServiceImpl implements AttachmentService {
 
     @Autowired
     AttachmentInfoMapper attachmentInfoMapper;
@@ -34,11 +34,11 @@ public class AttachmentServiceImpl implements AttachmentService{
 
     @Override
     public List<AttachmentVo> getAttachmentVoList(Integer bizId, AttachmentBizTypeEnum attachmentBizType) {
-        List<AttachmentInfo> attachmentInfos = attachmentInfoMapper.selectAttachmentByBizId(attachmentBizType.getCode(),bizId);
+        List<AttachmentInfo> attachmentInfos = attachmentInfoMapper.selectAttachmentByBizId(attachmentBizType.getCode(), bizId);
         List<AttachmentVo> attachmentVos = new ArrayList<>();
 
-        for(AttachmentInfo attachmentInfo:attachmentInfos){
-            AttachmentVo attachmentVo = dozerBeanMapper.map(attachmentInfo,AttachmentVo.class);
+        for (AttachmentInfo attachmentInfo : attachmentInfos) {
+            AttachmentVo attachmentVo = dozerBeanMapper.map(attachmentInfo, AttachmentVo.class);
             attachmentVos.add(attachmentVo);
         }
 
@@ -48,8 +48,8 @@ public class AttachmentServiceImpl implements AttachmentService{
 
     @Override
     public boolean updateAttachment(List<Integer> attachmentIds, AttachmentBizTypeEnum attachmentBizTypeEnum, Integer bizId) {
-        for(Integer attachmentId:attachmentIds){
-            attachmentInfoMapper.updateAttachment(attachmentBizTypeEnum.getCode(),bizId,attachmentId);
+        for (Integer attachmentId : attachmentIds) {
+            attachmentInfoMapper.updateAttachment(attachmentBizTypeEnum.getCode(), bizId, attachmentId);
         }
 
         return true;
@@ -63,6 +63,18 @@ public class AttachmentServiceImpl implements AttachmentService{
      */
     @Override
     public AttachmentInfo getAttachmentById(Integer id) {
-        return attachmentInfoMapper.selectByPrimaryKey( id);
+        return attachmentInfoMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 删除之前的附件信息
+     *
+     * @param attachmentBizTypeEnum
+     * @param id
+     * @return
+     */
+    @Override
+    public void delAttachment(AttachmentBizTypeEnum attachmentBizTypeEnum, Integer id) {
+        attachmentInfoMapper.delAttachment(attachmentBizTypeEnum.getCode(), id);
     }
 }

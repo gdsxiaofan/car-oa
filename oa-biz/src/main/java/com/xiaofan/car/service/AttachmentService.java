@@ -39,5 +39,11 @@ public interface AttachmentService {
      * @return
      */
     AttachmentInfo getAttachmentById(Integer id);
+    /**
+     * 删除之前的附件信息
+     * @param id
+     * @return
+     */
+    void delAttachment(AttachmentBizTypeEnum attachmentBizTypeEnum, Integer id);
 }
 

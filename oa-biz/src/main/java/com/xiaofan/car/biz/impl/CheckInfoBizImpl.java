@@ -2,14 +2,18 @@ package com.xiaofan.car.biz.impl;
 
 import com.xiaofan.car.biz.CheckInfoBiz;
 import com.xiaofan.car.dao.repository.CheckInfoMapper;
+import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.model.CheckInfo;
 import com.xiaofan.car.persistence.param.CheckInfoParam;
 import com.xiaofan.car.persistence.vo.CheckInfoVo;
+import com.xiaofan.car.service.AttachmentService;
 import com.xiaofan.car.service.TpmBillService;
 import io.jsonwebtoken.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,6 +30,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@Transactional
 public class CheckInfoBizImpl implements CheckInfoBiz {
 
     @Autowired
@@ -34,6 +39,8 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
     @Autowired
     private TpmBillService tpmBillService;
 
+    @Autowired
+    private AttachmentService attachmentService;
     @Override
     public List<CheckInfoVo> getCheckInfoList(Integer deviceId) {
         // 1.校验参数
@@ -41,6 +48,9 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
 
         // 2. 查询对应的检查项列表
         List<CheckInfoVo> checkInfoVos = checkInfoMapper.getCheckInfoByDeviceId(deviceId);
+        checkInfoVos.forEach(e->{
+            e.setAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.CHECK_TYPE ));
+        });;
         return checkInfoVos;
     }
 
@@ -68,9 +78,31 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
             checkInfos.add(checkInfo);
             tpmBillService.addTpmBill(checkInfos);
         }
+        //保存图片
+        updateAttachment(checkInfoParam,checkInfo);
 
     }
 
+    /**
+     * 保存图片
+     * @param checkInfoParam
+     * @param checkInfo
+     */
+    private void updateAttachment(CheckInfoParam checkInfoParam,CheckInfo checkInfo){
+        AttachmentBizTypeEnum attachmentBizTypeEnum = AttachmentBizTypeEnum.CHECK_TYPE;
+        //1.删除之前的
+        attachmentService.delAttachment(attachmentBizTypeEnum, checkInfo.getId());
+        //2.保存之后的
+        if (StringUtils.isNotBlank(checkInfoParam.getAttachmentIds())) {
+            String[] attachmentIdArray = checkInfoParam.getAttachmentIds().split(",");
+            List<Integer> attachmentIdList = new ArrayList<>();
+            for (String aId : attachmentIdArray) {
+                Integer id = Integer.valueOf(aId);
+                attachmentIdList.add(id);
+            }
+            attachmentService.updateAttachment(attachmentIdList, attachmentBizTypeEnum, checkInfo.getId());
+        }
+    }
     @Override
     public void updateCheckInfo(CheckInfoParam checkInfoParam) {
         // 1.校验当前检查项id
@@ -79,6 +111,8 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
         // 2.转换信息，并且更新对应的数据
         CheckInfo checkInfo = transformCheckInfo(checkInfoParam);
         checkInfoMapper.updateByPrimaryKeySelective(checkInfo);
+        //保存图片
+        updateAttachment(checkInfoParam,checkInfo);
     }
 
     @Override
