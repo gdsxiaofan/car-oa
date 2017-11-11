@@ -72,6 +72,16 @@
         </Row>
         <Row class="ModalRow">
           <Col span="10">
+          <strong class="label">参考图片</strong>
+          </Col>
+          <Col span="14">
+          <div class="demo-upload-list" v-for="(item,index) in detail.demoAttachements">
+            <img @click="handleView(item.id)" :src="env+'/v1/image/sosOutImg/'+item.id">
+          </div>
+          </Col>
+        </Row>
+        <Row class="ModalRow">
+          <Col span="10">
           <strong class="label">巡检描述</strong>
           </Col>
           <Col span="14">

@@ -242,7 +242,7 @@
             )
           }
         ],
-        list: [{id: 1, serviceName: 'aaa'}],
+        list: [],
         RoleList: []
       }
     },

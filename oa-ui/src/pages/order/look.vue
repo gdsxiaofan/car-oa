@@ -61,7 +61,7 @@
           {{detail.serviceDescribe}}
           </Col>
         </Row>
-        </Col >
+
         <Row class="ModalRow">
           <Col span="10">
           <strong class="label">巡检描述</strong>
@@ -72,55 +72,56 @@
         </Row>
         <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">报修图片</strong>
+          <strong class="label">参考图片</strong>
           </Col>
           <Col span="14">
-          <div class="demo-upload-list" v-for="(item,index) in lookList">
-            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
+          <div class="demo-upload-list" v-for="(item,index) in detail.demoAttachements">
+            <img @click="handleView(item.id)" :src="env+'/v1/image/sosOutImg/'+item.id">
           </div>
           </Col>
         </Row>
-        <Row class="ModalRow">
-          <Col span="10">
-          <strong class="label">维修描述</strong>
-          </Col>
-          <Col span="14">
-          {{detail.repairedComment}}
-          </Col>
-        </Row>
-        <Row class="ModalRow">
-          <Col span="10">
-          <strong class="label">处理图片</strong>
-          </Col>
-          <Col span="14">
-          <div class="demo-upload-list" v-for="(item,index) in fixImgList">
-            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
-          </div>
-          </Col>
-        </Row>
+        </Col >
+        <!--<Row class="ModalRow">-->
+        <!--<Col span="10">-->
+        <!--<strong class="label">维修描述</strong>-->
+        <!--</Col>-->
+        <!--<Col span="14">-->
+        <!--{{detail.repairedComment}}-->
+        <!--</Col>-->
+        <!--</Row>-->
+        <!--<Row class="ModalRow">-->
+        <!--<Col span="10">-->
+        <!--<strong class="label">处理图片</strong>-->
+        <!--</Col>-->
+        <!--<Col span="14">-->
+        <!--<div class="demo-upload-list" v-for="(item,index) in fixImgList">-->
+        <!--<img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">-->
+        <!--</div>-->
+        <!--</Col>-->
+        <!--</Row>-->
 
-        <Row class="ModalRow">
-          <Col span="10">
-          <strong class="label">审核结果</strong>
-          </Col>
-          <Col span="14">
-          {{detail.rejectReason}}
-          </Col>
-        </Row>
+        <!--<Row class="ModalRow">-->
+        <!--<Col span="10">-->
+        <!--<strong class="label">审核结果</strong>-->
+        <!--</Col>-->
+        <!--<Col span="14">-->
+        <!--{{detail.rejectReason}}-->
+        <!--</Col>-->
+        <!--</Row>-->
         <!--<Col span="8">-->
         <!--<Timeline>-->
-          <!--<TimelineItem>-->
-            <!--<p class="time">事件：1976年</p>-->
-            <!--<p class="content">Apple I 问世</p>-->
-          <!--</TimelineItem>-->
-          <!--<TimelineItem>-->
-            <!--<p class="time">事件：1976年</p>-->
-            <!--<p class="content">Apple I 问世</p>-->
-          <!--</TimelineItem>-->
-          <!--<TimelineItem>-->
-            <!--<p class="time">事件：1976年</p>-->
-            <!--<p class="content">Apple I 问世</p>-->
-          <!--</TimelineItem>-->
+        <!--<TimelineItem>-->
+        <!--<p class="time">事件：1976年</p>-->
+        <!--<p class="content">Apple I 问世</p>-->
+        <!--</TimelineItem>-->
+        <!--<TimelineItem>-->
+        <!--<p class="time">事件：1976年</p>-->
+        <!--<p class="content">Apple I 问世</p>-->
+        <!--</TimelineItem>-->
+        <!--<TimelineItem>-->
+        <!--<p class="time">事件：1976年</p>-->
+        <!--<p class="content">Apple I 问世</p>-->
+        <!--</TimelineItem>-->
         <!--</Timeline>-->
         <!--</Col>-->
       </Row>
@@ -180,6 +181,16 @@
         </Col>
         <Col span="14">
         {{detail.serviceDescribe}}
+        </Col>
+      </Row>
+      <Row class="ModalRow">
+        <Col span="10">
+        <strong class="label">参考图片</strong>
+        </Col>
+        <Col span="14">
+        <div class="demo-upload-list" v-for="(item,index) in detail.demoAttachements">
+          <img @click="handleView(item.id)" :src="env+'/v1/image/sosOutImg/'+item.id">
+        </div>
         </Col>
       </Row>
       <Row class="ModalRow">
