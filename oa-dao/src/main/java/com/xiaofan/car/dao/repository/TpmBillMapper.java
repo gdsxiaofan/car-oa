@@ -127,6 +127,6 @@ public interface TpmBillMapper{
     );
 
     public void updateTpmBillList(
-            List<TpmBill> tpmBills
+            @Param("tpmbills") List<TpmBill> tpmBills
     );
 }

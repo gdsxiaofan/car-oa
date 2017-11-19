@@ -16,8 +16,18 @@ public class TpmTasks {
     @Autowired
     private TpmJob tpmJob;
 
-    @Scheduled(cron="0 0/1 * * * ?")
+    @Scheduled(cron="0 0 1 * * ?")
     public void createTmp() throws Exception{
         tpmJob.exeu();
+    }
+
+    @Scheduled(cron="0 0 1 * * ?")
+    public void dealLastDayTmp() throws Exception{
+        tpmJob.updateForOverdueForLastDay();
+    }
+
+    @Scheduled(cron="0 0/5 * * * ?")
+    public void dealTodayTmp() throws Exception{
+        tpmJob.updateForOverdueForToDay();
     }
 }

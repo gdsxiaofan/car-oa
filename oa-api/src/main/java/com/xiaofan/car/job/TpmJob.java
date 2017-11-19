@@ -59,6 +59,22 @@ public class TpmJob {
     public void updateForOverdueForLastDay(){
         Date today = Calendar.getInstance().getTime();
         log.info(">>>>>>>>处理昨日过期的工单数据,当前时间为：", today.toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String endTime = sdf.format(today)+" "+"00:00:00";
+        List<Integer> tpmStatus = new ArrayList<>();
+        tpmStatus.add(TmpStatusEnum.PENDING.getCode());//待巡检
+        tpmStatus.add(TmpStatusEnum.REPAIRING.getCode());//待维修
+        tpmStatus.add(TmpStatusEnum.PENDED.getCode());
+        tpmStatus.add(TmpStatusEnum.REPAIRED.getCode());
+        SimpleDateFormat sdfLong = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try{
+            List<TpmBill> tpmBills = tpmBillMapper.getTpmBillForOverdue(tpmStatus,null,sdfLong.parse(endTime));
+
+            //处理所有需要转为过期的数据
+            dealAllData(tpmBills);
+        }catch(Exception e){
+            log.error("处理昨日的过期工单失败：",e);
+        }
 
     }
 
@@ -74,7 +90,7 @@ public class TpmJob {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String startTime = sdf.format(today)+" "+"00:00:00";
         String morningEnd = sdf.format(today) + " " + arrangeInfo.getMorningEnd();
-        String noonEnd = sdf.format(today) + "" + arrangeInfo.getNoonEnd();
+        String noonEnd = sdf.format(today) + " " + arrangeInfo.getNoonEnd();
 
         /**
          * 1.如果当前时间比早班最晚时间大且比晚班最晚时间小，则查询早班未处理的工单，置为过期
@@ -87,6 +103,7 @@ public class TpmJob {
             List<Integer> tpmStatus = new ArrayList<>();
             tpmStatus.add(TmpStatusEnum.PENDING.getCode());//待巡检
             tpmStatus.add(TmpStatusEnum.REPAIRING.getCode());//待维修
+            tpmStatus.add(TmpStatusEnum.PENDED.getCode());
             if(today.getTime()>sdfLong.parse(morningEnd).getTime()
                     &&today.getTime()<sdfLong.parse(noonEnd).getTime()){
                 tpmBills = tpmBillMapper.getTpmBillForOverdue(tpmStatus,sdfLong.parse(startTime),sdfLong.parse(morningEnd));
@@ -97,25 +114,35 @@ public class TpmJob {
             }
 
             //处理所有需要转为过期的数据
-            if(CollectionUtils.isNotEmpty(tpmBills)){
-                List<TpmBill> overdueTpmBillList = new ArrayList<>();
-                for(TpmBill tpmBill:tpmBills){
-                    Integer status = TmpStatusEnum.REPAIR_OVERDUE.getCode();
-                    if(tpmBill.getTpmStatus().equals(TmpStatusEnum.PENDING)){
-                        status = TmpStatusEnum.PEND_OVERDUE.getCode();
-                    }
-                    TpmBill overdueTpmBill = new TpmBill().builder().
-                            id(tpmBill.getId())
-                            .tpmStatus(status)
-                            .build();
-                    overdueTpmBillList.add(overdueTpmBill);
-                }
-                //更新所有的过期数据
-            }
+            dealAllData(tpmBills);
 
         }catch (Exception e){
-            log.error("处理时间失败！",e);
+            log.error("处理当日过期工单失败！",e);
         }
         log.info(">>>>>>>>处理当日过期的工单数据,当前时间为：", today.toString());
+    }
+
+    private void dealAllData(List<TpmBill> tpmBills){
+        //处理所有需要转为过期的数据
+        if(CollectionUtils.isNotEmpty(tpmBills)){
+            List<TpmBill> overdueTpmBillList = new ArrayList<>();
+            for(TpmBill tpmBill:tpmBills){
+                Integer status = TmpStatusEnum.REPAIR_OVERDUE.getCode();
+                if(tpmBill.getTpmStatus().equals(TmpStatusEnum.PENDING.getCode())){
+                    status = TmpStatusEnum.PEND_OVERDUE.getCode();
+                }
+                if(tpmBill.getTpmStatus().equals(TmpStatusEnum.PENDED.getCode())
+                        || tpmBill.getTpmStatus().equals(TmpStatusEnum.REPAIRED.getCode())){
+                    status = TmpStatusEnum.AUDIT_OVERDUE.getCode();
+                }
+                TpmBill overdueTpmBill = new TpmBill().builder().
+                        id(tpmBill.getId())
+                        .tpmStatus(status)
+                        .build();
+                overdueTpmBillList.add(overdueTpmBill);
+            }
+            //更新所有的过期数据
+            tpmBillMapper.updateTpmBillList(overdueTpmBillList);
+        }
     }
 }

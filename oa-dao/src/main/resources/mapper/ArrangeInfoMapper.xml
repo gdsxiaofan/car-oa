@@ -46,7 +46,7 @@
 		<include refid="Base_Column_List" />
 		FROM t_arrange_info where delete_status =1
 	</select>
-    <select id="selectCurrentArrange" resultType="com.xiaofan.car.persistence.model.ArrangeInfo">
+    <select id="selectCurrentArrange" resultMap="BaseResultMap">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM t_arrange_info

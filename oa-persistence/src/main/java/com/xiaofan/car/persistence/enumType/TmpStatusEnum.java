@@ -16,7 +16,8 @@ public enum TmpStatusEnum {
     REPAIRED(4,"维修完成"),
     FINISHED(5,"已完成"),
     PEND_OVERDUE(6,"过期"),
-    REPAIR_OVERDUE(7,"过期");
+    REPAIR_OVERDUE(7,"过期"),
+    AUDIT_OVERDUE(8,"过期");
 
     @Getter
     private int code;
