@@ -3,19 +3,20 @@
     <Card>
       <p slot="title">条件查询</p>
       <Row>
-        <Col :span="4" >
+        <Col :span="4">
         时间区间：
         </Col>
         <Col :span="7">
-        <DatePicker type="daterange" :value="[queryCondition.begin,queryCondition.end]" @on-change='queryCondition.begin=arguments[0][0];queryCondition.end=arguments[0][1]'
+        <DatePicker type="daterange" :value="[queryCondition.begin,queryCondition.end]"
+                    @on-change='queryCondition.begin=arguments[0][0];queryCondition.end=arguments[0][1]'
                     placeholder="选择日期和时间（不含秒）"
                     style="width: 300px"
                     :clearable="false"></DatePicker>
         </Col>
-        <Col :span="2":offset="4">
+        <Col :span="2" :offset="4">
         工单名：
         </Col>
-        <Col :span="3" >
+        <Col :span="3">
         <Input type="text" v-model="queryCondition.tpmBillName" placeholder="请输入..."></Input>
         </Col>
         <Col :span="3" offset='18' class="ModalRow">
@@ -64,7 +65,7 @@
         </Row>
         <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">标准检查操作步骤</strong>
+          <strong class="label">描述</strong>
           </Col>
           <Col span="14">
           {{detail.serviceDescribe}}
@@ -94,7 +95,7 @@
           </Col>
           <Col span="14">
           <div class="demo-upload-list" v-for="(item,index) in lookList">
-            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
+            <img @click="handleView(item)" :src="env+'/v1/image/sosOutImg/'+item">
           </div>
           </Col>
         </Row>
@@ -112,7 +113,7 @@
           </Col>
           <Col span="14">
           <div class="demo-upload-list" v-for="(item,index) in fixImgList">
-            <img @click="handleView(item)"  :src="env+'/v1/image/sosOutImg/'+item">
+            <img @click="handleView(item)" :src="env+'/v1/image/sosOutImg/'+item">
           </div>
           </Col>
         </Row>
@@ -163,12 +164,13 @@
     doOrder
   } from '../../api/order'
   import {formatData} from '../../lib/utils/common'
+
   export default {
     data() {
       return {
-        env:process.env.NODE_ENV === 'production' ? '' : "car",
+        env: process.env.NODE_ENV === 'production' ? '' : "car",
         img: '',
-        fixImgList:[],
+        fixImgList: [],
         lookList: [],
         visible: false,
         imgList: [],
@@ -206,8 +208,8 @@
           pageNum: 1,
           tpmBillName: '',
           total: 0,
-          begin:formatData.call(new Date(), "yyyy-MM-dd"),
-          end:formatData.call(new Date(), "yyyy-MM-dd")
+          begin: formatData.call(new Date(), "yyyy-MM-dd"),
+          end: formatData.call(new Date(), "yyyy-MM-dd")
         },
         columns: [
           {
@@ -228,12 +230,13 @@
           },
           {
             title: '状态',
-            key: 'tpmStatusName'
+            key: 'tpmStatusName',
+            className: 'red'
           },
           {
             title: '是否异常',
             render: (h, params) => {
-              return h('div', params.row.repairedUserId===0||params.row.tpmStatus===3?"异常":"无异常")
+              return h('div', params.row.repairedUserId === 0 || params.row.tpmStatus === 3 ? "异常" : "无异常")
             }
           },
           {
@@ -251,48 +254,21 @@
                     click: () => {
                       this.userModal.isShow = true
                       this.detail = params.row
-                      let fixImgList=[]
-                      params.row.repairAttachements.forEach(e=>{
+                      let fixImgList = []
+                      params.row.repairAttachements.forEach(e => {
                         fixImgList.push(e.id)
                       })
-                      this.fixImgList=fixImgList
-                      let lookList=[]
-                      params.row.pendAttachements.forEach(e=>{
+                      this.fixImgList = fixImgList
+                      let lookList = []
+                      params.row.pendAttachements.forEach(e => {
                         lookList.push(e.id)
                       })
-                      this.lookList=lookList
+                      this.lookList = lookList
                     }
                   }
                 },
                 '详情'
               )]
-//              if (params.row.tpmStatus===2||params.row.tpmStatus===4 )
-//                button.push(h('Button', {
-//                    props: {
-//                      type: 'info'
-//                    },
-//                    style: {
-//                      marginRight: '5px'
-//                    },
-//                    on: {
-//                      click: () => {
-//                        this.orderId = params.row.id
-//                        let fixImgList=[]
-//                        params.row.repairAttachements.forEach(e=>{
-//                          fixImgList.push(e.id)
-//                        })
-//                        this.fixImgList=fixImgList
-//                        let lookList=[]
-//                        params.row.pendAttachements.forEach(e=>{
-//                          lookList.push(e.id)
-//                        })
-//                        this.lookList=lookList
-//                        this.doModal.isShow = true
-//                      }
-//                    }
-//                  },
-//                  '审核'
-//                ))
               return h('div', button)
             }
           }
@@ -304,6 +280,9 @@
       getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
         getOrderList(this.queryCondition).then(res => {
+          res.data.data.list.forEach(x => {
+            x.cellClassName = {tpmStatusName: (x.tpmStatus===6||x.tpmStatus===7)?'red':x.tpmStatus===5?'green':'yellow'}
+          })
           this.queryCondition.pageNum = res.data.data.pageNum
           this.list = res.data.data.list
           this.queryCondition.total = res.data.data.total
@@ -327,7 +306,7 @@
         })
       },
       handleView(id) {
-        this.img = this.env+'/v1/image/sosOutImg/'+id;
+        this.img = this.env + '/v1/image/sosOutImg/' + id;
         this.visible = true;
       },
       handleRemove(index) {
@@ -385,7 +364,7 @@
   }
 </script>
 
-<style scoped>
+<style >
   .ModalRow {
     margin-top: 1%;
   }
@@ -394,13 +373,14 @@
     font-size: 14px;
   }
 
-  .time {
-    font-size: 14px;
-    font-weight: bold;
+  td.red {
+    background: red;
   }
-
-  .content {
-    padding-left: 5px;
+  td.green {
+    background: #19be6b;
+  }
+  td.yellow {
+    background: yellow;
   }
 
   .demo-upload-list {
