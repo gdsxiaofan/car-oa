@@ -56,7 +56,7 @@
         </Row>
         <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">描述</strong>
+          <strong class="label">标准检查操作步骤</strong>
           </Col>
           <Col span="14">
           {{detail.serviceDescribe}}
@@ -160,7 +160,7 @@
       </Row>
       <Row class="ModalRow">
         <Col span="10">
-        <strong class="label">描述</strong>
+        <strong class="label">标准检查操作步骤</strong>
         </Col>
         <Col span="14">
         {{detail.serviceDescribe}}

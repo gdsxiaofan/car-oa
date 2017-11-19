@@ -64,7 +64,7 @@
         </Row>
         <Row class="ModalRow">
           <Col span="10">
-          <strong class="label">描述</strong>
+          <strong class="label">标准检查操作步骤</strong>
           </Col>
           <Col span="14">
           {{detail.serviceDescribe}}
@@ -223,8 +223,18 @@
             key: "deviceName"
           },
           {
+            title: '巡检人',
+            key: "repairedUserName"
+          },
+          {
             title: '状态',
             key: 'tpmStatusName'
+          },
+          {
+            title: '是否异常',
+            render: (h, params) => {
+              return h('div', params.row.repairedUserId===0||params.row.tpmStatus===3?"异常":"无异常")
+            }
           },
           {
             title: '操作',

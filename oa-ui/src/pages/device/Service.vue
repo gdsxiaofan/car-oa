@@ -45,20 +45,16 @@
           <Input type="text" v-model="service.serviceName" :disabled="userModal.disabled" placeholder="服务名称"/>
         </Form-item>
         <Form-item label="巡检周期：">
-          <InputNumber :max="99999" v-model="service.checkCycle" :disabled="userModal.disabled"></InputNumber>
-        </Form-item>
-        <Form-item label="任务描述：">
-          <Input type="textarea" autosize v-model="service.serviceDescribe" :disabled="userModal.disabled"
-                 placeholder="属性二"/>
+          <InputNumber :max="99999" v-model="service.checkCycle" :disabled="userModal.disabled"></InputNumber>天
         </Form-item>
         <Form-item label="检查时间">
           <TimePicker format="HH:mm" :value="service.checkTime" @on-change='service.checkTime=arguments[0]'
-                      style="width: 300px" :disabled="userModal.disabled"
+                      style="width: 300px" :disabled="userModal.disabled" :key="service.checkTime"
                       :clearable="false"></TimePicker>
         </Form-item>
         <Form-item label="开始时间">
           <DatePicker type="date" :value="service.fromDate" @on-change='service.fromDate=arguments[0]'
-                      placeholder="选择日期和时间（不含秒）"
+                      placeholder="选择日期和时间（不含秒）"   :key="service.fromDate"
                       style="width: 300px" :disabled="userModal.disabled"
                       :clearable="false"></DatePicker>
         </Form-item>
@@ -87,12 +83,10 @@
             </upload>
           </Row>
         </Form-item>
-        <!--<Form-item label="结束时间">-->
-        <!--<DatePicker type="date" :value="service.lastCheckTime" @on-change='service.lastCheckTime=arguments[0]'-->
-        <!--placeholder="选择日期和时间（不含秒）"-->
-        <!--style="width: 300px" :disabled="userModal.disabled"-->
-        <!--:clearable="false"></DatePicker>-->
-        <!--</Form-item>-->
+        <Form-item label="标准检查操作步骤">
+          <Input type="textarea" autosize v-model="service.serviceDescribe" :disabled="userModal.disabled"
+                 placeholder=""/>
+        </Form-item>
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="userModal.isShow=false" style="margin-left: 8px">取消</Button>
