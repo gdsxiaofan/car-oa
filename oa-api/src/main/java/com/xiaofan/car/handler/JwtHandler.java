@@ -8,6 +8,7 @@ import com.xiaofan.car.util.jwt.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Description: jwt登录token认证
  * @Date:Create in 17:25 2017/8/25
  */
+@Service
 public class JwtHandler implements HandlerInterceptor {
 
     @Autowired
