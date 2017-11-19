@@ -19,5 +19,5 @@ public class TpmBillParam {
     Integer dealType;//操作类型：2：巡检完成 3.待维修 4，维修完成 5，审核完成
     String attachmentIds;//附件id，用逗号隔开：1，2，3，4
     String desc;//备注
-
+    String jwt;
 }

@@ -8,6 +8,7 @@ import com.xiaofan.car.util.jwt.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,11 +21,11 @@ import javax.servlet.http.HttpServletResponse;
  * @Description: jwt登录token认证
  * @Date:Create in 17:25 2017/8/25
  */
-@Service
+//@Component
 public class JwtHandler implements HandlerInterceptor {
 
-    @Autowired
-    private EmployeeMapper employeeMapper;
+//    @Autowired
+//    private EmployeeMapper employeeMapper;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String jwt = request.getHeader(Constant.AUTHORIZATION);
@@ -39,8 +40,8 @@ public class JwtHandler implements HandlerInterceptor {
             return false;
         }
         //查询对应的用户信息
-        Employee employee = employeeMapper.selectById(id);
-        MDC.put("user", JSONHelper.obj2JSONString(employee));
+//        Employee employee = employeeMapper.selectById(id);
+//        MDC.put("user", JSONHelper.obj2JSONString(employee));
         response.setHeader(Constant.AUTHORIZATION, JwtUtil.getJWTString(id));
         return true;
 

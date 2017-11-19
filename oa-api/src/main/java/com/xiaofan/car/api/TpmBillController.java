@@ -59,8 +59,9 @@ public class TpmBillController {
 
     @ApiOperation(value = "员工完成工单接口", notes = "员工完成工单接口", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/update")
-    public JsonResult updateTpmBill(TpmBillParam tpmBillParam){
-
+    public JsonResult updateTpmBill(HttpServletRequest request,TpmBillParam tpmBillParam){
+        String jwt = request.getHeader(Constant.AUTHORIZATION);
+        tpmBillParam.setJwt(jwt);
         tpmBillBiz.updateTpmBillForFinished(tpmBillParam);
         return new JsonResult(1, "操作成功");
     }
