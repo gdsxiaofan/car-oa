@@ -12,9 +12,11 @@ import com.xiaofan.car.persistence.param.TpmBillParam;
 import com.xiaofan.car.persistence.param.TpmBillQueryParam;
 import com.xiaofan.car.persistence.vo.TpmBillVo;
 import com.xiaofan.car.service.AttachmentService;
+import com.xiaofan.car.util.json.JSONHelper;
 import io.jsonwebtoken.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,13 +123,14 @@ public class TpmBillBizImpl implements TpmBillBiz {
         List<Integer> fromStatus = new ArrayList<>();
         toStatus = transformStatus(toStatus, fromStatus, tpmBillParam);
         // 查询当前处理的用户人员信息
-        Integer userId = null;
-        String userName = null;
-        if(tpmBillParam.getUserId()!=null){
-            Employee employee = employeeMapper.selectById(tpmBillParam.getUserId());
-            userId = employee.getId();
-            userName = employee.getEmployeeName();
-        }
+        Employee employee = JSONHelper.jsonToObject(MDC.get("user"),Employee.class);
+        Integer userId = employee.getId();
+        String userName = employee.getEmployeeName();
+//        if(tpmBillParam.getUserId()!=null){
+//            Employee employee = employeeMapper.selectById(tpmBillParam.getUserId());
+//            userId = employee.getId();
+//            userName = employee.getEmployeeName();
+//        }
         Date dateNow = Calendar.getInstance().getTime();
         if(toStatus==TmpStatusEnum.PENDED.getCode()||toStatus==TmpStatusEnum.REPAIRING.getCode()){
             flag = tpmBillMapper.updateForXJ(tpmBillParam.getId(), toStatus, fromStatus
