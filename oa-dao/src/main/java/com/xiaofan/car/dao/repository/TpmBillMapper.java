@@ -119,4 +119,14 @@ public interface TpmBillMapper{
     public List<TpmBillVo> getTpmBillVoListByStatus(
                                             @Param("tpmStatusList")List<Integer> tpmStatusList,
                                             @Param("tpmName")String tpmName);
+
+    public List<TpmBill> getTpmBillForOverdue(
+            @Param("tpmStatusList")List<Integer> tpmStatusList,
+            @Param("startTime")Date startTime,
+            @Param("endTime")Date endTime
+    );
+
+    public void updateTpmBillList(
+            List<TpmBill> tpmBills
+    );
 }

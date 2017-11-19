@@ -188,6 +188,25 @@
             AND tpm_name like CONCAT('%',#{tpmName},'%')
         </if>
     </select>
+    <select id="getTpmBillForOverdue" resultType="com.xiaofan.car.persistence.model.TpmBill">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_tpm_bill
+        WHERE
+            <if test="tpmStatusList!=null">
+                AND tpm_status IN
+                <foreach collection="tpmStatusList" open="(" close=")" index="index" item="item" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="startTime!=null">
+            and check_time &gt;= #{startTime}
+            </if>
+            <if test="endTime!=null">
+                and check_time &lt;= #{endTime}
+            </if>
+
+    </select>
 
     <!--删除：根据主键ID删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

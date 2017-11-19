@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -15,6 +17,8 @@ import java.net.UnknownHostException;
  * Created by gongdaoshun on 2017/8/6.
  */
 @SpringBootApplication
+@EnableScheduling
+@EnableBatchProcessing
 @MapperScan("com.xiaofan.car.dao.repository")
 @Slf4j
 public class AppStartConfiguration{

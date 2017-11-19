@@ -31,4 +31,8 @@ public interface ArrangeInfoMapper{
      * @return
      */
     public boolean updateForPause(@Param("id")Integer id);
+
+    public ArrangeInfo selectCurrentArrange(
+            @Param("isEffective")Integer isEffective
+    );
 }

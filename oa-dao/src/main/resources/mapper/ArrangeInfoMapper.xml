@@ -46,8 +46,14 @@
 		<include refid="Base_Column_List" />
 		FROM t_arrange_info where delete_status =1
 	</select>
+    <select id="selectCurrentArrange" resultType="com.xiaofan.car.persistence.model.ArrangeInfo">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM t_arrange_info
+		WHERE is_effective = #{isEffective}
+	</select>
 
-	<!--删除：根据主键ID删除-->
+    <!--删除：根据主键ID删除-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		 DELETE FROM t_arrange_info
 		 WHERE id = #{id}

@@ -6,49 +6,51 @@
     <!--实体映射-->
     <resultMap id="BaseResultMap" type="com.xiaofan.car.persistence.model.CheckInfo">
         <!---->
-        <id property="id" column="id"/>
+        <id property="id" column="id" />
         <!--服务名称-->
-        <result property="serviceName" column="service_name"/>
+        <result property="serviceName" column="service_name" />
         <!--设备id-->
-        <result property="deviceId" column="device_id"/>
+        <result property="deviceId" column="device_id" />
         <!--设备名称-->
-        <result property="deviceName" column="device_name"/>
+        <result property="deviceName" column="device_name" />
         <!--系统id-->
-        <result property="systemId" column="system_id"/>
+        <result property="systemId" column="system_id" />
         <!--系统名称-->
-        <result property="systemName" column="system_name"/>
-        <!--检查时间，格式为：hh:ss-->
-        <result property="checkTime" column="check_time"/>
-        <!--检查点-->
-        <result property="checkPoint" column="check_point"/>
-        <!--检查/维护内容-->
-        <result property="checkComment" column="check_comment"/>
-        <!--设定值-->
-        <result property="setValue" column="set_value"/>
-        <!--班次：1，早班；2：中班-->
-        <result property="shiftsNo" column="shifts_no"/>
-        <!--创建人id-->
-        <result property="createUserId" column="create_user_id"/>
-        <!--任务描述-->
-        <result property="serviceDescribe" column="service_describe"/>
-        <!--首次巡检日期-->
-        <result property="firstCheckTime" column="first_check_time"/>
-        <!--最后一次巡检的日期-->
-        <result property="lastCheckTime" column="last_check_time"/>
-        <!--有效状态：0：无效，1：有效-->
-        <result property="deleteStatus" column="delete_status"/>
-        <!--创建时间-->
-        <result property="createTime" column="create_time"/>
-        <!--更新时间-->
-        <result property="updateTime" column="update_time"/>
+        <result property="systemName" column="system_name" />
         <!--巡检周期-->
-        <result property="checkCycle" column="check_cycle"/>
+        <result property="checkCycle" column="check_cycle" />
+        <!--检查时间，格式为：hh:ss-->
+        <result property="checkTime" column="check_time" />
+        <!--检查点-->
+        <result property="checkPoint" column="check_point" />
+        <!--检查/维护内容-->
+        <result property="checkComment" column="check_comment" />
+        <!--设定值-->
+        <result property="setValue" column="set_value" />
+        <!--班次：1，早班；2：中班-->
+        <result property="shiftsNo" column="shifts_no" />
+        <!--创建人id-->
+        <result property="createUserId" column="create_user_id" />
+        <!--任务描述-->
+        <result property="serviceDescribe" column="service_describe" />
+        <!--首次巡检日期-->
+        <result property="firstCheckTime" column="first_check_time" />
+        <!--最后一次巡检的日期-->
+        <result property="lastCheckTime" column="last_check_time" />
+        <!--有效状态：0：无效，1：有效-->
+        <result property="deleteStatus" column="delete_status" />
+        <!--创建时间-->
+        <result property="createTime" column="create_time" />
+        <!--更新时间-->
+        <result property="updateTime" column="update_time" />
+        <!--下一次巡检的时间-->
+        <result property="nextCheckTime" column="next_check_time" />
     </resultMap>
 
 
     <!-- 通用查询结果列-->
     <sql id="Base_Column_List">
-        id, service_name, device_id, device_name, system_id, system_name, check_time, check_point, check_comment, set_value, shifts_no, create_user_id, service_describe, first_check_time, last_check_time, delete_status, create_time, update_time, check_cycle
+        id,	service_name,	device_id,	device_name,	system_id,	system_name,	check_cycle,	check_time,	check_point,	check_comment,	set_value,	shifts_no,	create_user_id,	service_describe,	first_check_time,	last_check_time,	delete_status,	create_time,	update_time,	next_check_time
     </sql>
 
     <!-- 查询（根据主键ID查询） -->
@@ -327,8 +329,8 @@
         WHERE
             device_id = #{deviceId} AND delete_status = 1
     </select>
-    <select id="selectTodayCheckInfo" resultType="com.xiaofan.car.persistence.model.CheckInfo">
-        SELECT *
+    <select id="selectTodayCheckInfo" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
         FROM
             t_check_info
         WHERE

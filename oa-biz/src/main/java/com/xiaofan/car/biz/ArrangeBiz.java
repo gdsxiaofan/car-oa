@@ -1,7 +1,9 @@
 package com.xiaofan.car.biz;
 
+import com.xiaofan.car.persistence.model.ArrangeInfo;
 import com.xiaofan.car.persistence.param.ArrangeParam;
 import com.xiaofan.car.persistence.vo.ArrangeInfoVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -40,4 +42,6 @@ public interface ArrangeBiz {
      * @return
      */
     public boolean deleteArrange(Integer id);
+
+
 }
