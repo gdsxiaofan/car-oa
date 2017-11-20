@@ -236,7 +236,7 @@
           {
             title: '是否异常',
             render: (h, params) => {
-              return h('div', params.row.repairedUserId === 0 || params.row.tpmStatus === 3 ? "异常" : "无异常")
+              return h('div', params.row.repairedUserId === 0 || params.row.tpmStatus === 3 || params.row.tpmStatus===7? "异常" : "无异常")
             }
           },
           {
@@ -281,7 +281,7 @@
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
         getOrderList(this.queryCondition).then(res => {
           res.data.data.list.forEach(x => {
-            x.cellClassName = {tpmStatusName: (x.tpmStatus===6||x.tpmStatus===7)?'red':x.tpmStatus===5?'green':'yellow'}
+            x.cellClassName = {tpmStatusName: (x.tpmStatus===6||x.tpmStatus===7||x.tpmStatus===8)?'red':x.tpmStatus===5?'green':'yellow'}
           })
           this.queryCondition.pageNum = res.data.data.pageNum
           this.list = res.data.data.list
