@@ -7,9 +7,7 @@ import Vuex from 'vuex'
 import router from './routes'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
-import VueClipboard from 'vue-clipboard2'
 
-Vue.use(VueClipboard)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(iview)
