@@ -225,7 +225,7 @@
             key: "deviceName"
           },
           {
-            title: '巡检人',
+            title: '责任人',
             key: "repairedUserName"
           },
           {
