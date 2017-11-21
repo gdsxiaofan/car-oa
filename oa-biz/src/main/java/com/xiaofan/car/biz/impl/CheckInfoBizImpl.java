@@ -1,10 +1,13 @@
 package com.xiaofan.car.biz.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.CheckInfoBiz;
 import com.xiaofan.car.dao.repository.CheckInfoMapper;
 import com.xiaofan.car.persistence.enumType.AttachmentBizTypeEnum;
 import com.xiaofan.car.persistence.model.CheckInfo;
 import com.xiaofan.car.persistence.param.CheckInfoParam;
+import com.xiaofan.car.persistence.param.CheckInfoQueryParam;
 import com.xiaofan.car.persistence.vo.CheckInfoVo;
 import com.xiaofan.car.service.AttachmentService;
 import com.xiaofan.car.service.TpmBillService;
@@ -42,14 +45,14 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
     @Autowired
     private AttachmentService attachmentService;
     @Override
-    public List<CheckInfoVo> getCheckInfoList(Integer deviceId) {
+    public PageInfo<CheckInfoVo> getCheckInfoList(CheckInfoQueryParam checkInfoQueryParam) {
         // 1.校验参数
-        Assert.notNull(deviceId,"设备id不能为空");
-
+        Assert.notNull(checkInfoQueryParam.getDeviceId(),"设备id不能为空");
+        PageHelper.startPage(checkInfoQueryParam.getPageNum(),checkInfoQueryParam.getPageSize());
         // 2. 查询对应的检查项列表
-        List<CheckInfoVo> checkInfoVos = checkInfoMapper.getCheckInfoByDeviceId(deviceId);
+        List<CheckInfoVo> checkInfoVos = checkInfoMapper.getCheckInfoByDeviceId(checkInfoQueryParam.getDeviceId());
         checkInfoVos.forEach(e-> e.setAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.CHECK_TYPE )));;
-        return checkInfoVos;
+        return new PageInfo<CheckInfoVo>(checkInfoVos);
     }
 
     @Override

@@ -5,7 +5,7 @@ export function getServiceList(deviceId) {
   return fetch({
     url: `${baseurl}getlist`,
     method: 'get',
-    params: {deviceId}
+    params: deviceId
   })
 }
 //新增

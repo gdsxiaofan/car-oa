@@ -3,6 +3,7 @@ package com.xiaofan.car.biz;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.persistence.model.CheckInfo;
 import com.xiaofan.car.persistence.param.CheckInfoParam;
+import com.xiaofan.car.persistence.param.CheckInfoQueryParam;
 import com.xiaofan.car.persistence.vo.CheckInfoVo;
 
 import java.util.List;
@@ -18,10 +19,10 @@ public interface CheckInfoBiz {
 
     /**
      * 获取检查项列表数据
-     * @param deviceId
+     * @param checkInfoQueryParam
      * @return
      */
-    public List<CheckInfoVo> getCheckInfoList(Integer deviceId);
+    public PageInfo<CheckInfoVo> getCheckInfoList(CheckInfoQueryParam checkInfoQueryParam);
 
     /**
      * 保存对应的检查项信息

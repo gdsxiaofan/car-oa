@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.CheckInfoBiz;
 import com.xiaofan.car.persistence.model.CheckInfo;
 import com.xiaofan.car.persistence.param.CheckInfoParam;
+import com.xiaofan.car.persistence.param.CheckInfoQueryParam;
 import com.xiaofan.car.persistence.param.DeviceInfoParam;
 import com.xiaofan.car.persistence.param.ServiceParam;
 import com.xiaofan.car.persistence.vo.CheckInfoVo;
@@ -36,9 +37,9 @@ public class CheckInfoController {
 
     @ApiOperation(value = "获取所有设备服务", notes = "获取所有设备服务", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getlist")
-    public JsonResult<List<CheckInfoVo>> getlist(int deviceId) {
-        List pageInfo= checkInfoBiz.getCheckInfoList(deviceId);
-        return new JsonResult<List<CheckInfoVo>>(1, "获取成功",pageInfo);
+    public JsonResult<PageInfo<CheckInfoVo>> getlist(CheckInfoQueryParam checkInfoQueryParam) {
+        PageInfo<CheckInfoVo> pageInfo= checkInfoBiz.getCheckInfoList(checkInfoQueryParam);
+        return new JsonResult<PageInfo<CheckInfoVo>>(1, "获取成功",pageInfo);
     }
     @ApiOperation(value = "新增检查信息", notes = "新增检查信息", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/add")

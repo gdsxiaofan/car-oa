@@ -24,6 +24,12 @@
       </Row>
     </Card>
     <Table border :columns="columns" :data="list"></Table>
+    <div style="margin: 10px;overflow: hidden">
+      <div style="float: right;">
+        <Page :total="queryCondition.total" :current.sync="queryCondition.pageNum" @on-change="getlist" show-total
+              show-elevator></Page>
+      </div>
+    </div>
     <Row>
       <Col :offset="11">
       <Button type="primary" v-on:click.native="$router.go(-1)">
@@ -118,6 +124,12 @@
     data() {
       return {
         env: process.env.NODE_ENV === 'production' ? '' : "car",
+        queryCondition: {
+          pageSize: 10,
+          pageNum: 1,
+          deviceId: this.$route.query.deviceId,
+          total: 0
+        },
         uploadList: [],
         visible: false,
         checkTimeKey:new Date(),
@@ -261,9 +273,11 @@
         this.userModal.isShow = true
         this.userModal.disabled = false
       },
-      getlist() {
-        getServiceList(this.$route.query.deviceId).then(res => {
-          this.list = res.data.data
+      getlist(pageNum ) {
+        this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
+        getServiceList(this.queryCondition).then(res => {
+          this.list = res.data.data.list
+          this.queryCondition.total=res.data.data.total
         }).catch(err => {
 
         });
@@ -374,9 +388,7 @@
         this.device.location = res.data.data.location
         this.device.routingDays = res.data.data.routingDays
       })
-      getServiceList(this.$route.query.deviceId).then(res => {
-        this.list = res.data.data
-      })
+      this.getlist()
     }
   }
 </script>
