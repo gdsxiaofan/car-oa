@@ -49,8 +49,8 @@
         </Form-item>
         <Form-item label="检查时间">
           <TimePicker format="HH:mm" :value="service.checkTime" @on-change='service.checkTime=arguments[0]'
-                      style="width: 300px" :disabled="userModal.disabled" :key="service.checkTime"
-                      :clearable="false"></TimePicker>
+                      style="width: 300px" :disabled="userModal.disabled" :key="checkTimeKey"
+                      :clearable="true"></TimePicker>
         </Form-item>
         <Form-item label="开始时间">
           <DatePicker type="date" :value="service.fromDate" @on-change='service.fromDate=arguments[0]'
@@ -120,6 +120,7 @@
         env: process.env.NODE_ENV === 'production' ? '' : "car",
         uploadList: [],
         visible: false,
+        checkTimeKey:new Date(),
         device: {
           deviceName: '',
           routingDays: 1,
@@ -150,10 +151,10 @@
         },
 
         columns: [
-          {
-            title: '序号',
-            key: 'id'
-          },
+//          {
+//            title: '序号',
+//            key: 'id'
+//          },
           {
             title: '服务名称',
             key: 'serviceName'
@@ -254,6 +255,7 @@
           fromDate: formatData.call(new Date(), 'yyyy-MM-dd'),
           lastCheckTime: new Date(),
         }
+        this.checkTimeKey=new Date()
         this.uploadList = []
         this.userModal.title = '新增服务'
         this.userModal.isShow = true

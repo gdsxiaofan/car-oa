@@ -64,7 +64,7 @@
           <Select v-model="userInfo.shiftsNo" style="width:200px">
             <Option :value="0">无排班</Option>
             <Option :value="1">早班</Option>
-            <Option :value="2">午班</Option>
+            <Option :value="2">晚班</Option>
           </Select>
         </Form-item>
         <Form-item label="手机号码：" prop="employeeMobile">
