@@ -72,6 +72,10 @@ public class TpmBillBizImpl implements TpmBillBiz {
             calendar.add(Calendar.DATE,1);
             endTime = calendar.getTime();
         }
+        //如果是待巡检的，只能看到当前时间之前的单子
+        if(TmpStatusEnum.PENDING.getCode()==(tpmBillQueryParam.getTpmStatus())){
+            endTime = Calendar.getInstance().getTime();
+        }
 
         List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoList(tpmBillQueryParam.getTpmType(), tpmBillQueryParam.getTpmStatus(), tpmBillQueryParam.getTpmBillName(),startTime,endTime);
         tpmBillVoList.forEach(e->{
