@@ -9,7 +9,6 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +16,7 @@ import java.util.Date;
 /**
  * Created by gongdaoshun on 2017/8/6.
  */
-@Component
+//@Component
 @Slf4j
 public class ScheduledTasks {
 
