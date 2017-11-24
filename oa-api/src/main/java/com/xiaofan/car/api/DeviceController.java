@@ -1,22 +1,17 @@
 package com.xiaofan.car.api;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.DeviceBiz;
-import com.xiaofan.car.persistence.model.Device;
 import com.xiaofan.car.persistence.param.DeviceInfoParam;
 import com.xiaofan.car.persistence.param.DeviceParam;
 import com.xiaofan.car.persistence.vo.DeviceInfoVo;
 import com.xiaofan.car.persistence.vo.JsonResult;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author:duhongda
@@ -30,11 +25,14 @@ public class DeviceController {
 
     @Autowired
     private DeviceBiz deviceBiz;
-
+    //用于转发数据(sendTo)
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @ApiOperation(value = "获取所有设备", notes = "获取所有设备", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/getlist")
     public JsonResult<PageInfo<DeviceInfoVo>> getlist(DeviceParam param) {
+        template.convertAndSendToUser("1","/getResponse",param);
         PageInfo<DeviceInfoVo> deviceInfoVoPageInfo = deviceBiz.getDeviceList(param);
         return new JsonResult<PageInfo<DeviceInfoVo>>(1, "获取成功",deviceInfoVoPageInfo);
     }

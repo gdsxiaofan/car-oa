@@ -7,11 +7,12 @@ import Vuex from 'vuex'
 import router from './routes'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
-import vueStome from 'vue-stomp'
+import stomp from './stomp'
+
 Vue.use(VueRouter)
+Vue.use(stomp)
 Vue.use(Vuex)
 Vue.use(iview)
-Vue.use(vueStome)
 Vue.config.devtools = true
 
 Array.prototype.indexOf = function(val) {
