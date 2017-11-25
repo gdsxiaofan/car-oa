@@ -236,7 +236,7 @@
           {
             title: '是否异常',
             render: (h, params) => {
-              return h('div', params.row.repairedUserId === 0 || params.row.tpmStatus === 3 || params.row.tpmStatus===7? "异常" : "无异常")
+              return h('div', params.row.repairedUserId !== 0 || params.row.tpmStatus === 3 || params.row.tpmStatus===7? "异常" : "无异常")
             }
           },
           {
