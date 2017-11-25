@@ -125,6 +125,9 @@
         <if test="endTime!=null">
             and create_time &lt;= #{endTime}
         </if>
+        <if test="checkTime!=null">
+            and check_time &lt;= #{checkTime}
+        </if>
     </select>
     <select id="getTpmBillDetail" resultType="com.xiaofan.car.persistence.vo.TpmBillVo">
         SELECT

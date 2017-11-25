@@ -137,6 +137,7 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
                 .serviceName(checkInfoParam.getServiceName())
                 .checkCycle(checkInfoParam.getCheckCycle())
                 .checkComment(checkInfoParam.getCheckComment())
+                .checkTime(checkInfoParam.getCheckTime())
                 .serviceDescribe(checkInfoParam.getServiceDescribe())
                 .build();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

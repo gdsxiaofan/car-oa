@@ -63,6 +63,7 @@ public class TpmBillBizImpl implements TpmBillBiz {
         // 2.调用查询接口
         Date startTime = null;
         Date endTime = null;
+        Date checkTime = null;
         if(StringUtils.isNotBlank(tpmBillQueryParam.getBegin())&&StringUtils.isNotBlank(tpmBillQueryParam.getEnd())){
             SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
             startTime = sdf.parse(tpmBillQueryParam.getBegin());
@@ -74,10 +75,10 @@ public class TpmBillBizImpl implements TpmBillBiz {
         }
         //如果是待巡检的，只能看到当前时间之前的单子
         if(tpmBillQueryParam.getTpmStatus()!=null&&TmpStatusEnum.PENDING.getCode()==(tpmBillQueryParam.getTpmStatus())){
-            endTime = Calendar.getInstance().getTime();
+            checkTime = Calendar.getInstance().getTime();
         }
 
-        List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoList(tpmBillQueryParam.getTpmType(), tpmBillQueryParam.getTpmStatus(), tpmBillQueryParam.getTpmBillName(),startTime,endTime);
+        List<TpmBillVo> tpmBillVoList = tpmBillMapper.getTpmBillVoList(tpmBillQueryParam.getTpmType(), tpmBillQueryParam.getTpmStatus(), tpmBillQueryParam.getTpmBillName(),startTime,endTime,checkTime);
         tpmBillVoList.forEach(e->{
             e.setPendAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.PEND_TYPE));
             e.setRepairAttachements(attachmentService.getAttachmentVoList(e.getId(),AttachmentBizTypeEnum.REPAIR_TYPE));

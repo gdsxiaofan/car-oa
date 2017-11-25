@@ -30,7 +30,8 @@ public interface TpmBillMapper{
                                             @Param("tpmStatus")Integer tpmStatus,
                                             @Param("tpmName")String tpmName,
                                             @Param("startTime")Date startTime,
-                                            @Param("endTime")Date endTime);
+                                            @Param("endTime")Date endTime,
+                                            @Param("checkTime")Date checkTime);
 
     /**
      *
