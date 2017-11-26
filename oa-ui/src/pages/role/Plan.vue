@@ -32,6 +32,7 @@
           <TimePicker :value="plan.night" type="timerange" placement="bottom-end" placeholder="选择时间"
                       @on-change="plan.night=arguments[0]" :clearable="false"
                       style="width: 168px"></TimePicker>
+          <div v-show="timerule" style="color: red">早班时间和晚班时间不可有交集</div>
         </Form-item>
       </Form>
       <div slot="footer">
@@ -163,8 +164,9 @@
           id: '',
           arrangeName: '',
           day: ['06:00:00', '11:00:00'],
-          night: ['13:41:00', '17:00:00']
+          night: ['13:00:00', '17:00:00']
         },
+        timerule: false,
         rule: {
           arrangeName: [
             {required: true, message: '不可为空', trigger: 'blur'}
@@ -179,11 +181,14 @@
       }
     },
     methods: {
-      test(e) {
-        console.log(e)
-      },
       doPlan() {
         this.$refs['plan'].validate((valid) => {
+          if (this.plan.day[1] > this.plan.night[0]) {
+            this.timerule = true
+            valid = false
+          } else {
+            this.timerule = false
+          }
           if (valid) {
             this.Modal.isLoading = true
             let plan = _.cloneDeep(this.plan)

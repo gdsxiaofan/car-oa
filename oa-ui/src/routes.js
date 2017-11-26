@@ -21,11 +21,7 @@ const verifyOrder = resolve => require(['./pages/order/verify.vue'], resolve)
 const configOrder = resolve => require(['./pages/order/config.vue'], resolve)
 /*所有工单*/
 const AllOrder = resolve => require(['./pages/order/All.vue'], resolve)
-//员工管理          >>>>>>
-/*信息*/
-const EmployeeInfo = resolve => require(['./pages/employee/Info.vue'], resolve)
-/*新增*/
-const EmployeeAdd = resolve => require(['./pages/employee/Add.vue'], resolve)
+
 //设备管理          >>>>>>
 /*信息*/
 const DeviceInfo = resolve => require(['./pages/device/Info.vue'], resolve)
@@ -48,8 +44,6 @@ let routes = [
       {path: 'verifyOrder', meta: {title: '审核工单'}, icon: 'ios-home', component: verifyOrder},
       {path: 'configOrder', meta: {title: '配置工单'}, icon: 'ios-home', component: configOrder},
       {path: 'allOrder', meta: {title: '所有工单'}, icon: 'ios-home', component: AllOrder},
-      {path: 'employeeInfo', meta: {title: '员工信息'}, icon: 'ios-home', component: EmployeeInfo},
-      {path: 'employeeAdd', meta: {title: '员工新增'}, icon: 'ios-home', component: EmployeeAdd},
       {path: 'deviceInfo', meta: {title: '设备信息'}, icon: 'ios-home', component: DeviceInfo},
       {path: 'service', meta: {title: '服务信息'}, icon: 'ios-home', component: Service},
 
