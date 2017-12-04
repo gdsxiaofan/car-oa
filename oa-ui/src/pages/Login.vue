@@ -93,11 +93,11 @@
     },
     created() {
       if (sessionStorage.getItem('username')) {
-        this.formLogin.username = JSON.parse(sessionStorage.getItem('username'))
+        this.formLogin.username = JSON.parse(localStorage.getItem('username'))
         this.formLogin.remember[0] = "ck"
       }
       if (sessionStorage.getItem('password')) {
-        this.formLogin.password = JSON.parse(sessionStorage.getItem('password'))
+        this.formLogin.password = JSON.parse(localStorage.getItem('password'))
       }
 
     }

@@ -1,5 +1,9 @@
 import VueRouter from 'vue-router'
 import iview from 'iview'
+import {
+  getCookie,
+  delCookie
+} from '../src/lib/utils/common'
 //登录页
 const Login = resolve => require(['./pages/Login.vue'], resolve)
 //404
@@ -74,11 +78,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   iview.LoadingBar.start();
   if (to.path === '/login') {
-    sessionStorage.removeItem('Authorization');
+    delCookie('Authorization');
   }
-  let jwt = sessionStorage.getItem("Authorization");
+  let jwt = getCookie("Authorization");
   if (!jwt && to.path !== '/login') {
-    next({ path: '/login',query:{ redirect: to.fullPath} })
+    next({path: '/login', query: {redirect: to.fullPath}})
     iview.LoadingBar.finish();
     window.scrollTo(0, 0);
   } else {

@@ -2,10 +2,9 @@ package com.xiaofan.car.api;
 
 import com.xiaofan.car.biz.LoginBiz;
 import com.xiaofan.car.dao.repository.LedgerInfoMapper;
+import com.xiaofan.car.handler.JwtHandler;
 import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.vo.JsonResult;
-import com.xiaofan.car.util.Constant;
-import com.xiaofan.car.util.jwt.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +37,9 @@ public class LoginController {
                             String password) {
         Employee employee=loginBiz.verificationForLogin(username,password);
         if(employee!=null){
-            String jwt = JwtUtil.getJWTString(employee.getId());
-            response.setHeader(Constant.AUTHORIZATION,jwt);
+//            String jwt = JwtUtil.getJWTString(employee.getId());
+            JwtHandler.setCookieJWT(employee.getId(),response);
+//            response.setHeader(Constant.AUTHORIZATION,jwt);
             return new JsonResult(1, "登陆成功");
         }
         return new JsonResult(0,"用户名或密码不匹配");
