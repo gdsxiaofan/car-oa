@@ -3,12 +3,12 @@ package com.xiaofan.car.api;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.RoleBiz;
 import com.xiaofan.car.biz.UserBiz;
+import com.xiaofan.car.handler.JwtHandler;
 import com.xiaofan.car.persistence.model.Employee;
 import com.xiaofan.car.persistence.param.UserQueryParam;
 import com.xiaofan.car.persistence.vo.EmployeeVo;
 import com.xiaofan.car.persistence.vo.JsonResult;
 import com.xiaofan.car.persistence.vo.UserPermissionVo;
-import com.xiaofan.car.util.Constant;
 import com.xiaofan.car.util.jwt.JwtUtil;
 import com.xiaofan.car.util.lang.MD5Util;
 import io.swagger.annotations.Api;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by gongdaoshun on 2017/8/26.
@@ -60,9 +60,9 @@ public class UserController {
     @ApiOperation(value = "获取当前用户、角色、权限信息", notes = "获取用户权限相关信息", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @GetMapping("/query")
     public JsonResult<UserPermissionVo> getUserPermissionVo(
-            HttpServletResponse response
+            HttpServletRequest request
     ) {
-        Integer userId = JwtUtil.parseJwt2Id(response.getHeader(Constant.AUTHORIZATION));
+        Integer userId = JwtUtil.parseJwt2Id(JwtHandler.getCookieJWT(request));
         JsonResult<UserPermissionVo> returnJson = new JsonResult<>();
 
         UserPermissionVo userPermissionVo = userBiz.getUserPermisson(userId);
@@ -76,9 +76,9 @@ public class UserController {
     @PutMapping("/updatePwd")
     public JsonResult<String> updatePwd(
             String oldPwd, String newPwd,
-            HttpServletResponse response
+            HttpServletRequest request
     ) {
-        Integer userId = JwtUtil.parseJwt2Id(response.getHeader(Constant.AUTHORIZATION));
+        Integer userId = JwtUtil.parseJwt2Id(JwtHandler.getCookieJWT(request));
         Boolean rs = userBiz.updatePwd(userId, oldPwd, newPwd);
         if (rs) {
             return new JsonResult<>(1, "修改成功");

@@ -24,23 +24,12 @@ public class JwtHandler implements HandlerInterceptor {
 //    private EmployeeMapper employeeMapper;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        String jwt = null;
-
-        Cookie[] cs = request.getCookies();
-        if (null != cs && cs.length > 0) {
-            Optional<Cookie> v = Stream.of(cs).filter((c) -> c.getName().equals(Constant.AUTHORIZATION)).findFirst();
-            if (v.isPresent()) {
-                Cookie cookie = v.get();
-                jwt = cookie.getValue();
-            }
-        }
-
+        String jwt = getCookieJWT(request);
         if (StringUtils.isBlank(jwt)) {//判断jwt是否为空
             response.setStatus(401);
             return false;
         }
         Integer id = JwtUtil.parseJwt2Id(jwt);
-
         if (id == null) {//判断jwt是否为真或是否过期
             response.setStatus(401);
             return false;
@@ -54,11 +43,26 @@ public class JwtHandler implements HandlerInterceptor {
 
     }
 
+    /**
+     *
+     * @param request
+     * @return null 代表没有
+     */
+    public static String getCookieJWT(HttpServletRequest request) {
+        Cookie[] cs = request.getCookies();
+        if (null != cs && cs.length > 0) {
+            Optional<Cookie> v = Stream.of(cs).filter((c) -> c.getName().equals(Constant.AUTHORIZATION)).findFirst();
+            if (v.isPresent()) {
+                Cookie cookie = v.get();
+                return  cookie.getValue();
+            }
+        }
+        return null;
+    }
 
     public static void setCookieJWT(Integer id, HttpServletResponse response) {
         String jwt = JwtUtil.getJWTString(id);
         Cookie cookie = new Cookie(Constant.AUTHORIZATION, jwt);
-        response.setHeader(Constant.AUTHORIZATION, jwt);
         cookie.setPath("/");
         cookie.setMaxAge(24 * 60 * 60);//过期时间为24小时
         response.addCookie(cookie);
