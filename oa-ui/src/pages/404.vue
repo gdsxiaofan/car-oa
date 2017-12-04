@@ -1,5 +1,6 @@
 <template>
   <div>
+    <InputNumber @on-blur="co"></InputNumber>
     <p style="font-size:20px;text-align: center;color:rgb(192, 204, 218);">404</p>
     <input v-model="data">
     <Button type="primary" shape="circle" icon="ios-search" @click="sendMsg" long>查询</Button>
@@ -22,6 +23,9 @@
       }
     },
     methods: {
+      co(){
+        console.log("Asdadad")
+      },
       sendMsg() {
         let destination = '/welcome'
         let body=JSON.stringify({'name': this.data})
