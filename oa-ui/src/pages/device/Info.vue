@@ -26,6 +26,17 @@
           新建设备
         </Button>
         </Col>
+        <Col :span="2" offset="1">
+        <Upload action="/v1/device/addList" ref="upload"
+                :headers="header"
+                :on-format-error="handleFormatError"
+                :on-success="handleSuccess"
+                :on-error="handleError"
+                :format="['xlsx']"
+        >
+          <Button type="ghost" icon="ios-cloud-upload-outline">上传文件批量上传</Button>
+        </Upload>
+        </Col>
       </Row>
     </Card>
     <Table border :columns="columns" :data="list"></Table>
@@ -43,7 +54,7 @@
           <Input v-model="Device.deviceName" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
         <!--<Form-item label="巡检天数">-->
-          <!--<InputNumber :min="1" v-model="Device.routingDays" :disabled="DeviceModal.disabled" placeholder="请输入"/>-->
+        <!--<InputNumber :min="1" v-model="Device.routingDays" :disabled="DeviceModal.disabled" placeholder="请输入"/>-->
         <!--</Form-item>-->
         <Form-item label="区域">
           <Input v-model="Device.area" :disabled="DeviceModal.disabled" placeholder="请输入"/>
@@ -52,22 +63,23 @@
           <Input v-model="Device.location" :disabled="DeviceModal.disabled" placeholder="请输入"/>
         </Form-item>
         <!--<Form-item label="开始时间">-->
-          <!--<DatePicker type="date" :value="Device.fromDate" @on-change='Device.fromDate=arguments[0]'-->
-                      <!--placeholder="选择日期和时间（不含秒）"-->
-                      <!--style="width: 300px" :disabled="DeviceModal.disabled"-->
-                      <!--:clearable="false"></DatePicker>-->
+        <!--<DatePicker type="date" :value="Device.fromDate" @on-change='Device.fromDate=arguments[0]'-->
+        <!--placeholder="选择日期和时间（不含秒）"-->
+        <!--style="width: 300px" :disabled="DeviceModal.disabled"-->
+        <!--:clearable="false"></DatePicker>-->
         <!--</Form-item>-->
         <!--<Form-item label="结束时间">-->
-          <!--<DatePicker type="date" :value="Device.toDate" @on-change='Device.toDate=arguments[0]'-->
-                      <!--placeholder="选择日期和时间（不含秒）"-->
-                      <!--style="width: 300px" :disabled="DeviceModal.disabled"-->
-                      <!--:clearable="false"></DatePicker>-->
+        <!--<DatePicker type="date" :value="Device.toDate" @on-change='Device.toDate=arguments[0]'-->
+        <!--placeholder="选择日期和时间（不含秒）"-->
+        <!--style="width: 300px" :disabled="DeviceModal.disabled"-->
+        <!--:clearable="false"></DatePicker>-->
         <!--</Form-item>-->
       </Form>
       <div slot="footer">
         <Button type="ghost" @click="DeviceModal.isShow=false" style="margin-left: 8px">取消</Button>
-        <Button type="primary" @click="doDevice" :loading="DeviceModal.isLoading" v-if="!DeviceModal.disabled">提交</Button>
-        <Button type="primary" @click="DeviceModal.isShow=false"  v-else>确认</Button>
+        <Button type="primary" @click="doDevice" :loading="DeviceModal.isLoading" v-if="!DeviceModal.disabled">提交
+        </Button>
+        <Button type="primary" @click="DeviceModal.isShow=false" v-else>确认</Button>
       </div>
     </Modal>
   </div>
@@ -82,9 +94,10 @@
   } from '../../api/device/device'
 
   export default {
-    data() {
+    data () {
       return {
         list: [],
+        header:{"Authorization":sessionStorage.getItem("Authorization")},
         queryCondition: {
           pageSize: 10,
           pageNum: 1,
@@ -133,7 +146,7 @@
                 },
                 on: {
                   click: () => {
-                    this.showDevice('修改设备',params)
+                    this.showDevice('修改设备', params)
                   }
                 }
               }, '修改'),
@@ -146,7 +159,7 @@
                 },
                 on: {
                   click: () => {
-                    this.showDevice('设备详情',params)
+                    this.showDevice('设备详情', params)
 
                   }
                 }
@@ -179,13 +192,13 @@
                       loading: true,
                       onOk: () => {
                         delDevcie(params.row.id).then(res => {
-                          this.$Message.success(res.data.message);
+                          this.$Message.success(res.data.message)
                           this.$Modal.remove()
                           this.getlist()
                         })
 
                       }
-                    });
+                    })
                   }
                 }
               }, '删除')
@@ -201,22 +214,41 @@
           title: '',
           isShow: false,
           isLoading: false,
-          disabled:false
+          disabled: false
         },
         Device: {
           id: '',
           deviceName: '',
-          routingDays:1,
-          area:'',
-          location:''
+          routingDays: 1,
+          area: '',
+          location: ''
         },
       }
     },
-    created(){
+    created () {
       this.getlist()
     },
     methods: {
-      getlist(pageNum) {
+      handleFormatError (file) {
+        this.$Notice.warning({
+          title: '文件类型不合法',
+          desc: '请使用.xlsx文件'
+        })
+      },
+      handleSuccess (res, file) {
+        if(res.data.code===1){
+          this.$Message.success(res.data.message)
+          this.getlist()
+        }else {
+          this.$Message.error(res.data.message)
+        }
+        this.$refs.upload.clearFiles()
+      },
+      handleError (res, file) {
+        this.$Message.error('新增失败')
+        this.$refs.upload.clearFiles()
+      },
+      getlist (pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
         getDeviceList(this.queryCondition).then(res => {
           this.queryCondition.pageNum = res.data.data.pageNum
@@ -224,9 +256,9 @@
           this.queryCondition.total = res.data.data.total
         }).catch(err => {
 
-        });
+        })
       },
-      showDevice(title,params){
+      showDevice (title, params) {
         this.Device.id = params.row.id
         this.Device.deviceName = params.row.deviceName
         this.Device.routingDays = params.row.routingDays
@@ -235,12 +267,12 @@
         this.Device.fromDate = params.row.fromDate
         this.Device.toDate = params.row.toDate
         this.DeviceModal.isShow = true
-        this.DeviceModal.title =title
-        this.DeviceModal.disabled =title==='设备详情'
+        this.DeviceModal.title = title
+        this.DeviceModal.disabled = title === '设备详情'
         this.$refs['device'].validate()
         this.$refs['device'].validate()
       },
-      doDevice() {
+      doDevice () {
         this.$refs['device'].validate((valid) => {
           if (valid) {
             this.DeviceModal.isLoading = true

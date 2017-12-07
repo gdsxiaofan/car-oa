@@ -1,22 +1,17 @@
 package com.xiaofan.car.api;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.biz.DeviceBiz;
-import com.xiaofan.car.persistence.model.Device;
 import com.xiaofan.car.persistence.param.DeviceInfoParam;
 import com.xiaofan.car.persistence.param.DeviceParam;
 import com.xiaofan.car.persistence.vo.DeviceInfoVo;
 import com.xiaofan.car.persistence.vo.JsonResult;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author:duhongda
@@ -42,6 +37,12 @@ public class DeviceController {
     @PostMapping("/add")
     public JsonResult<String> add(@RequestBody DeviceInfoParam param) {
         deviceBiz.addDevice(param);
+        return new JsonResult<String>(1, "新增成功");
+    }
+    @ApiOperation(value = "Excel批量新增设备", notes = "Excel批量新增设备", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping("/addList")
+    public JsonResult<String> addList(@RequestParam MultipartFile file) {
+
         return new JsonResult<String>(1, "新增成功");
     }
     @ApiOperation(value = "修改设备", notes = "修改设备", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
