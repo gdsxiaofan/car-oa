@@ -1,6 +1,5 @@
 package com.xiaofan.car.utilApi;
 
-import com.sun.deploy.net.URLEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 /**
  * 提供模板下载的功能
