@@ -42,7 +42,16 @@ public class DeviceController {
     @ApiOperation(value = "Excel批量新增设备", notes = "Excel批量新增设备", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @PostMapping("/addList")
     public JsonResult<String> addList(@RequestParam MultipartFile file) {
-
+        try{
+            deviceBiz.addDevice(file);
+        }
+        catch(RuntimeException re){
+            log.error("上传设备信息失败：",re);
+            return new JsonResult<String>(0, re.getMessage());
+        }
+        catch(Exception e){
+            return new JsonResult<String>(0, "系统内部异常");
+        }
         return new JsonResult<String>(1, "新增成功");
     }
     @ApiOperation(value = "修改设备", notes = "修改设备", httpMethod = "PUT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.xiaofan.car.persistence.param.DeviceInfoParam;
 import com.xiaofan.car.persistence.param.DeviceParam;
 import com.xiaofan.car.persistence.vo.DeviceInfoVo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 设备管理业务层
@@ -46,4 +47,9 @@ public interface DeviceBiz {
      * @param deviceInfoParam
      */
     public void updateDevice(DeviceInfoParam deviceInfoParam);
+
+    /**
+     * 批量新增设备
+     */
+    public boolean addDevice(MultipartFile multipartFile);
 }
