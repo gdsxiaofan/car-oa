@@ -3,16 +3,16 @@
     <Card>
       <p slot="title">条件查询</p>
       <Row>
-        <Col :span="2" :offset="2" style="margin-top:0.2%">
+        <Col :span="2" :offset="1" style="margin-top:0.2%">
         设备名称：
         </Col>
-        <Col :span="6">
+        <Col :span="4">
         <Input type="text" v-model="queryCondition.deviceName" placeholder="请输入..."></Input>
         </Col>
-        <Col :span="2" offset="2">
+        <Col :span="2" offset="1">
         <Button type="primary" shape="circle" icon="ios-search" @click="getlist">查询</Button>
         </Col>
-        <Col :span="2" offset="4">
+        <Col :span="2" offset="1">
         <Button type="success" shape="circle" icon="ios-personadd"
                 @click="Device={
           id: '',
@@ -26,7 +26,7 @@
           新建设备
         </Button>
         </Col>
-        <Col :span="2" offset="1">
+        <Col :span="3" offset="1">
         <Upload action="/v1/device/addList" ref="upload"
                 :headers="header"
                 :on-format-error="handleFormatError"
@@ -34,8 +34,13 @@
                 :on-error="handleError"
                 :format="['xlsx']"
         >
-          <Button type="ghost" icon="ios-cloud-upload-outline">上传文件批量上传</Button>
+          <Button type="info" shape="circle" icon="ios-cloud-upload-outline">Excel文件上传</Button>
         </Upload>
+        </Col>
+        <Col :span="2" offset="1">
+        <a  target="_blank" href="/v1/file/download">
+        <Button type="warning" shape="circle" icon="ios-download-outline">Excel文件模板下载</Button>
+        </a>
         </Col>
       </Row>
     </Card>
@@ -90,14 +95,15 @@
     getDeviceList,
     addDevcie,
     updateDevcie,
-    delDevcie
+    delDevcie,
+    downFile
   } from '../../api/device/device'
 
   export default {
-    data () {
+    data() {
       return {
         list: [],
-        header:{"Authorization":sessionStorage.getItem("Authorization")},
+        header: {"Authorization": sessionStorage.getItem("Authorization")},
         queryCondition: {
           pageSize: 10,
           pageNum: 1,
@@ -225,30 +231,31 @@
         },
       }
     },
-    created () {
+    created() {
       this.getlist()
     },
     methods: {
-      handleFormatError (file) {
+      handleFormatError(file) {
         this.$Notice.warning({
           title: '文件类型不合法',
           desc: '请使用.xlsx文件'
         })
       },
-      handleSuccess (res, file) {
-        if(res.data.code===1){
-          this.$Message.success(res.data.message)
+      handleSuccess(res, file) {
+        console.log(res)
+        if (res.code === 1) {
+          this.$Message.success(res.message)
           this.getlist()
-        }else {
-          this.$Message.error(res.data.message)
+        } else {
+          this.$Message.error(res.message)
         }
         this.$refs.upload.clearFiles()
       },
-      handleError (res, file) {
+      handleError(res, file) {
         this.$Message.error('新增失败')
         this.$refs.upload.clearFiles()
       },
-      getlist (pageNum) {
+      getlist(pageNum) {
         this.queryCondition.pageNum = !isNaN(pageNum) ? pageNum : this.queryCondition.pageNum
         getDeviceList(this.queryCondition).then(res => {
           this.queryCondition.pageNum = res.data.data.pageNum
@@ -258,7 +265,7 @@
 
         })
       },
-      showDevice (title, params) {
+      showDevice(title, params) {
         this.Device.id = params.row.id
         this.Device.deviceName = params.row.deviceName
         this.Device.routingDays = params.row.routingDays
@@ -272,7 +279,7 @@
         this.$refs['device'].validate()
         this.$refs['device'].validate()
       },
-      doDevice () {
+      doDevice() {
         this.$refs['device'].validate((valid) => {
           if (valid) {
             this.DeviceModal.isLoading = true
