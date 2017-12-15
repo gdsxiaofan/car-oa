@@ -20,3 +20,4 @@ oa-ui/dist/
 oa-ui/node_modules/
 oa-ui/package-lock.json
 !/oa-ui/package-lock.json
+!/oa-ui/dist/
