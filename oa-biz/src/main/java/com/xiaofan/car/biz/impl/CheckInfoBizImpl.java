@@ -188,11 +188,13 @@ public class CheckInfoBizImpl implements CheckInfoBiz {
         // 1.首次巡检时间不得比当前日期小
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
-            Date firstDate = sdf.parse(checkInfoParam.getFirstCheckTime());
-            Date today = Calendar.getInstance().getTime();
-            today = sdf.parse(sdf.format(today));
-            if(firstDate.getTime()<today.getTime()){
-                throw new RuntimeException("首次巡检时间不得早于当前日期");
+            if(StringUtils.isNotBlank(checkInfoParam.getFirstCheckTime())){
+                Date firstDate = sdf.parse(checkInfoParam.getFirstCheckTime());
+                Date today = Calendar.getInstance().getTime();
+                today = sdf.parse(sdf.format(today));
+                if(firstDate.getTime()<today.getTime()){
+                    throw new RuntimeException("首次巡检时间不得早于当前日期");
+                }
             }
         }
         catch (Exception e){

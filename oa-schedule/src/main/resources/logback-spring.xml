@@ -8,7 +8,7 @@
 	<property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 	<property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 	
-	<property name="LOG_PATH" value="${LOG_PATH:-/opt/MicroService/logs}" />
+	<property name="LOG_PATH" value="${LOG_PATH:-/opt/car/logs}" />
 	<property name="LOG_INFO_FILE" value="${LOG_FILE:-${LOG_PATH}/info.log}" />
 	<property name="LOG_ERROR_FILE" value="${LOG_PATH}/error.log" />
 
