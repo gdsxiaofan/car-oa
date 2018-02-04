@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @ClassName: EntityUtil
  * @Description: 自动生成MyBatis的实体类、实体映射XML文件、Mapper
- * @author EX-XIONGTAO600
+ * @author stabber
  * @date 2016年4月20日 下午8:04:18
  */
 public class EntityUtil {
